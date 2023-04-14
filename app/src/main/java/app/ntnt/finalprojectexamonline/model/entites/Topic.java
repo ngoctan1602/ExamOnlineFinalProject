@@ -1,4 +1,4 @@
-package app.ntnt.finalprojectexamonline.model;
+package app.ntnt.finalprojectexamonline.model.entites;
 
 public class Topic {
     private int id;

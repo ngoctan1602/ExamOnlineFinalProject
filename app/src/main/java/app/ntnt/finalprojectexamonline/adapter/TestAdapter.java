@@ -6,7 +6,6 @@ import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,9 +15,7 @@ import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
-import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
-import app.ntnt.finalprojectexamonline.model.Subject;
-import app.ntnt.finalprojectexamonline.model.Test;
+import app.ntnt.finalprojectexamonline.model.entites.Test;
 
 
 public class TestAdapter extends Adapter<TestAdapter.TopicViewHolder> {

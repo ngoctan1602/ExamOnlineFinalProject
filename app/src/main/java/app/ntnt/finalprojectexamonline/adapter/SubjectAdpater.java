@@ -3,7 +3,6 @@ package app.ntnt.finalprojectexamonline.adapter;
 import static androidx.recyclerview.widget.RecyclerView.Adapter;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
-import app.ntnt.finalprojectexamonline.model.Subject;
+import app.ntnt.finalprojectexamonline.model.entites.Subject;
 
 
 public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {

@@ -15,7 +15,7 @@ import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.TestAdapter;
-import app.ntnt.finalprojectexamonline.model.Test;
+import app.ntnt.finalprojectexamonline.model.entites.Test;
 
 
 public class HistoryFragment extends Fragment {

@@ -6,7 +6,6 @@ import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +13,7 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
-import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
-import app.ntnt.finalprojectexamonline.model.Test;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
 
 
