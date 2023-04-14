@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     EditText edtUsername,edtPassword;
     TextView tvSignup;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                progressBar.setVisibility(View.VISIBLE);
                 //Lấy thông tin từ người dùng nhập
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
 
                 if(username.equals("tan") && password.equals("123"))
                 {
+                    progressBar.setVisibility(View.VISIBLE);
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                     startActivity(intent);
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    progressBar.setVisibility(View.VISIBLE);
                     Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
                 }
 
@@ -64,5 +68,6 @@ public class LoginActivity extends AppCompatActivity {
         edtUsername = findViewById(R.id.edt_username);
         edtPassword = findViewById(R.id.edt_password);
         tvSignup = findViewById(R.id.txtSignUp);
+        progressBar = findViewById(R.id.prb_login);
     }
 }

@@ -12,6 +12,11 @@
         android:theme="@style/Theme.FinalProjectExamOnline"
         tools:targetApi="31">
         <activity
+            android:name=".activity.TopicActivity"
+            android:exported="false"
+            android:label="@string/title_activity_topic"
+            android:theme="@style/Theme.FinalProjectExamOnline.NoActionBar" />
+        <activity
             android:name=".activity.HomeActivity"
             android:exported="false" />
         <activity
