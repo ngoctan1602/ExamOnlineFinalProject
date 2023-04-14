@@ -15,10 +15,8 @@ import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.SubjectAdpater;
-import app.ntnt.finalprojectexamonline.adapter.TestAdapter;
 import app.ntnt.finalprojectexamonline.adapter.TestInforAdapter;
-import app.ntnt.finalprojectexamonline.model.Subject;
-import app.ntnt.finalprojectexamonline.model.Test;
+import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
 
 
