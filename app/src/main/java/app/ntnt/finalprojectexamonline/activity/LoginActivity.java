@@ -1,11 +1,8 @@
 package app.ntnt.finalprojectexamonline.activity;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,16 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding;
 import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
-import app.ntnt.finalprojectexamonline.services.ILoginService;
+import app.ntnt.finalprojectexamonline.services.IAuthService;
+import app.ntnt.finalprojectexamonline.utils.ContextUtil;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         binding =ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ContextUtil.context = getApplicationContext();
 //        //Ánh xạ
         init();
         //Chuyển trang đăng kí
@@ -64,15 +58,14 @@ public class LoginActivity extends AppCompatActivity {
                 String username = binding.edtUsername.getText().toString();
                 String password = binding.edtPassword.getText().toString();
                 LoginRequest loginRequest = new LoginRequest(username, password);
-                BaseAPIService.createService(ILoginService.class).login(loginRequest)
+                BaseAPIService.createService(IAuthService.class).login(loginRequest)
                         .enqueue(new Callback<AuthResponse>() {
                             @Override
                             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                                 progressBar.setVisibility(View.INVISIBLE);
                                 if (response.body()!=null){
-                                    Log.d("true", response.message().toString());
-                                    Log.d("token", response.body().getToken());
                                     SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
+                                    SharedPrefManager.getInstance(getApplicationContext()).saveUser(response.body().getUsername());
                                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                                     startActivity(intent);
@@ -82,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                             }
-
                             @Override
                             public void onFailure(Call<AuthResponse> call, Throwable t) {
                                 Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
