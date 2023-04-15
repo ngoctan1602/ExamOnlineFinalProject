@@ -1,12 +1,16 @@
 package app.ntnt.finalprojectexamonline.adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static androidx.recyclerview.widget.RecyclerView.Adapter;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,69 +18,69 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
+import app.ntnt.finalprojectexamonline.activity.TopicActivity;
 import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.model.Test;
+import app.ntnt.finalprojectexamonline.model.Topic;
 
 
 public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
-    private HistoryFragment context;
-    List<Test> tests;
+    private TopicActivity context;
+    List<Topic> topics;
 
-    public TopicAdapter(HistoryFragment context) {
+    public TopicAdapter(TopicActivity context) {
         this.context = context;
     }
 
-    public void setData(List<Test> tests) {
+    public void setData(List<Topic> topics) {
 
-        this.tests = tests;
+        this.topics = topics;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_topic, parent, false);
         return new TopicViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
-        Test test = tests.get(position);
-        if (test == null) {
+        Topic topic = topics.get(position);
+        if (topic == null) {
             return;
         }
-        int percent = test.getScore()*10;
-        holder.tvName.setText(test.getName());
-        holder.tvTime.setText(String.valueOf(test.getTime()));
-        holder.tvTimes.setText(String.valueOf(test.getTimes()));
-        holder.tvPercent.setText(String.valueOf(percent));
-        holder.tvDateComplete.setText(String.valueOf(test.getTime()));
-        holder.nameSubject.setText(test.getNameSubject());
-        holder.progressBar.setProgress(percent);
+
+        holder.tv_name_topic.setText(topic.getName());
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, TestInforActivity.class);
+                Bundle bundle = new Bundle();
+                startActivity(context,intent,bundle);
+            }
+        });
     }
 
 
     @Override
     public int getItemCount() {
-        if (tests != null)
-            return tests.size();
+        if (topics != null)
+            return topics.size();
         return 0;
     }
 
     public class TopicViewHolder extends ViewHolder {
 
-        TextView tvName,tvTime,tvTimes,tvPercent,tvDateComplete,nameSubject;
-        ProgressBar progressBar;
+        TextView tv_name_topic;
+        RelativeLayout relativeLayout;
 
         public TopicViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName=itemView.findViewById(R.id.tv_nameExam);
-            tvTime=itemView.findViewById(R.id.tv_time);
-            tvTimes=itemView.findViewById(R.id.txt_times);
-            tvPercent=itemView.findViewById(R.id.txt_percent);
-            tvDateComplete=itemView.findViewById(R.id.txt_date_complete);
-            nameSubject=itemView.findViewById(R.id.tv_time_exam);
-            progressBar = itemView.findViewById(R.id.pbr_complete);
+            tv_name_topic=itemView.findViewById(R.id.tv_name_topic);
+            relativeLayout = itemView.findViewById(R.id.item_rlt_topic);
 
         }
     }

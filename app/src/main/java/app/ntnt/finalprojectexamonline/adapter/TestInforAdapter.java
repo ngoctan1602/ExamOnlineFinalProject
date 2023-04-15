@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
 import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
 import app.ntnt.finalprojectexamonline.model.Test;
@@ -22,10 +23,15 @@ import app.ntnt.finalprojectexamonline.model.TestInfor;
 
 public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> {
     private HomeFragment context;
+    private TestInforActivity testInforActivity;
     List<TestInfor> testInforList;
 
     public TestInforAdapter(HomeFragment context) {
         this.context = context;
+    }
+
+    public TestInforAdapter(TestInforActivity testInforActivity) {
+        this.testInforActivity = testInforActivity;
     }
 
     public void setData(List<TestInfor> testInforList) {

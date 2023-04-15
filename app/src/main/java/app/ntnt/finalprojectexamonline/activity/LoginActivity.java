@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(username.equals("tan") && password.equals("123"))
                 {
-                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                     startActivity(intent);
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
                 }
 
