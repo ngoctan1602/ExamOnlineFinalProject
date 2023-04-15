@@ -5,6 +5,8 @@ plugins {
 android {
     namespace 'app.ntnt.finalprojectexamonline'
     compileSdk 33
+    compileOptions.encoding = 'ISO-8859-1'
+1
 
     defaultConfig {
         applicationId "app.ntnt.finalprojectexamonline"

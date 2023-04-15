@@ -1,10 +1,12 @@
 package app.ntnt.finalprojectexamonline.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
+import app.ntnt.finalprojectexamonline.activity.LoginActivity;
 import app.ntnt.finalprojectexamonline.model.entites.User;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
 
@@ -60,14 +62,16 @@ public class SharedPrefManager {
         String authToken = sharedPreferences.getString(KEY_AUTH_TOKEN,"");
         return gson.fromJson(authToken, AuthResponse.class);
     }
+    public void logout() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(ctx, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ctx.startActivity(intent);
+    }
+
 }
 
-//    public void logout() {
-//        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.clear();
-//        editor.apply();
-//        Intent intent = new Intent(ctx, Signin.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        ctx.startActivity(intent);
-//    }
+

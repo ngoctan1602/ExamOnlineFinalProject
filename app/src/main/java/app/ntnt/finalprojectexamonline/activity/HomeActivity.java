@@ -12,6 +12,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.MyViewPagerAdapter;
+import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 
 public class HomeActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
@@ -26,8 +27,7 @@ public class HomeActivity extends AppCompatActivity {
 
         MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(this);
         viewPager2.setAdapter(myViewPagerAdapter);
-
-
+        SharedPrefManager.getInstance(getApplicationContext()).getAuthToken();
         viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {

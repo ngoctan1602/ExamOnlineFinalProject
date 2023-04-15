@@ -5,6 +5,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.ILoginService;
+import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                                 Log.d("true", response.message().toString());
                                 Log.d("token", response.body().getToken());
-
+                                SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
                                 Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                                 startActivity(intent);
                             }
