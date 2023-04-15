@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
@@ -53,8 +55,8 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
             return;
         }
         holder.tvNameSubject.setText(subject.getName());
-//        Glide.with(context).load(subject.getImage()).into(holder.imageViewSubject);
-        holder.imageViewSubject.setImageResource(R.drawable.pic6);
+        Glide.with(context).load(subject.getImage()).into(holder.imageViewSubject);
+//        holder.imageViewSubject.setImageResource(R.drawable.pic6);
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override

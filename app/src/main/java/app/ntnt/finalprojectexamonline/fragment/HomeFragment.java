@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,11 @@ import app.ntnt.finalprojectexamonline.adapter.SubjectAdpater;
 import app.ntnt.finalprojectexamonline.adapter.TestInforAdapter;
 import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
+import app.ntnt.finalprojectexamonline.services.BaseAPIService;
+import app.ntnt.finalprojectexamonline.services.ISubjectService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class HomeFragment extends Fragment {
@@ -67,18 +73,24 @@ public class HomeFragment extends Fragment {
         subjectAdapter = new SubjectAdpater(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         rcvSubject.setLayoutManager(gridLayoutManager);
-        subjectAdapter.setData(getAllSubject());
-        rcvSubject.setAdapter(subjectAdapter);
+
+        BaseAPIService.createService(ISubjectService.class).getAllSubject()
+                .enqueue(new Callback<List<Subject>>() {
+                    @Override
+                    public void onResponse(Call<List<Subject>> call, Response<List<Subject>> response) {
+                        if (response.body()!= null){
+                            subjectAdapter.setData(response.body());
+                            rcvSubject.setAdapter(subjectAdapter);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Subject>> call, Throwable t) {
+                        Log.d("erroeee rồi", t.getMessage().toString());
+                    }
+                });
     }
 
-    private List<Subject> getAllSubject() {
-        subjects = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            Subject subject = new Subject(i, "Toán", "https://images.pexels.com/photos/14819864/pexels-photo-14819864.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
-            subjects.add(subject);
-        }
-        return subjects;
-    }
     private void init(View view)
     {
         rcvSubject = view.findViewById(R.id.rcv_subject_home);
