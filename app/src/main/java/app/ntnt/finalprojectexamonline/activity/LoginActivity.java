@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private EditText edtUsername,edtPassword;
     private TextView tvSignup;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,27 +59,33 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                progressBar.setVisibility(view.getVisibility());
                 //Lấy thông tin từ người dùng nhập
                 String username = binding.edtUsername.getText().toString();
                 String password = binding.edtPassword.getText().toString();
                 LoginRequest loginRequest = new LoginRequest(username, password);
-                String params = new Gson().toJson(loginRequest);
-                JsonParser parser = new JsonParser();
                 BaseAPIService.createService(ILoginService.class).login(loginRequest)
                         .enqueue(new Callback<AuthResponse>() {
                             @Override
                             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                                Log.d("true", response.message().toString());
-                                Log.d("token", response.body().getToken());
-                                SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
-                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                                startActivity(intent);
+                                progressBar.setVisibility(View.INVISIBLE);
+                                if (response.body()!=null){
+                                    Log.d("true", response.message().toString());
+                                    Log.d("token", response.body().getToken());
+                                    SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
+                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
+                                }
+
                             }
 
                             @Override
                             public void onFailure(Call<AuthResponse> call, Throwable t) {
-                                Log.d("error", t.getMessage().toString());
+                                Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
                             }
                         });
             }
@@ -86,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void init()
     {
+        progressBar = binding.prbLogin;
         btnLogin = binding.btnLogin;
         tvSignup = binding.txtSignUp;
     }
