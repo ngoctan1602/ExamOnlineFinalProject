@@ -5,6 +5,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.ILoginService;
+import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,14 +34,11 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-
     private ActivityLoginBinding binding;
     private Button btnLogin;
     private EditText edtUsername,edtPassword;
     private TextView tvSignup;
-
-    ProgressBar progressBar;
-
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(view.getVisibility());
                 //Lấy thông tin từ người dùng nhập
                 String username = binding.edtUsername.getText().toString();
                 String password = binding.edtPassword.getText().toString();
@@ -69,32 +68,24 @@ public class LoginActivity extends AppCompatActivity {
                         .enqueue(new Callback<AuthResponse>() {
                             @Override
                             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                                Log.d("true", response.message().toString());
-                                Log.d("token", response.body().getToken());
-                String username = edtUsername.getText().toString();
-                String password = edtPassword.getText().toString();
+                                progressBar.setVisibility(View.INVISIBLE);
+                                if (response.body()!=null){
+                                    Log.d("true", response.message().toString());
+                                    Log.d("token", response.body().getToken());
+                                    SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
+                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
+                                }
 
-                if(username.equals("tan") && password.equals("123"))
-                {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                    startActivity(intent);
-
-                }
-                else
-                {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
-                }
-
-                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                                startActivity(intent);
                             }
 
                             @Override
                             public void onFailure(Call<AuthResponse> call, Throwable t) {
-                                Log.d("error", t.getMessage().toString());
+                                Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
                             }
                         });
             }
@@ -103,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void init()
     {
+        progressBar = binding.prbLogin;
         btnLogin = binding.btnLogin;
         tvSignup = binding.txtSignUp;
     }
