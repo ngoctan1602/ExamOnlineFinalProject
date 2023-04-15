@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +32,14 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+
     private ActivityLoginBinding binding;
     private Button btnLogin;
     private EditText edtUsername,edtPassword;
     private TextView tvSignup;
+
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,19 +60,33 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                progressBar.setVisibility(View.VISIBLE);
                 //Lấy thông tin từ người dùng nhập
                 String username = binding.edtUsername.getText().toString();
                 String password = binding.edtPassword.getText().toString();
                 LoginRequest loginRequest = new LoginRequest(username, password);
-                String params = new Gson().toJson(loginRequest);
-                JsonParser parser = new JsonParser();
                 BaseAPIService.createService(ILoginService.class).login(loginRequest)
                         .enqueue(new Callback<AuthResponse>() {
                             @Override
                             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                                 Log.d("true", response.message().toString());
                                 Log.d("token", response.body().getToken());
+                String username = edtUsername.getText().toString();
+                String password = edtPassword.getText().toString();
+
+                if(username.equals("tan") && password.equals("123"))
+                {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                    startActivity(intent);
+
+                }
+                else
+                {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
+                }
 
                                 Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
                                 startActivity(intent);

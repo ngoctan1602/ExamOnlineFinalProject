@@ -16,8 +16,10 @@
        >
 
       <RelativeLayout
+          android:id="@+id/item_rlt_topic"
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="match_parent"
+          android:gravity="center">
 
          <TextView
              android:id="@+id/tv_name_topic"
