@@ -1,4 +1,4 @@
-package app.ntnt.finalprojectexamonline.model;
+package app.ntnt.finalprojectexamonline.model.response;
 
 public class RespRegister {
     private String message;
