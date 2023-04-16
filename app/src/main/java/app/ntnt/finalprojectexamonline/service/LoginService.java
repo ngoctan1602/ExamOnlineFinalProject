@@ -3,18 +3,13 @@ package app.ntnt.finalprojectexamonline.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
-
-import app.ntnt.finalprojectexamonline.model.RespRegister;
+import app.ntnt.finalprojectexamonline.model.response.RespRegister;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface LoginService {
     Gson gson = new GsonBuilder().setDateFormat("dd:MM:yyyy").create();
