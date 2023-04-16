@@ -25,7 +25,8 @@ import app.ntnt.finalprojectexamonline.model.request.RegisterRequest;
 import app.ntnt.finalprojectexamonline.model.response.RespRegister;
 import app.ntnt.finalprojectexamonline.service.LoginService;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
-import app.ntnt.finalprojectexamonline.services.ILoginService;
+
+import app.ntnt.finalprojectexamonline.services.IAuthService;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -84,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
 //        String json = gson.toJson(registerRequest);
 //        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 //        MultipartBody.Part objectPart = MultipartBody.Part.createFormData("object", "object.json", requestBody);
-        BaseAPIService.createService(ILoginService.class).register(params).enqueue(new Callback<RespRegister>() {
+        BaseAPIService.createService(IAuthService.class).register(params).enqueue(new Callback<RespRegister>() {
             @Override
             public void onResponse(Call<RespRegister> call, Response<RespRegister> response) {
                 String message = response.message().toString();

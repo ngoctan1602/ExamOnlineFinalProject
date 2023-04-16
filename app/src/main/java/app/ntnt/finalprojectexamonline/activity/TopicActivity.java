@@ -45,10 +45,10 @@ public class TopicActivity extends AppCompatActivity {
         topics = new ArrayList<>();
         for(int i=0;i<=10;i++)
         {
-            Topic topic = new Topic(i,"Chuyển động thẳng đều");
-            topics.add(topic);
+//            Topic topic = new Topic(i,"Chuyển động thẳng đều");
+//            topics.add(topic);
         }
 
-        return topics;
+        return null;
     }
 }

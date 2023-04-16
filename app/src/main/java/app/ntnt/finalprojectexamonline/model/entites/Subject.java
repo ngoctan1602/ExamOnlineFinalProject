@@ -1,22 +1,22 @@
 package app.ntnt.finalprojectexamonline.model.entites;
 
 public class Subject {
-    private int id;
+    private Long subjectId;
     private String name;
     private String image;
 
-    public Subject(int id, String name, String image) {
-        this.id = id;
+    public Subject(Long subjectId, String name, String image) {
+        this.subjectId = subjectId;
         this.name = name;
         this.image = image;
     }
 
-    public int getId() {
-        return id;
+    public Long getSubjectId() {
+        return subjectId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
     }
 
     public String getName() {

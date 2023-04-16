@@ -27,11 +27,11 @@ public class SharedPrefManager {
         return instance;
     }
     //this method will store the user data in shared preferences
-    public void saveUser (User user) {
+    public void saveUser (String userName) {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String currentUser = gson.toJson(user);
+        String currentUser = gson.toJson(userName);
         editor.putString(KEY_USER, currentUser);
         editor.apply();
     }
@@ -50,11 +50,11 @@ public class SharedPrefManager {
         return sharedPreferences.getString(KEY_USER,null) != null;
     }
     //this method will give the logged in user
-    public User getUser() {
+    public String getUser() {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences (SHARED_PREF_NAME, Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String currentUser = sharedPreferences.getString(KEY_USER,"");
-        return gson.fromJson(currentUser, User.class);
+        return gson.fromJson(currentUser, String.class);
     }
     public AuthResponse getAuthToken() {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences (SHARED_PREF_NAME, Context.MODE_PRIVATE);
