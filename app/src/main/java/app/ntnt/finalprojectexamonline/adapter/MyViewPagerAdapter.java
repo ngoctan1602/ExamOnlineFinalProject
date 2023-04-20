@@ -34,6 +34,6 @@ public class MyViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return this.getItemCount();
+        return 3;
     }
 }
