@@ -107,12 +107,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="48dp"
         android:text="Đăng ký"
         android:textColor="#ffff"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.385"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,7 +147,7 @@
         android:drawableLeft="@drawable/baseline_email_24"
         android:ems="10"
         android:hint=" Email"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -249,6 +250,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_gender" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/uploadImage"
+        android:layout_width="96dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

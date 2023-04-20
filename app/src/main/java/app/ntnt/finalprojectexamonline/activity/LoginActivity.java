@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private Button btnLogin;
-    private EditText edtUsername,edtPassword;
     private TextView tvSignup;
     private ProgressBar progressBar;
     @Override
@@ -55,9 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 progressBar.setVisibility(view.getVisibility());
                 //Lấy thông tin từ người dùng nhập
-                String username = binding.edtUsername.getText().toString();
-                String password = binding.edtPassword.getText().toString();
-                LoginRequest loginRequest = new LoginRequest(username, password);
+                LoginRequest loginRequest = getInputData();
                 BaseAPIService.createService(IAuthService.class).login(loginRequest)
                         .enqueue(new Callback<AuthResponse>() {
                             @Override
@@ -82,6 +79,12 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    private LoginRequest getInputData(){
+        String username = binding.edtUsername.getText().toString();
+        String password = binding.edtPassword.getText().toString();
+        return new LoginRequest(username, password);
     }
 
     private void init()
