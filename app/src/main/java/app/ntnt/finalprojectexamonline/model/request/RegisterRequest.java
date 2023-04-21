@@ -10,12 +10,19 @@ import retrofit2.http.Multipart;
 import retrofit2.http.Part;
 
 public class RegisterRequest {
+    @SerializedName("email")
     private String email;
+    @SerializedName("firstName")
     private String firstName;
+    @SerializedName("lastName")
     private String lastName;
+    @SerializedName("phoneNumber")
     private String phoneNumber;
+    @SerializedName("username")
     private String username;
+    @SerializedName("password")
     private String password;
+    @SerializedName("gender")
     private String gender;
     public RegisterRequest(String email, String firstName, String lastName, String phoneNumber, String username, String password, String gender) {
         this.email = email;

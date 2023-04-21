@@ -1,26 +1,17 @@
 package app.ntnt.finalprojectexamonline.activity;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.databinding.ActivityRegisterBinding;
@@ -31,10 +22,7 @@ import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 
 import app.ntnt.finalprojectexamonline.services.IAuthService;
 import app.ntnt.finalprojectexamonline.utils.AppConstrain;
-import app.ntnt.finalprojectexamonline.utils.RealPathUtil;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements UploadImageFr
     private ActivityRegisterBinding binding;
     private Uri mUri;
     UploadImageFragment uploadImageFragment;
+    private String gender;
     private void initFragMent(){
        uploadImageFragment = UploadImageFragment.getInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -71,6 +60,14 @@ public class RegisterActivity extends AppCompatActivity implements UploadImageFr
             }
         });
 
+        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                radioGroup.setBackgroundColor(Color.TRANSPARENT);
+                RadioButton radioButton = radioGroup.findViewById(i);
+                gender = radioButton.getText().toString();
+            }
+        });
         binding.btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,34 +80,39 @@ public class RegisterActivity extends AppCompatActivity implements UploadImageFr
     }
 
     private boolean validate(){
-        if (binding.edtEmail.getText()== null)
+        if (binding.edtEmail.getText().toString().trim().isEmpty())
         {
             binding.edtEmail.setError("Vui lòng nhập thông tin");
             return false;
         }
-        if (binding.edtFirstName.getText()== null)
+        if (binding.edtFirstName.getText().toString().trim().isEmpty())
         {
             binding.edtFirstName.setError("Vui lòng nhập thông tin");
             return false;
         }
-        if (binding.edtLastName.getText()== null)
+        if (binding.edtLastName.getText().toString().trim().isEmpty())
         {
             binding.edtLastName.setError("Vui lòng nhập thông tin");
             return false;
         }
-        if (binding.edtPhoneNumber.getText()== null)
+        if (binding.edtPhoneNumber.getText().toString().trim().isEmpty())
         {
             binding.edtPhoneNumber.setError("Vui lòng nhập thông tin");
             return false;
         }
-        if (binding.edtUsernameSignup.getText()== null)
+        if (binding.edtUsernameSignup.getText().toString().trim().isEmpty())
         {
             binding.edtUsernameSignup.setError("Vui lòng nhập thông tin");
             return false;
         }
-        if (binding.edtPasswordSignup.getText() == null)
+        if (binding.edtPasswordSignup.getText().toString().trim().isEmpty())
         {
             binding.edtPasswordSignup.setError("Vui lòng nhập thông tin");
+            return false;
+        }
+        if(gender == null){
+            RadioGroup radioGroup = findViewById(R.id.radioGroup);
+            radioGroup.setBackgroundColor(Color.RED);
             return false;
         }
         else{
@@ -118,22 +120,26 @@ public class RegisterActivity extends AppCompatActivity implements UploadImageFr
         }
     }
 
+
     private RegisterRequest getInputData(){
         RegisterRequest userRegister = new RegisterRequest();
-        userRegister.setGender(binding.radioGroup.toString());
         userRegister.setFirstName(binding.edtFirstName.getText().toString());
         userRegister.setLastName(binding.edtLastName.getText().toString());
         userRegister.setEmail(binding.edtEmail.getText().toString());
         userRegister.setPhoneNumber(binding.edtPhoneNumber.getText().toString());
         userRegister.setUsername(binding.edtUsernameSignup.getText().toString());
         userRegister.setPassword(binding.edtPasswordSignup.getText().toString());
+        userRegister.setGender(gender);
         return userRegister;
     }
-
     public void createAccount()
     {
         MultipartBody.Part avatar = AppConstrain.toPart(this, mUri);
-        RegisterRequest userRegister = getInputData();
+       if (!validate())
+           return;
+       RegisterRequest userRegister = getInputData();
+//
+//        RequestBody userPart = RequestBody.create(userJson, MediaType.parse("application/json"));
         BaseAPIService.createService(IAuthService.class).register(userRegister, avatar).enqueue(new Callback<RespRegister>() {
             @Override
             public void onResponse(Call<RespRegister> call, Response<RespRegister> response) {
@@ -147,8 +153,6 @@ public class RegisterActivity extends AppCompatActivity implements UploadImageFr
             @Override
             public void onFailure(Call<RespRegister> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this, "Đăng ký thất bại", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(RegisterActivity.this,TestInforActivity.class);
-//                startActivity(intent);
             }
         });
     }
