@@ -13,6 +13,8 @@ import okhttp3.RequestBody;
 
 public class AppConstrain {
     public static MultipartBody.Part toPart(Context context, Uri uri){
+        if (uri == null)
+            return null;
         String IMAGE_PATH = RealPathUtil.getRealPath(context, uri);
         File file = new File(IMAGE_PATH);
         byte[] fileBytes;

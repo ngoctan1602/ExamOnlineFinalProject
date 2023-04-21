@@ -226,7 +226,7 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:buttonTint="@color/white"
-                android:text="Nam"
+                android:text="Nữ"
                 android:textColor="@color/white" />
 
             <RadioButton
@@ -235,7 +235,7 @@
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:buttonTint="@color/white"
-                android:text="Nữ"
+                android:text="Nam"
                 android:textColor="@color/white" />
 
         </RadioGroup>
