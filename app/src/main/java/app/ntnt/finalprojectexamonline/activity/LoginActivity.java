@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding binding;
     private Button btnLogin;
-    private EditText edtUsername,edtPassword;
     private TextView tvSignup;
     private ProgressBar progressBar;
     @Override
@@ -53,35 +52,59 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressBar.setVisibility(view.getVisibility());
-                //Lấy thông tin từ người dùng nhập
-                String username = binding.edtUsername.getText().toString();
-                String password = binding.edtPassword.getText().toString();
-                LoginRequest loginRequest = new LoginRequest(username, password);
-                BaseAPIService.createService(IAuthService.class).login(loginRequest)
-                        .enqueue(new Callback<AuthResponse>() {
-                            @Override
-                            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                                progressBar.setVisibility(View.INVISIBLE);
-                                if (response.body()!=null){
-                                    SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
-                                    SharedPrefManager.getInstance(getApplicationContext()).saveUser(response.body().getUsername());
-                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                                    startActivity(intent);
-                                }
-                                else {
-                                    Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
-                                }
-
-                            }
-                            @Override
-                            public void onFailure(Call<AuthResponse> call, Throwable t) {
-                                Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                login();
             }
         });
+    }
+
+    private void login(){
+
+        if(!validated()){
+            return;
+        }
+        progressBar.setVisibility(binding.getRoot().getVisibility());
+        LoginRequest loginRequest = getInputData();
+        BaseAPIService.createService(IAuthService.class).login(loginRequest)
+                .enqueue(new Callback<AuthResponse>() {
+                    @Override
+                    public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        if (response.body()!=null){
+                            SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
+                            SharedPrefManager.getInstance(getApplicationContext()).saveUser(response.body().getUsername());
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                    @Override
+                    public void onFailure(Call<AuthResponse> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private boolean validated(){
+        if(binding.edtPassword.getText().toString().trim().isEmpty()){
+            binding.edtPassword.setError("Vui lòng nhập password");
+            return false;
+        }
+        if(binding.edtUsername.getText().toString().trim().isEmpty()){
+            binding.edtUsername.setError("Vui lòng nhập username");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    private LoginRequest getInputData(){
+        String username = binding.edtUsername.getText().toString();
+        String password = binding.edtPassword.getText().toString();
+        return new LoginRequest(username, password);
     }
 
     private void init()
