@@ -34,4 +34,9 @@ public class Subject {
     public void setImage(String image) {
         this.image = image;
     }
+
+    @Override
+    public String toString() {
+        return name; // Hiển thị tên môn học dùng trong Spinner
+    }
 }

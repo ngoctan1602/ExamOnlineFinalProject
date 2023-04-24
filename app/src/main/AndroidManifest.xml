@@ -13,6 +13,7 @@
         tools:ignore="ScopedStorage" />
 
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -24,6 +25,24 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.test.AddTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.test.HomeTeacherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.test.AnswerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.test.QuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.TestInforActivity"
             android:exported="false" />
         <activity
@@ -32,16 +51,13 @@
             android:label="@string/title_activity_topic"
             android:theme="@style/Theme.FinalProjectExamOnline.NoActionBar" />
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.teacher.HomeTeacherActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.RegisterActivity"
-            android:exported="true">
-
-        </activity>
-
-        <activity
             android:name=".activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.test.LoadQuestionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
