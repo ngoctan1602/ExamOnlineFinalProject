@@ -41,7 +41,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.RegisterActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activity.TestInforActivity"
             android:exported="false" />
@@ -55,15 +55,17 @@
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="false" />
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".activity.test.LoadQuestionActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
