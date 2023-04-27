@@ -28,7 +28,7 @@ public class RequestInterceptor implements Interceptor {
         request = request.newBuilder().addHeader(
                 "Authorization",
                 "Bearer "+
-                       "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkdW5nMTIzMyIsImlhdCI6MTY4MTIwMzI2NiwiZXhwIjoxNjk1NjAzMjY2fQ.Xc5hO6mPG24GkodwSUhlvLuir2GUSZcKOKAMVCwC_9UkGuEz9PaHusOi6krYo3u5B11nRhtx76A4tyFEj7UhDA").build();
+                       SharedPrefManager.getInstance(ContextUtil.context).getAuthToken().getToken()).build();
         return chain.proceed(request);
     }
 }

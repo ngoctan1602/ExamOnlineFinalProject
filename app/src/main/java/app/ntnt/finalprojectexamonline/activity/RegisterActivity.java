@@ -1,5 +1,6 @@
 package app.ntnt.finalprojectexamonline.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,6 +20,7 @@ import app.ntnt.finalprojectexamonline.databinding.ActivityRegisterBinding;
 import app.ntnt.finalprojectexamonline.fragment.UploadImageFragment;
 import app.ntnt.finalprojectexamonline.model.request.RegisterRequest;
 import app.ntnt.finalprojectexamonline.model.response.RespRegister;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 
 import app.ntnt.finalprojectexamonline.services.IAuthService;
@@ -138,20 +141,25 @@ public class RegisterActivity extends AppCompatActivity implements UploadImageFr
        if (!validate())
            return;
        RegisterRequest userRegister = getInputData();
-//
-//        RequestBody userPart = RequestBody.create(userJson, MediaType.parse("application/json"));
-        BaseAPIService.createService(IAuthService.class).register(userRegister, avatar).enqueue(new Callback<RespRegister>() {
+        BaseAPIService.createService(IAuthService.class).register(userRegister, avatar)
+                .enqueue(new Callback<ResponseEntity>() {
             @Override
-            public void onResponse(Call<RespRegister> call, Response<RespRegister> response) {
-                String message = response.message().toString();
-                Toast.makeText(RegisterActivity.this, message.toString(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                startActivity(intent);
+            public void onResponse(@NonNull Call<ResponseEntity> call, @NonNull Response<ResponseEntity> response) {
+                if (response.body()!= null){
+                    if (!response.body().isError()){
+                        Toast.makeText(RegisterActivity.this,"Đăng ký thành công", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(RegisterActivity.this, response.body().getData().toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
 
             }
 
             @Override
-            public void onFailure(Call<RespRegister> call, Throwable t) {
+            public void onFailure(Call<ResponseEntity> call, Throwable t) {
                 Toast.makeText(RegisterActivity.this, "Đăng ký thất bại", Toast.LENGTH_LONG).show();
             }
         });
