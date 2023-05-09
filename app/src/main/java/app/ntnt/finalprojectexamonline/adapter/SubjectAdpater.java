@@ -86,7 +86,7 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
         Subject subject = filteredList.get(position);
-        Boolean bUser = booleans.get(position);
+
 
 
         if (subject == null) {
@@ -95,9 +95,15 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
 
 
         holder.tvNameSubject.setText(subject.getName());
-        Glide.with(teacherHomeFragment.getContext()).load(subject.getImage()).into(holder.imageViewSubject);
+
+        if(b==true)
+        {
+            Glide.with(context.getContext()).load(subject.getImage()).into(holder.imageViewSubject);
+        }
 
         if (b == false) {
+            Boolean bUser = booleans.get(position);
+            Glide.with(teacherHomeFragment.getContext()).load(subject.getImage()).into(holder.imageViewSubject);
 
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -193,6 +199,7 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
 //                }
 //            });
         }
+
 
     }
 

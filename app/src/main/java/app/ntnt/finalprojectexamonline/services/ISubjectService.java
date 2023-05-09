@@ -29,8 +29,6 @@ public interface ISubjectService {
     Call<SubjectDataResponse> getSubject();
 
 
-
-
     @Multipart
     @POST("subject/add")
     Call<RespRegister> addSubject(@Part("name") RequestBody name,
@@ -43,7 +41,7 @@ public interface ISubjectService {
     @GET("subject/del")
     Call<DeleteResponse> delSubject(@Query("subjectId") long subjectId);
     
-
+    @GET("subject")
     Call<ResponseEntity> getAllSubject();
 
 }
