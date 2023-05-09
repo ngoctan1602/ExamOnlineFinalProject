@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,8 +15,10 @@ import android.widget.Toast;
 import app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding;
 import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.IAuthService;
+import app.ntnt.finalprojectexamonline.utils.AppConstrain;
 import app.ntnt.finalprojectexamonline.utils.ContextUtil;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import retrofit2.Call;
@@ -65,24 +66,32 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(binding.getRoot().getVisibility());
         LoginRequest loginRequest = getInputData();
         BaseAPIService.createService(IAuthService.class).login(loginRequest)
-                .enqueue(new Callback<AuthResponse>() {
+                .enqueue(new Callback<ResponseEntity>() {
                     @Override
-                    public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                    public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
                         progressBar.setVisibility(View.INVISIBLE);
                         if (response.body()!=null){
-                            SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(response.body());
-                            SharedPrefManager.getInstance(getApplicationContext()).saveUser(response.body().getUsername());
-                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                            startActivity(intent);
-                        }
-                        else {
-                            Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
+                            AuthResponse authResponse = null;
+                            if (!response.body().isError()){
+                                //Lấy dữ liệu từ response
+                                authResponse = (AuthResponse) AppConstrain.toObject(response.body().getData(), AuthResponse.class);
+                                SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(authResponse);
+                                SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUsername());
+                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
+                            }
                         }
 
+                        else {
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
+                        }
                     }
                     @Override
-                    public void onFailure(Call<AuthResponse> call, Throwable t) {
+                    public void onFailure(Call<ResponseEntity> call, Throwable t) {
                         Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
                     }
                 });

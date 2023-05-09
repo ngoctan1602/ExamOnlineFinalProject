@@ -17,10 +17,13 @@ import java.util.List;
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.SubjectAdpater;
 import app.ntnt.finalprojectexamonline.adapter.TestInforAdapter;
-import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
+import app.ntnt.finalprojectexamonline.model.entites.Subject;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
+import app.ntnt.finalprojectexamonline.model.response.SubjectResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.ISubjectService;
+import app.ntnt.finalprojectexamonline.utils.AppConstrain;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,17 +78,29 @@ public class HomeFragment extends Fragment {
         rcvSubject.setLayoutManager(gridLayoutManager);
 
         BaseAPIService.createService(ISubjectService.class).getAllSubject()
-                .enqueue(new Callback<List<Subject>>() {
+                .enqueue(new Callback<ResponseEntity>() {
                     @Override
-                    public void onResponse(Call<List<Subject>> call, Response<List<Subject>> response) {
+                    public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
                         if (response.body()!= null){
-                            subjectAdapter.setData(response.body());
-                            rcvSubject.setAdapter(subjectAdapter);
+                            if (!response.body().isError()){
+                                List<Object> objects;
+                                List<SubjectResponse> subjectResponses = new ArrayList<>();
+                                objects = AppConstrain.objectList(response.body().getData(), SubjectResponse.class);
+                                for (Object i: objects){
+                                    subjectResponses.add((SubjectResponse) i);
+                                }
+                                subjects = new ArrayList<>();
+                                for (SubjectResponse i: subjectResponses){
+                                    subjects.add(new Subject(i.getSubjectId(), i.getName(), i.getImage()));
+                                }
+                                subjectAdapter.setData(subjects);
+                                rcvSubject.setAdapter(subjectAdapter);
+                            }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Subject>> call, Throwable t) {
+                    public void onFailure(Call<ResponseEntity> call, Throwable t) {
                         Log.d("erroeee rồi", t.getMessage().toString());
                     }
                 });
