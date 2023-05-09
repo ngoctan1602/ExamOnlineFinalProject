@@ -96,6 +96,10 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
 
         holder.tvNameSubject.setText(subject.getName());
 
+        if(b==true)
+        {
+            Glide.with(context.getContext()).load(subject.getImage()).into(holder.imageViewSubject);
+        }
 
         if (b == false) {
             Boolean bUser = booleans.get(position);
