@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
     @NonNull
     @Override
     public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_topic_teacher, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_subject_teacher, parent, false);
         return new TopicViewHolder(view);
     }
 
@@ -59,22 +61,20 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
         }
 
         holder.tvNameTopic.setText(topic.getName());
-        holder.imageViewTopic.setImageResource(R.drawable.pic6);
+//        holder.imageViewTopic.setImageResource(R.drawable.pic6);
+        Glide.with(context).load(topic.getImage()).into(holder.imageViewTopic);
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, QuestionActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putLong("topicId",topic.getId());
+                intent.putExtras(bundle);
                 startActivity(context,intent,bundle);
             }
         });
 
-        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.showDialogUpdate();
-            }
-        });
+        holder.imgEdit.setVisibility(View.GONE);
         holder.imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,17 +93,21 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
 
     public class TopicViewHolder extends ViewHolder {
 
-        ImageView imageViewTopic,imgEdit,imgDelete;
+//        ImageView imageViewTopic,imgEdit,imgDelete;
+//        TextView tvNameTopic;
+//        RelativeLayout relativeLayout;
+
+        ImageView imageViewTopic, imgEdit, imgDelete;
         TextView tvNameTopic;
         RelativeLayout relativeLayout;
 
         public TopicViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewTopic = itemView.findViewById(R.id.img_topic_teacher);
-            imgEdit = itemView.findViewById(R.id.img_edit_topic);
-            imgDelete = itemView.findViewById(R.id.img_delete_topic);
-            tvNameTopic = itemView.findViewById(R.id.tv_topic_teacher);
-            relativeLayout = itemView.findViewById(R.id.rlt_topic_teacher);
+            tvNameTopic = itemView.findViewById(R.id.tv_subject_teacher);
+            imageViewTopic = itemView.findViewById(R.id.img_subject_teacher);
+            relativeLayout = itemView.findViewById(R.id.rlt_subject_teacher);
+            imgDelete = itemView.findViewById(R.id.img_delete);
+            imgEdit = itemView.findViewById(R.id.img_edit);
 
         }
     }

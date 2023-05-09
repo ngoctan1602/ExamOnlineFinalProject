@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +28,14 @@ import app.ntnt.finalprojectexamonline.activity.test.AnswerActivity;
 import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
 import app.ntnt.finalprojectexamonline.model.entites.Topic;
+import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
 
 
 public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
     private AddTestActivity context;
     QuestionActivity contextQues;
-    List<Question> questions;
-    List<Question> filteredList;
+    List<QuestionResponse> questions;
+    List<QuestionResponse> filteredList;
     boolean b;
 
     public QuestionAdapter(QuestionActivity contextQues) {
@@ -45,7 +48,7 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
         this.b=false;
     }
 
-    public void setData(List<Question> questions) {
+    public void setData(List<QuestionResponse> questions) {
 
         this.questions = questions;
         this.filteredList = new ArrayList<>(questions);
@@ -61,12 +64,12 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
-        Question question = filteredList.get(position);
+        QuestionResponse question = filteredList.get(position);
         if (question == null) {
             return;
         }
-        holder.tvIdQuestion.setText(String.valueOf(question.getId()));
-        holder.tvNameQuestion.setText(question.getName());
+        holder.tvIdQuestion.setText(String.valueOf(question.getQuestionId()));
+        holder.tvNameQuestion.setText(question.getQuestion());
         if(b==false)
         {
             holder.imgEdit.setVisibility(View.GONE);
@@ -74,6 +77,7 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
 
 //        holder.tvNameTopic.setText(question.getName());
 //        holder.imageViewTopic.setImageResource(R.drawable.pic6);
+        Glide.with(contextQues).load(question.getImage()).into(holder.imgQuestion);
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -132,8 +136,8 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
         if (query.isEmpty()) {
             filteredList.addAll(questions);
         } else {
-            for (Question item : questions) {
-                if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+            for (QuestionResponse item : questions) {
+                if (item.getQuestion().toLowerCase().contains(query.toLowerCase())) {
                     filteredList.add(item);
                 }
             }

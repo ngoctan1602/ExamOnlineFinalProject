@@ -1,6 +1,8 @@
 package app.ntnt.finalprojectexamonline.model.entites;
 
-public class Subject {
+import java.io.Serializable;
+
+public class Subject implements Serializable {
     private Long subjectId;
     private String name;
     private String image;

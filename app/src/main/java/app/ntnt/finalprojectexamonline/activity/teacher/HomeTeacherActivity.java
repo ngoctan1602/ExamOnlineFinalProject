@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,9 +14,10 @@ import com.google.android.material.navigation.NavigationBarView;
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.MyViewPagerAdapter;
 import app.ntnt.finalprojectexamonline.adapter.MyViewPagerAdapterTeacher;
+import app.ntnt.finalprojectexamonline.fragment.UploadImageFragment;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 
-public class HomeTeacherActivity extends AppCompatActivity {
+public class HomeTeacherActivity extends AppCompatActivity implements UploadImageFragment.OnImageUploadedListener {
     private ViewPager2 viewPager2;
     private BottomNavigationView bottomNavigationView;
     @Override
@@ -69,5 +71,15 @@ public class HomeTeacherActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onImageUploaded(Uri uri) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

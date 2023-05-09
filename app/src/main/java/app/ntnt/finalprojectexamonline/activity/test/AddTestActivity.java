@@ -73,7 +73,7 @@ public class AddTestActivity extends AppCompatActivity {
         questionAdapter = new QuestionAdapter(this);
         GridLayoutManager gridLayoutManager= new GridLayoutManager(this,1, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        questionAdapter.setData(getQuestionById());
+        //questionAdapter.setData(getQuestionById());
         recyclerView.setAdapter(questionAdapter);
     }
 

@@ -3,34 +3,22 @@ package app.ntnt.finalprojectexamonline.activity.test;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
-import app.ntnt.finalprojectexamonline.activity.TopicActivity;
 import app.ntnt.finalprojectexamonline.adapter.SubjectAdpater;
-import app.ntnt.finalprojectexamonline.adapter.TestInforAdapter;
-import app.ntnt.finalprojectexamonline.adapter.TopicAdapter;
-import app.ntnt.finalprojectexamonline.model.TestInfor;
 import app.ntnt.finalprojectexamonline.model.entites.Subject;
-import app.ntnt.finalprojectexamonline.services.BaseAPIService;
-import app.ntnt.finalprojectexamonline.services.ISubjectService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeTeacherActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -73,7 +61,7 @@ public class HomeTeacherActivity extends AppCompatActivity {
     }
     public void showDialogAddSubject() {
         Dialog dialog = new Dialog(HomeTeacherActivity.this);
-        dialog.setContentView(R.layout.dialog_update_subject);
+        dialog.setContentView(R.layout.dialog_add_subject);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.CENTER);
         Button btnOk = dialog.findViewById(R.id.dialog_btn_Ok);
@@ -103,7 +91,7 @@ public class HomeTeacherActivity extends AppCompatActivity {
     }
     public void showDialogUpdate() {
         Dialog dialog = new Dialog(HomeTeacherActivity.this);
-        dialog.setContentView(R.layout.dialog_update_subject);
+        dialog.setContentView(R.layout.dialog_add_subject);
         Window window = dialog.getWindow();
         window.setGravity(Gravity.CENTER);
         Button btnOk = dialog.findViewById(R.id.dialog_btn_Ok);

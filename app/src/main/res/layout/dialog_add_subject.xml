@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingTop="8dp"
-
+    android:background="@color/teal_200"
+    android:gravity="center"
     >
 
 
@@ -19,7 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Cập nhật môn học"
+            android:text="Thêm mới môn học"
+            android:textColor="#ffff"
             android:textSize="24sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -29,14 +31,15 @@
         android:layout_marginTop="4dp"
         android:layout_below="@+id/rlt_dialog_text"
         android:layout_width="match_parent"
+        android:layout_centerInParent="true"
         android:layout_height="150dp">
 
-        <ImageView
-            android:id="@+id/img_dialog_imgSubject"
+        <FrameLayout
+
+            android:id="@+id/img_dialog_addImage"
             android:layout_width="wrap_content"
-            android:layout_height="128dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/pic6" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -54,7 +57,7 @@
             android:layout_width="275dp"
             android:layout_height="48dp"
             android:gravity="center"
-            android:ems="10"
+            android:textColor="#ffff"
             android:inputType="textPersonName"
             android:hint="Tên môn học" />
     </RelativeLayout>
