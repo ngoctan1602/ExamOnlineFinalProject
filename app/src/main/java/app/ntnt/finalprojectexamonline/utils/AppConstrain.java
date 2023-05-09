@@ -9,10 +9,9 @@ import com.google.gson.internal.LinkedTreeMap;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -32,7 +31,8 @@ public class AppConstrain {
             throw new RuntimeException(e);
         }
         RequestBody requestFile = RequestBody.create(file, MediaType.parse("image/*"));
-        return MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
+        return MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+
     }
 
     public static Object toObject(Object object, Class<?> S ){

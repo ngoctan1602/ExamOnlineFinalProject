@@ -5,11 +5,19 @@ import java.util.List;
 import app.ntnt.finalprojectexamonline.model.entites.User;
 
 public class SubjectResponse {
-    private Long subjectId;
+
+    private long subjectId;
+
     private String name;
     private int status;
     private String image;
+
     private List<User> users;
+
+    public void setSubjectId(long subjectId) {
+        this.subjectId = subjectId;
+    }
+
 
     public Long getSubjectId() {
         return subjectId;
@@ -22,6 +30,7 @@ public class SubjectResponse {
     public String getName() {
         return name;
     }
+
 
     public void setName(String name) {
         this.name = name;
@@ -51,7 +60,11 @@ public class SubjectResponse {
         this.users = users;
     }
 
-    public SubjectResponse(Long subjectId, String name, int status, String image, List<User> users) {
+
+    public SubjectResponse() {
+    }
+
+    public SubjectResponse(long subjectId, String name, int status, String image, List<User> users) {
         this.subjectId = subjectId;
         this.name = name;
         this.status = status;

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
+    app:cardCornerRadius="16dp"
    >
 
     <RelativeLayout
@@ -12,24 +13,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:background="@color/teal_200">
+        android:background="@color/teal_200"
+        >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_subject_teacher"
             android:layout_width="86dp"
             android:layout_height="86dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:src="@drawable/pic6"/>
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="86dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/img_subject_teacher">
+            <TextView
+                android:id="@+id/tv_subject_teacher"
+                android:layout_width="91dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#ffff"
+                android:layout_toEndOf="@+id/img_subject_teacher"
+                android:text="Môn Toán" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_subject_teacher"
-            android:layout_width="91dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:textSize="16sp"
-            android:textColor="#ffff"
-            android:layout_toEndOf="@+id/img_subject_teacher"
-            android:text="Môn Toán" />
 
         <ImageView
             android:id="@+id/img_edit"
@@ -38,7 +45,7 @@
             android:background="@drawable/bg_blue_corner_border_16"
             android:layout_toLeftOf="@+id/img_delete"
             android:layout_marginTop="20dp"
-            app:srcCompat="@android:drawable/ic_menu_edit"
+            app:srcCompat="@android:drawable/ic_input_add"
             />
 
         <ImageView
