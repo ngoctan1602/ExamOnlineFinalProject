@@ -47,30 +47,30 @@ public class HomeFragment extends Fragment {
         init(view);
         //Load dữ liệu cho rcv Môn học
         loadDataSubject();
-        loadDataTest();
+//        loadDataTest();
 
         return view;
     }
 
-    private void loadDataTest()
-    {
-        testInforAdapter = new TestInforAdapter(this);
-        GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
-        rcvTest.setLayoutManager(gridLayoutManager);
-        testInforAdapter.setData(getFeaturedExam());
-        rcvTest.setAdapter(testInforAdapter);
-    }
+//    private void loadDataTest()
+//    {
+//        testInforAdapter = new TestInforAdapter(this);
+//        GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
+//        rcvTest.setLayoutManager(gridLayoutManager);
+//        testInforAdapter.setData(getFeaturedExam());
+//        rcvTest.setAdapter(testInforAdapter);
+//    }
 
-    private List<TestInfor> getFeaturedExam() {
-        testInforList = new ArrayList<>();
-        for(int i=0;i<=10;i++)
-        {
-            TestInfor test = new TestInfor(1,"Đề quốc gia lần 1","Toán",45,"Nguyễn Văn B","29/3/2023");
-            testInforList.add(test);
-        }
-
-        return testInforList;
-    }
+//    private List<TestInfor> getFeaturedExam() {
+//        testInforList = new ArrayList<>();
+//        for(int i=0;i<=10;i++)
+//        {
+//            TestInfor test = new TestInfor(1,"Đề quốc gia lần 1","Toán",45,"Nguyễn Văn B","29/3/2023");
+//            testInforList.add(test);
+//        }
+//
+//        return testInforList;
+//    }
 
     private void loadDataSubject() {
         subjectAdapter = new SubjectAdpater(this);
