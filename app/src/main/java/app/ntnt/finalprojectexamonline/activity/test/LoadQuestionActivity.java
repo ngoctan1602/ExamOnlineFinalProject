@@ -3,8 +3,10 @@ package app.ntnt.finalprojectexamonline.activity.test;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,76 +19,129 @@ import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.LoadQuestionAdapter;
 import app.ntnt.finalprojectexamonline.model.entites.Answer;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
+import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
+import app.ntnt.finalprojectexamonline.model.response.TestResponse;
+import app.ntnt.finalprojectexamonline.services.BaseAPIService;
+import app.ntnt.finalprojectexamonline.services.ITestService;
+import app.ntnt.finalprojectexamonline.utils.AppConstrain;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoadQuestionActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private Button button;
-    private List<Question> questionList;
+    List<QuestionResponse> questionResponses = new ArrayList<>();
+    private int size = 10;
     private TextView txtBack, txtNext, txtCurrent, txtSumQuestion;
     private TextView countdownText;
     private CountDownTimer countDownTimer;
-    private long timeLeftInMillis = 60000*60; // Thời gian bắt đầu đếm ngược
+    private long timeLeftInMillis = 60000 * 60; // Thời gian bắt đầu đếm ngược
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_question);
         init();
-        LoadQuestionAdapter viewPagerAdapter = new LoadQuestionAdapter(this,getQuestion(),getListAnswer());
-        viewPager.setAdapter(viewPagerAdapter);
-        txtCurrent.setText("1");
-        txtSumQuestion.setText(String.valueOf(questionList.size()));
-        countdownText = findViewById(R.id.tv_timmer);
 
-        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                // Cập nhật thời gian đếm ngược trên TextView
-                timeLeftInMillis = millisUntilFinished;
-                updateCountdownText();
-            }
+        Bundle bundle = getIntent().getExtras();
+        Long testId = (Long) bundle.getLong("testId");
 
-            @Override
-            public void onFinish() {
-                // Thực hiện thao tác sau khi đếm ngược kết thúc
-                // Ví dụ: hiển thị thông báo hoặc chuyển sang màn hình khác
-            }
-        }.start();
+        loadDataQuestion(testId);
+
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                Question question = questionList.get(position);
-                txtCurrent.setText(String.valueOf(position+1));
-                if(position==0)
-                {
+//                Question question = questionList.get(position);
+                countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        // Cập nhật thời gian đếm ngược trên TextView
+                        timeLeftInMillis = millisUntilFinished;
+                        updateCountdownText();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        // Thực hiện thao tác sau khi đếm ngược kết thúc
+                        // Ví dụ: hiển thị thông báo hoặc chuyển sang màn hình khác
+                        Log.d("TAG", "onFinish: hết giờ");
+                    }
+                }.start();
+
+                txtCurrent.setText(String.valueOf(position + 1));
+                txtSumQuestion.setText(String.valueOf(size));
+                if (position == 0) {
                     txtBack.setVisibility(View.GONE);
                     txtNext.setVisibility(View.VISIBLE);
+                    txtNext.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                }
-                else if(position==questionList.size()-1)
-                {
+                        }
+                    });
+
+                } else if (position == size - 1) {
                     txtBack.setVisibility(View.VISIBLE);
                     txtNext.setVisibility(View.GONE);
 
-                }
-                else
-                {
+                } else {
                     txtBack.setVisibility(View.VISIBLE);
                     txtNext.setVisibility(View.VISIBLE);
                 }
+                txtBack.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                    }
+                });
+                txtNext.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                    }
+                });
 
             }
         });
 
 
+    }
 
+    private void loadDataQuestion(Long testId) {
+        BaseAPIService.createService(ITestService.class).getTestById(testId).enqueue(new Callback<ResponseEntity>() {
+            @Override
+            public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                Log.d("TAG", "onResponse: succees");
+                if (response.body().isError() == false) {
+                    Object objects;
+                    objects = AppConstrain.toObject(response.body().getData(), TestResponse.class);
+                    TestResponse testResponse = (TestResponse) objects;
+
+                    questionResponses = testResponse.getQuestions();
+                    List<List<AnswerResponse>> answerResponses = new ArrayList<>();
+                    for (QuestionResponse questionResponse : questionResponses) {
+                        answerResponses.add(questionResponse.getAnswers());
+                    }
+                    size = questionResponses.size();
+                    timeLeftInMillis = testResponse.getTime() * 60000;
+                    LoadQuestionAdapter viewPagerAdapter = new LoadQuestionAdapter(LoadQuestionActivity.this, questionResponses, answerResponses);
+                    viewPager.setAdapter(viewPagerAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEntity> call, Throwable t) {
+                Log.d("TAG", "onResponse: failed");
+            }
+        });
     }
 
     private void updateCountdownText() {
-//        int minutes = (int) (timeLeftInMillis / 1000) / 60;
-//        int seconds = (int) (timeLeftInMillis / 1000) % 60;
-//
-//        String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
         String timeString = String.format("%02d:%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(timeLeftInMillis),
@@ -95,41 +150,16 @@ public class LoadQuestionActivity extends AppCompatActivity {
         countdownText.setText(timeString);
     }
 
-    private void init()
-    {
+    private void init() {
+        countdownText = findViewById(R.id.tv_timmer);
         txtBack = findViewById(R.id.txt_back);
         txtCurrent = findViewById(R.id.txt_curent);
-        txtNext= findViewById(R.id.txt_next);
-        txtSumQuestion= findViewById(R.id.txt_sumquestion);
+        txtNext = findViewById(R.id.txt_next);
+        txtSumQuestion = findViewById(R.id.txt_sumquestion);
         viewPager = findViewById(R.id.view_pager);
         button = findViewById(R.id.btn_sheet);
     }
 
-    private List<Question> getQuestion()
-    {
-        questionList = new ArrayList<>();
-        for(int i=1;i<11;i++)
-        {
-            questionList.add(new Question(1L,"Câu hỏi số "+i,null,1L));
-        }
 
-        return questionList;
-    }
 
-    private List<List<Answer>> getListAnswer()
-    {
-        List<List<Answer>> list = new ArrayList<List<Answer>>();
-        for( int i=1;i<11;i++)
-        {
-            List<Answer> answers = new ArrayList<>();
-            answers.add(new Answer(1L,2L,"Đáp án a",0));
-            answers.add(new Answer(2L,2L,"Đáp án b",0));
-            answers.add(new Answer(3L,2L,"Đáp án c",0));
-            answers.add(new Answer(4L,2L,"Đáp án d",1));
-            list.add(answers);
-        }
-
-        return  list;
-
-    }
 }

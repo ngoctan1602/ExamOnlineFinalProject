@@ -67,7 +67,7 @@
 
                     />
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/img_reload_topic"
                     android:background="#ffff"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -98,7 +98,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/edt_name_test"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1.5"
@@ -199,7 +199,7 @@
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcv_list_ques"
+                android:id="@+id/rcv_list_ques_for_add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

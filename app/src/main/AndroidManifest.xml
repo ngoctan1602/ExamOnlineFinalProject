@@ -23,13 +23,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.LoadTopicData"
+            android:exported="false" />
+        <activity
             android:name=".activity.teacher.AddQuestionActivity"
             android:exported="false" />
         <activity
             android:name=".activity.teacher.AddTopicActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.teacher.HomeTeacherActivity"
             android:exported="false" />
         <activity
             android:name=".activity.HomeActivity"
@@ -62,18 +62,19 @@
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
+            android:name=".activity.teacher.HomeTeacherActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.test.AddTestActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

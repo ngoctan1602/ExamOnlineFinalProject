@@ -17,6 +17,8 @@ import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.AnswerAdapter;
 import app.ntnt.finalprojectexamonline.model.entites.Answer;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
+import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
 
 public class QuestionFragment extends Fragment {
     private View view;
@@ -32,24 +34,28 @@ public class QuestionFragment extends Fragment {
         textView= view.findViewById(R.id.txt_ques);
         recyclerView = view.findViewById(R.id.rcv_anwser);
 
-
         answerAdapter = new AnswerAdapter(getContext());
         GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        List<Answer> list = new ArrayList<Answer>();
+        List<AnswerResponse> list = new ArrayList<AnswerResponse>();
         Bundle bundle = getArguments();
         if(bundle !=null)
         {
-            Question question = (Question) bundle.getSerializable("question_object");
-            list = (List<Answer>) bundle.getSerializable("answers_object");
+            QuestionResponse question = (QuestionResponse) bundle.getParcelable("question_object");
+
+            answerAdapter.setSelectedAnswerPosition(1);
+            answerAdapter.notifyDataSetChanged();
+            list = bundle.getParcelableArrayList("answers_object");
             if(question!=null)
             {
-                textView.setText(question.getName());
+                textView.setText(question.getQuestion());
             }
         }
         answerAdapter.setData(list);
         recyclerView.setAdapter(answerAdapter);
+
         return view;
     }
+
 }

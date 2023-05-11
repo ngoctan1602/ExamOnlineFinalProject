@@ -35,7 +35,7 @@ public class AnswerActivity extends AppCompatActivity {
         answerAdapter = new AnswerAdapter(this);
         GridLayoutManager gridLayoutManager= new GridLayoutManager(this,1, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        answerAdapter.setData(getQuestionById());
+//        answerAdapter.setData(getQuestionById());
         recyclerView.setAdapter(answerAdapter);
     }
 
