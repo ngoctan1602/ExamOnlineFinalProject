@@ -48,7 +48,6 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
     private SubjectAdpater subjectAdpater;
     private SearchView searchView;
     private List<Subject> subjects;
-
     private ImageView imageViewAdd;
     private Uri mUri;
     View view;
@@ -78,12 +77,10 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
         return view;
     }
 
-
     private void loadData() {
         subjectAdpater = new SubjectAdpater(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         subjects = new ArrayList<>();
         List<Boolean> b = new ArrayList<>();
         BaseAPIService.createService(ISubjectService.class).getSubject().enqueue(new Callback<SubjectDataResponse>() {
@@ -95,9 +92,7 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
                     SubjectResponse subjectResponse = subjectResponses.get(i);
                     Subject subjects1 = new Subject(subjectResponse.getSubjectId(), subjectResponse.getName(), subjectResponse.getImage());
                     subjects.add(subjects1);
-
                     List<User> users= subjectResponse.getUsers();
-
                     boolean b1=false;
                     for(User user:users)
                     {
@@ -106,7 +101,6 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
                             b1=true;
                         }
                     }
-
                     b.add(b1);
                 }
                 subjectAdpater.setDataUserSubject(subjects,b);

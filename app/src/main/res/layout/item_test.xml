@@ -11,8 +11,9 @@
 
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="100dp"
        android:orientation="horizontal"
+       android:padding="10dp"
        >
 
 
@@ -20,12 +21,14 @@
       <RelativeLayout
           android:id="@+id/rlt_item_test"
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="match_parent"
+          >
 
          <TextView
              android:id="@+id/tv_nameExam_test"
              android:layout_width="match_parent"
              android:textColor="#ffff"
+             android:gravity="center"
              android:layout_height="wrap_content"
              android:text="Đề thi Trung học phổ thông quốc gia năm 2023 - Đề số 1" />
 
@@ -33,6 +36,7 @@
              android:id="@+id/img_subject_test"
              android:layout_width="30dp"
              android:layout_height="35dp"
+             android:layout_marginLeft="80dp"
              android:layout_below="@+id/tv_nameExam_test"
              android:src="@drawable/baseline_menu_book_24" />
 
@@ -74,16 +78,16 @@
              android:id="@+id/img_author"
              android:layout_width="30dp"
              android:layout_height="40dp"
-             android:layout_below="@+id/tv_nameExam_test"
-             android:layout_marginStart="4dp"
-             android:layout_toEndOf="@+id/tv_time_test"
+             android:layout_below="@+id/img_subject_test"
+
+             android:layout_marginLeft="80dp"
              android:src="@drawable/baseline_person_24" />
 
          <TextView
              android:id="@+id/tv_author"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_below="@+id/tv_nameExam_test"
+             android:layout_below="@+id/img_subject_test"
              android:layout_centerInParent="true"
              android:layout_marginStart="4dp"
              android:layout_marginTop="6dp"
@@ -95,7 +99,7 @@
              android:id="@+id/img_datecreated"
              android:layout_width="30dp"
              android:layout_height="40dp"
-             android:layout_below="@+id/tv_nameExam_test"
+             android:layout_below="@+id/img_subject_test"
              android:layout_marginStart="4dp"
              android:layout_toEndOf="@+id/tv_author"
              android:src="@drawable/baseline_calendar_month_24" />
@@ -104,7 +108,7 @@
              android:id="@+id/tv_datecreated"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:layout_below="@+id/tv_nameExam_test"
+             android:layout_below="@+id/img_subject_test"
              android:layout_centerInParent="true"
              android:layout_marginStart="4dp"
              android:layout_marginTop="6dp"

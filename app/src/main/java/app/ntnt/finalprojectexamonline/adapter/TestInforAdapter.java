@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 import static androidx.recyclerview.widget.RecyclerView.Adapter;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,22 +14,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
+import java.io.Serializable;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.LoadTopicData;
 import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
 import app.ntnt.finalprojectexamonline.activity.test.LoadQuestionActivity;
 import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
 import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
+import app.ntnt.finalprojectexamonline.model.response.TestResponse;
 
 
 public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> {
     private HomeFragment context;
     private TestInforActivity testInforActivity;
-    List<TestInfor> testInforList;
+    List<TestResponse> testInforList;
     private boolean b;
 
     public TestInforAdapter(HomeFragment context) {
@@ -41,7 +46,7 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
         this.b=false;
     }
 
-    public void setData(List<TestInfor> testInforList) {
+    public void setData(List<TestResponse> testInforList) {
 
         this.testInforList = testInforList;
         notifyDataSetChanged();
@@ -56,15 +61,18 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
-        TestInfor test = testInforList.get(position);
+        TestResponse test = testInforList.get(position);
         if (test == null) {
             return;
         }
-        holder.tvName.setText(test.getName());
-        holder.tvNameAuthor.setText(test.getNameAuthor());
-        holder.tvDateCreated.setText(test.getDateCreated());
-        holder.tvTime.setText(String.valueOf(test.getTime()));
-        holder.tvNameSubject.setText(test.getNameSubject());
+        holder.tvName.setText(test.getTestName());
+//        holder.tvNameAuthor.setText(test.getNameAuthor());
+
+        String str = test.getDateCreate();
+        String first20Chars = str.substring(0, Math.min(str.length(), 10));
+        holder.tvDateCreated.setText(first20Chars);
+        holder.tvTime.setText(String.valueOf(test.getTime())+ " phút");
+//        holder.tvNameSubject.setText(test.getTestName());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +83,33 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
                     startActivity(context.getContext(),intent,bundle);
                 }
                else {
-                    Intent intent = new Intent(testInforActivity, LoadQuestionActivity.class);
-                    Bundle bundle = new Bundle();
-                    startActivity(testInforActivity,intent,bundle);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(testInforActivity);
+                    builder.setTitle("Xác nhận");
+                    builder.setMessage("Bạn có muốn tiếp tục?");
+                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(testInforActivity, LoadQuestionActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("testId", test.getTestId());
+                            intent.putExtras(bundle);
+//                            intent.putExtra("test",test);
+                            startActivity(testInforActivity,intent,bundle);
+                        }
+                    });
+                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+//                    Intent intent = new Intent(testInforActivity, LoadQuestionActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    startActivity(testInforActivity,intent,bundle);
                 }
             }
         });

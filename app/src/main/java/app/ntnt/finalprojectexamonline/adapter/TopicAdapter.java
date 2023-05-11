@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.LoadTopicData;
 import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
 import app.ntnt.finalprojectexamonline.activity.TopicActivity;
 import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
@@ -32,11 +33,19 @@ import app.ntnt.finalprojectexamonline.model.entites.Topic;
 
 public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
     private TopicActivity context;
+    private LoadTopicData loadTopicData;
     List<Topic> topics;
     List<Topic> filteredList;
+    boolean b;
 
     public TopicAdapter(TopicActivity context) {
         this.context = context;
+        this.b= true;
+    }
+
+    public TopicAdapter(LoadTopicData loadTopicData) {
+        this.loadTopicData = loadTopicData;
+        this.b =false;
     }
 
     public void setData(List<Topic> topics) {
@@ -62,25 +71,46 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
 
         holder.tvNameTopic.setText(topic.getName());
 //        holder.imageViewTopic.setImageResource(R.drawable.pic6);
-        Glide.with(context).load(topic.getImage()).into(holder.imageViewTopic);
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, QuestionActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putLong("topicId",topic.getId());
-                intent.putExtras(bundle);
-                startActivity(context,intent,bundle);
-            }
-        });
+        if(b==true)
+        {
+            Glide.with(context).load(topic.getImage()).into(holder.imageViewTopic);
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, QuestionActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("topicId",topic.getId());
+                    intent.putExtras(bundle);
+                    startActivity(context,intent,bundle);
+                }
+            });
 
-        holder.imgEdit.setVisibility(View.GONE);
-        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.showDialogDelete();
-            }
-        });
+            holder.imgEdit.setVisibility(View.GONE);
+            holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.showDialogDelete();
+                }
+            });
+        }
+        else {
+            Glide.with(loadTopicData).load(topic.getImage()).into(holder.imageViewTopic);
+            holder.imgEdit.setVisibility(View.GONE);
+            holder.imgDelete.setVisibility(View.GONE);
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(loadTopicData, TestInforActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("topicId",topic.getId());
+                    bundle.putString("nameTopic",topic.getName());
+                    intent.putExtras(bundle);
+                    startActivity(loadTopicData,intent,bundle);
+                }
+            });
+        }
+
+
     }
 
 

@@ -3,7 +3,9 @@ package app.ntnt.finalprojectexamonline.adapter;
 import static androidx.recyclerview.widget.RecyclerView.Adapter;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,24 +24,33 @@ import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
 import app.ntnt.finalprojectexamonline.fragment.QuestionFragment;
 import app.ntnt.finalprojectexamonline.model.entites.Answer;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
+import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
 
 
 public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
 
 
     Context context;
-    List<Answer> answers;
-    List<Answer> filteredList;
+    List<AnswerResponse> answers;
+    List<AnswerResponse> filteredList;
     private int lastCheckPosition=-1;
 
+    private int selectedAnswerPosition = -1;
 
+    public int getSelectedAnswerPosition() {
+        return selectedAnswerPosition;
+    }
+
+    public void setSelectedAnswerPosition(int selectedAnswerPosition) {
+        this.selectedAnswerPosition = selectedAnswerPosition;
+    }
 
     public AnswerAdapter(Context context) {
         this.context = context;
 
     }
 
-    public void setData(List<Answer> answers) {
+    public void setData(List<AnswerResponse> answers) {
 
         this.answers = answers;
         this.filteredList = new ArrayList<>(answers);
@@ -55,20 +66,35 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
-        Answer answer = filteredList.get(position);
+    public void onBindViewHolder(@NonNull TopicViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        AnswerResponse answer = filteredList.get(position);
         if (answer == null) {
             return;
         }
         //holder.tvIdAnswer.setText(String.valueOf(answer.getId()));
-        holder.tvNameAnswer.setText(answer.getName());
-        if(position == lastCheckPosition)
-        {
+        holder.tvNameAnswer.setText(answer.getContent());
+//        if(position == lastCheckPosition)
+//        {
+//            holder.relativeLayout.setBackgroundResource(R.color.yellow);
+//        }
+//        else {
+//            holder.relativeLayout.setBackgroundResource(R.color.teal_200);
+//        }
+
+        if (position == selectedAnswerPosition) {
             holder.relativeLayout.setBackgroundResource(R.color.yellow);
-        }
-        else {
+        } else {
             holder.relativeLayout.setBackgroundResource(R.color.teal_200);
         }
+
+        // Set click listener for item
+        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedAnswerPosition = position;
+                notifyDataSetChanged();
+            }
+        });
 
 //        if(answer.getStatus()==0)
 //        {
@@ -124,15 +150,16 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
             tvNameAnswer = itemView.findViewById(R.id.tv_answer_content);
             relativeLayout= itemView.findViewById(R.id.rlt_load_answer);
 
-            relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int copy = lastCheckPosition;
-                    lastCheckPosition= getAdapterPosition();
-                    notifyItemChanged(copy);
-                    notifyItemChanged(lastCheckPosition);
-                }
-            });
+//            relativeLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int copy = lastCheckPosition;
+//                    lastCheckPosition= getAdapterPosition();
+//                    notifyItemChanged(copy);
+//                    notifyItemChanged(lastCheckPosition);
+//
+//                }
+//            });
 
         }
     }
@@ -142,8 +169,8 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
         if (query.isEmpty()) {
             filteredList.addAll(answers);
         } else {
-            for (Answer item : answers) {
-                if (item.getName().toLowerCase().contains(query.toLowerCase())) {
+            for (AnswerResponse item : answers) {
+                if (item.getContent().toLowerCase().contains(query.toLowerCase())) {
                     filteredList.add(item);
                 }
             }

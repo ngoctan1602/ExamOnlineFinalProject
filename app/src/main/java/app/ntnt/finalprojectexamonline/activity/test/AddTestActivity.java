@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
@@ -32,15 +33,32 @@ import app.ntnt.finalprojectexamonline.fragment.DialogFragmentTest;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
 import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.entites.Topic;
+import app.ntnt.finalprojectexamonline.model.request.TestRequest;
+import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
+import app.ntnt.finalprojectexamonline.model.response.TopicResponse;
+import app.ntnt.finalprojectexamonline.services.BaseAPIService;
+import app.ntnt.finalprojectexamonline.services.IQuestionService;
+import app.ntnt.finalprojectexamonline.services.ITestService;
+import app.ntnt.finalprojectexamonline.services.ITopicService;
+import app.ntnt.finalprojectexamonline.utils.AppConstrain;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddTestActivity extends AppCompatActivity {
     Spinner spinnerSubject,spinnerTopic;
     QuestionAdapter questionAdapter;
-    List<Question> questions;
+    List<QuestionResponse> questions;
     RecyclerView recyclerView;
     Button btnAddTest;
 
-    ImageView imageViewCountQuestion;
+    ArrayList<Topic> topics;
+    boolean[] selected ;
+    List<Topic> selectedItems;
+    ImageView imageViewCountQuestion,imageReloadTopic;
+    SpinnerAdapter adapter;
+    EditText editTextNameTest;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,6 +69,10 @@ public class AddTestActivity extends AppCompatActivity {
         imageViewCountQuestion = findViewById(R.id.img_countQues);
         spinnerTopic = findViewById(R.id.spinnerTopic);
         btnAddTest = findViewById(R.id.btn_add_test);
+        imageReloadTopic = findViewById(R.id.img_reload_topic);
+        recyclerView = findViewById(R.id.rcv_list_ques_for_add);
+        editTextNameTest = findViewById(R.id.edt_name_test);
+
 
         // Tạo popup window
         PopupWindow popupWindow = new PopupWindow(getApplicationContext());
@@ -92,54 +114,120 @@ public class AddTestActivity extends AppCompatActivity {
         });
 
 
-        ArrayList<Topic> topics = new ArrayList<>();
-        topics.add(new Topic(1L,"Chuyển động thẳng đều",null,1));
-        topics.add(new Topic(1L,"Chuyển động nhanh dần đều",null,1));
-        topics.add(new Topic(1L,"Chuyển động chậm dần đều",null,1));
-        topics.add(new Topic(1L,"Chuyển động thẳng đều đều đều đều",null,1));
-        SpinnerAdapter adapter = new SpinnerAdapter(this,topics);
-        spinnerTopic.setAdapter(adapter);
+        btnAddTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseAPIService.createService(ITestService.class).addTest(createTest()).enqueue(new Callback<ResponseEntity>() {
+                    @Override
+                    public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                        response.body().getData();
 
-//        ArrayAdapter<Topic> adapter2 =
-//                new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, topics);
-//        spinnerTopic.setAdapter(adapter2);
+                        Log.d("TAG", "onResponse: success");
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseEntity> call, Throwable t) {
+                        Log.d("TAG", "onResponse: failed");
+                    }
+                });
 
 
-//        boolean[] selected = new boolean[topics.size()];
-//        List<Topic> selectedItems = new ArrayList<>();
-//        MultiCheckboxSpinnerAdapter multiCheckboxSpinnerAdapter = new MultiCheckboxSpinnerAdapter(this,topics);
-//
-//        spinnerTopic.setAdapter(multiCheckboxSpinnerAdapter);
-//        btnAddTest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               // multiCheckboxSpinnerAdapter.notifyDataSetChanged();
-//                multiCheckboxSpinnerAdapter.printSelectedItems();
-//
-//            }
-//        });
+                Log.d("TAG", "onClick: "+questionAdapter.questionsChecked().toString());
+            }
+        });
+        imageReloadTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.notifyDataSetChanged();
+                setQuestionAdapter();
+            }
+        });
+
+        LoadDataTopic(spinnerTopic);
 
     }
 
-    private void setQuestionAdapter()
-    {
+
+
+    private void setQuestionAdapter() {
         questionAdapter = new QuestionAdapter(this);
-        GridLayoutManager gridLayoutManager= new GridLayoutManager(this,1, GridLayoutManager.VERTICAL,false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        //questionAdapter.setData(getQuestionById());
-        recyclerView.setAdapter(questionAdapter);
-    }
-
-    private List<Question> getQuestionById() {
-        questions = new ArrayList<>();
-        for(int i=0;i<=10;i++)
+        List<Long> items = new ArrayList<>();
+        for(Topic topic:selectedItems)
         {
-            Question question = new Question(1L,"Chuyển động thẳng đều","null",1L);
-            questions.add(question);
+            items.add(topic.getId());
+        }
+        for(Long id : items)
+        {
+        questions = new ArrayList<>();
+            BaseAPIService.createService(IQuestionService.class).getQuestionByTopicId(id).enqueue(new Callback<ResponseEntity>() {
+                @Override
+                public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                    List<Object> objects;
+                    objects = AppConstrain.objectList(response.body().getData(), QuestionResponse.class);
+                    for (Object i: objects){
+                        questions.add((QuestionResponse) i);
+                    }
+                    questionAdapter.setData(questions);
+                }
+
+                @Override
+                public void onFailure(Call<ResponseEntity> call, Throwable t) {
+
+                }
+            });
         }
 
-        return questions;
+        recyclerView.setAdapter(questionAdapter);
+
     }
 
+    private void LoadDataTopic(Spinner spinner)
+    {
+        topics= new ArrayList<>();
+
+
+        BaseAPIService.createService(ITopicService.class).getTopicBySubjectId(23L).enqueue(new Callback<TopicResponse>() {
+            @Override
+            public void onResponse(Call<TopicResponse> call, Response<TopicResponse> response) {
+                List<Topic> topics1 = response.body().getData();
+                for (Topic topic:topics1)
+                {
+                    topics.add(topic);
+                }
+                selected = new boolean[topics.size()];
+                selectedItems = new ArrayList<>();
+                adapter = new SpinnerAdapter(AddTestActivity.this, topics, selectedItems, selected);
+                spinner.setAdapter(adapter);
+                Log.d("TAG", "LoadDataTopic: "+topics.toString());
+            }
+            @Override
+            public void onFailure(Call<TopicResponse> call, Throwable t) {
+                Log.d("done", "fail");
+            }
+        });
+
+    }
+
+    private TestRequest createTest()
+    {
+        String testName = editTextNameTest.getText().toString();
+        List<QuestionResponse> questionResponses = questionAdapter.questionsChecked();
+        List<Long> questionIds = new ArrayList<>();
+        for(QuestionResponse questionResponse: questionResponses)
+        {
+            questionIds.add(questionResponse.getQuestionId());
+        }
+
+        List<Long> topicIds = new ArrayList<>();
+        for(Topic topic: selectedItems)
+        {
+            topicIds.add(topic.getId());
+        }
+
+        return new TestRequest(testName,5,45,questionIds,topicIds);
+    }
 
 }

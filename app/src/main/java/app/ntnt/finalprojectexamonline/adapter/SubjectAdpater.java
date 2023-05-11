@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.LoadTopicData;
 import app.ntnt.finalprojectexamonline.activity.TopicActivity;
 import app.ntnt.finalprojectexamonline.activity.test.HomeTeacherActivity;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
@@ -99,6 +100,17 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
         if(b==true)
         {
             Glide.with(context.getContext()).load(subject.getImage()).into(holder.imageViewSubject);
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(context.getContext(), LoadTopicData.class);
+                    bundle.putSerializable("subjectId", subject.getSubjectId());
+                    bundle.putSerializable("nameSubject", subject.getName());
+                    intent.putExtras(bundle);
+                    startActivity(context.getContext(), intent, bundle);
+                }
+            });
         }
 
         if (b == false) {

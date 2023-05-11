@@ -4,11 +4,15 @@ import static androidx.core.content.ContextCompat.startActivity;
 import static androidx.recyclerview.widget.RecyclerView.Adapter;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,16 +40,21 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
     QuestionActivity contextQues;
     List<QuestionResponse> questions;
     List<QuestionResponse> filteredList;
+
+
+    List<QuestionResponse> selectedQuestion;
     boolean b;
 
     public QuestionAdapter(QuestionActivity contextQues) {
         this.contextQues = contextQues;
-        this.b=true;
+        this.b = true;
     }
 
     public QuestionAdapter(AddTestActivity context) {
         this.context = context;
-        this.b=false;
+        this.selectedQuestion = new ArrayList<>();
+        this.b = false;
+        notifyDataSetChanged();
     }
 
     public void setData(List<QuestionResponse> questions) {
@@ -58,51 +67,54 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
     @NonNull
     @Override
     public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_question_teacher, parent, false);
-        return new TopicViewHolder(view);
+        if (b == true) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_question_teacher, parent, false);
+            return new TopicViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_question_for_add, parent, false);
+            return new TopicViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TopicViewHolder holder, @SuppressLint("RecyclerView") int position) {
         QuestionResponse question = filteredList.get(position);
         if (question == null) {
             return;
         }
         holder.tvIdQuestion.setText(String.valueOf(question.getQuestionId()));
         holder.tvNameQuestion.setText(question.getQuestion());
-        if(b==false)
-        {
-            holder.imgEdit.setVisibility(View.GONE);
-        }
+        if (b == false) {
 
-//        holder.tvNameTopic.setText(question.getName());
-//        holder.imageViewTopic.setImageResource(R.drawable.pic6);
-        Glide.with(contextQues).load(question.getImage()).into(holder.imgQuestion);
+            Glide.with(context).load(question.getImage()).into(holder.imgQuestion);
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        selectedQuestion.add(question);
+                    } else {
+                        if (selectedQuestion.contains(question)) {
+                            selectedQuestion.remove(question);
+                        }
+                    }
+
+                }
+            });
+        }
+        if (b == true) {
+            Glide.with(contextQues).load(question.getImage()).into(holder.imgQuestion);
+        }
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(b==false)
-                {
+                if (b == false) {
                     Intent intent = new Intent(context, AnswerActivity.class);
                     Bundle bundle = new Bundle();
-                    startActivity(context,intent,bundle);
+                    startActivity(context, intent, bundle);
                 }
 
             }
         });
-//
-//        holder.imgEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                context.showDialogUpdate();
-//            }
-//        });
-//        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                context.showDialogDelete();
-//            }
-//        });
     }
 
 
@@ -115,18 +127,27 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
 
     public class TopicViewHolder extends ViewHolder {
 
-        ImageView imgQuestion,imgEdit,imgDelete;
-        TextView tvIdQuestion,tvNameQuestion;
+        ImageView imgQuestion, imgEdit, imgDelete;
+        TextView tvIdQuestion, tvNameQuestion;
         RelativeLayout relativeLayout;
+        CheckBox checkBox;
 
         public TopicViewHolder(@NonNull View itemView) {
             super(itemView);
+            if (b == true) {
+                imgQuestion = itemView.findViewById(R.id.img_question_teacher);
+                tvNameQuestion = itemView.findViewById(R.id.tv_name_question);
+                tvIdQuestion = itemView.findViewById(R.id.tv_id_question);
+                relativeLayout = itemView.findViewById(R.id.rlt_question_teacher);
+                imgEdit = itemView.findViewById(R.id.img_edit_topic);
+            } else {
+                imgQuestion = itemView.findViewById(R.id.img_question_for_add);
+                tvNameQuestion = itemView.findViewById(R.id.tv_name_question_for_add);
+                tvIdQuestion = itemView.findViewById(R.id.tv_id_question_for_add);
+                relativeLayout = itemView.findViewById(R.id.rlt_question_for_add);
+                checkBox = itemView.findViewById(R.id.checkBox2);
+            }
 
-            imgQuestion= itemView.findViewById(R.id.img_question_teacher);
-            tvNameQuestion = itemView.findViewById(R.id.tv_name_question);
-            tvIdQuestion = itemView.findViewById(R.id.tv_id_question);
-            relativeLayout = itemView.findViewById(R.id.rlt_question_teacher);
-            imgEdit= itemView.findViewById(R.id.img_edit_topic);
 
         }
     }
@@ -143,5 +164,10 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public List<QuestionResponse> questionsChecked() {
+//        Log.d("TAG", "questionsChecked: " + selectedQuestion.toString());
+        return selectedQuestion;
     }
 }
