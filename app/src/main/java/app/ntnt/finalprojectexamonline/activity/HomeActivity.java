@@ -21,10 +21,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         viewPager2= findViewById(R.id.view_page);
         bottomNavigationView= findViewById(R.id.bottom_nav);
-
         MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(this);
         viewPager2.setAdapter(myViewPagerAdapter);
         SharedPrefManager.getInstance(getApplicationContext()).getAuthToken();
@@ -38,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().findItem(R.id.home).setChecked(true);
                         break;
                     case 1:
-                        bottomNavigationView.getMenu().findItem(R.id.category).setChecked(true);
+                        bottomNavigationView.getMenu().findItem(R.id.history).setChecked(true);
                         break;
                     case 2:
                         bottomNavigationView.getMenu().findItem(R.id.account).setChecked(true);
@@ -55,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
                 {
                     viewPager2.setCurrentItem(0);
                 }
-                else if(id ==R.id.category)
+                else if(id ==R.id.history)
                 {
                     viewPager2.setCurrentItem(1);
                 }

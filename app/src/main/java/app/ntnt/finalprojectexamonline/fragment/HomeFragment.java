@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,14 @@ import app.ntnt.finalprojectexamonline.adapter.SubjectAdpater;
 import app.ntnt.finalprojectexamonline.adapter.TestInforAdapter;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
 import app.ntnt.finalprojectexamonline.model.entites.Subject;
+import app.ntnt.finalprojectexamonline.model.entites.User;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.model.response.SubjectResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.ISubjectService;
+import app.ntnt.finalprojectexamonline.services.IUserService;
 import app.ntnt.finalprojectexamonline.utils.AppConstrain;
+import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +42,8 @@ public class HomeFragment extends Fragment {
     List<TestInfor> testInforList;
     View view;
 
+    TextView tvNameUser;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,7 +55,36 @@ public class HomeFragment extends Fragment {
         loadDataSubject();
 //        loadDataTest();
 
+        //Load data for User
+        loadDataUser();
+
+        //Set name user
+        BaseAPIService.createService(IUserService.class).getProfile()
+                .enqueue(new Callback<ResponseEntity>() {
+                    @Override
+                    public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                        if (response.body()!= null){
+                            if (!response.body().isError()){
+                                User user = (User) AppConstrain.toObject(response.body().getData(), User.class);
+                                tvNameUser.setText(user.getFirstName()+ " " + user.getLastName());
+                            }
+                        }
+                        if (response.errorBody()!= null){
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseEntity> call, Throwable t) {
+
+                    }
+                });
+
+
         return view;
+    }
+
+    private void loadDataUser(){
+
     }
 
 //    private void loadDataTest()
@@ -108,6 +143,7 @@ public class HomeFragment extends Fragment {
 
     private void init(View view)
     {
+        tvNameUser = view.findViewById(R.id.tv_name_user);
         rcvSubject = view.findViewById(R.id.rcv_subject_home);
         rcvTest =view.findViewById(R.id.rcv_featured_exam);
     }

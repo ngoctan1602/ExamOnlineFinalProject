@@ -16,19 +16,18 @@ public class RequestInterceptor implements Interceptor {
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
-//        if (SharedPrefManager.getInstance(ContextUtil.context).isLoggedIn()) {
-//            AuthResponse authResponse = SharedPrefManager.getInstance(ContextUtil.context).getAuthToken();
-//            if (authResponse != null){
-//                request = request.newBuilder().addHeader(
-//                        "Authorization",
-//                        "Bearer "+
-//                                authResponse.getToken()).build();
-//            }
-//        }
-        request = request.newBuilder().addHeader(
-                "Authorization",
-                "Bearer "+
-                       "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0YW5udG4yOSIsImlhdCI6MTY4Mzg2MzA3MywiZXhwIjoxNjk4MjYzMDczfQ.NV4RoXtJvKpozD5z9hw9BwzIHUJcZfESoM3taY_icyh4Kbyoxkj1pw1NuwR0PFoPXgrJFrmUBtKr_UQwqQC7dQ").build();
+
+        if (SharedPrefManager.getInstance(ContextUtil.context).isLoggedIn()) {
+            AuthResponse authResponse = SharedPrefManager.getInstance(ContextUtil.context).getAuthToken();
+            if (authResponse != null){
+                request = request.newBuilder().addHeader(
+                        "Authorization",
+                        "Bearer "+
+                                authResponse.getToken()).build();
+            }
+        }
+        else
+            request = request.newBuilder().build();
         return chain.proceed(request);
     }
 }

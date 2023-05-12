@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         binding =ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        ContextUtil.context = getApplicationContext();
+//        ContextUtil.context = getApplicationContext();
 //        //Ánh xạ
         init();
         //Chuyển trang đăng kí

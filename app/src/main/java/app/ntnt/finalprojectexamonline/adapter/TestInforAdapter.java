@@ -21,6 +21,7 @@ import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.activity.LoadTopicData;
+import app.ntnt.finalprojectexamonline.activity.LoginActivity;
 import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
 import app.ntnt.finalprojectexamonline.activity.test.LoadQuestionActivity;
 import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
@@ -28,6 +29,7 @@ import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
 import app.ntnt.finalprojectexamonline.model.response.TestResponse;
+import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 
 
 public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> {
@@ -90,12 +92,21 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
                     builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(testInforActivity, LoadQuestionActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putLong("testId", test.getTestId());
-                            intent.putExtras(bundle);
+                            if(SharedPrefManager.getInstance(testInforActivity).getUserId()!=null)
+                            {
+                                Intent intent = new Intent(testInforActivity, LoadQuestionActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putLong("testId", test.getTestId());
+                                intent.putExtras(bundle);
 //                            intent.putExtra("test",test);
-                            startActivity(testInforActivity,intent,bundle);
+                                startActivity(testInforActivity,intent,bundle);
+                            }
+                            else {
+                                Intent intent = new Intent(testInforActivity, LoginActivity.class);
+                                Bundle bundle = new Bundle();
+                                startActivity(testInforActivity,intent,bundle);
+                            }
+
                         }
                     });
                     builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
