@@ -63,18 +63,22 @@
         <activity
             android:name=".activity.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.teacher.HomeTeacherActivity"
             android:exported="false" />
         <activity
             android:name=".activity.test.AddTestActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+
+        <activity android:name=".activity.ActivityIntro"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

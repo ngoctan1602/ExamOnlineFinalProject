@@ -49,7 +49,13 @@ public class HomeFragment extends Fragment {
         loadDataSubject();
 //        loadDataTest();
 
+        //Load data for User
+        loadDataUser();
         return view;
+    }
+
+    private void loadDataUser(){
+
     }
 
 //    private void loadDataTest()
