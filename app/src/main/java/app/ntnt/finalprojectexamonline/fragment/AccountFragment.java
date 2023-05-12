@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import retrofit2.Response;
 public class AccountFragment extends Fragment {
     View view;
     private TextView fullName, email, address, phoneNumber, gender, numberTest, sumScore;
+    private Button btnUpdateProfile, btnLogout;
     CircleImageView avatar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +40,38 @@ public class AccountFragment extends Fragment {
         view= inflater.inflate(R.layout.activity_account, container, false);
         init();
         loadData();
+       setEvent();
         return view;
+    }
+    private void setEvent(){
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+    }
+    private void logout(){
+        SharedPrefManager.getInstance(ContextUtil.context).logout();
+        BaseAPIService.createService(IUserService.class).logout()
+                .enqueue(new Callback<ResponseEntity>() {
+                    @Override
+                    public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseEntity> call, Throwable t) {
+
+                    }
+                });
     }
     @SuppressLint("SetTextI18n")
     private void renderData(User user){
@@ -48,7 +81,7 @@ public class AccountFragment extends Fragment {
         phoneNumber.setText(user.getPhoneNumber());
         gender.setText(user.getGender());
         String avt = user.getAvatar();
-        Glide.with(view).load(avt).into(avatar);
+        Glide.with(view).load(user.getAvatar()).into(avatar);
     }
 
     private void loadData (){
@@ -82,5 +115,7 @@ public class AccountFragment extends Fragment {
         numberTest = view.findViewById(R.id.tvNumberTest);
         sumScore = view.findViewById(R.id.tvSumScore);
         avatar = view.findViewById(R.id.avatar);
+        btnLogout = view.findViewById(R.id.btnLogOut);
+        btnUpdateProfile = view.findViewById(R.id.btnUpdate);
     }
 }

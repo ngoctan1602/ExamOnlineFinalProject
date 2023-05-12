@@ -19,4 +19,7 @@ public interface IUserService {
 
     @GET("profile")
     Call<ResponseEntity> getProfile();
+
+    @GET("logoutAcc")
+    Call<ResponseEntity>logout();
 }
