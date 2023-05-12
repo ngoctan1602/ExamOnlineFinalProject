@@ -29,6 +29,7 @@
             android:layout_marginEnd="102dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avatar"
                 android:layout_width="116dp"
                 android:layout_height="116dp"
                 android:layout_marginTop="8dp"
@@ -50,7 +51,7 @@
             android:layout_marginEnd="70dp">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvFullName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -63,7 +64,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp"
@@ -153,7 +154,7 @@
                     android:text="Địa chỉ" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/tvAddress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -188,7 +189,7 @@
                     android:text="Số điện thoại" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tvPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -220,7 +221,7 @@
                     android:text="Giới tính" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/tvGender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -253,7 +254,7 @@
                     android:text="Số bài đã thi" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/tvNumberTest"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -285,7 +286,7 @@
                     android:text="Số điểm tích lũy" />
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/tvSumScore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

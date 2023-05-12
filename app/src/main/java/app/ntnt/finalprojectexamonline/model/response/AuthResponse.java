@@ -5,9 +5,18 @@ import java.util.List;
 
 public class AuthResponse {
 
+    private Long id;
     private String username;
     private String token;
     private List<String> roles;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public AuthResponse(String username, String token, List<String> roles) {
         this.username = username;
