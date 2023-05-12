@@ -162,10 +162,10 @@ public class LoadQuestionActivity extends AppCompatActivity {
         BaseAPIService.createService(IHistoryService.class).finishTest(historyRequest).enqueue(new Callback<ResponseEntity>() {
             @Override
             public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
-                if(response.body().isError())
-                    Log.d("TAG", "onResponse: failed");
-                else
-                    Toast.makeText(LoadQuestionActivity.this, "Bạn đã hoàn thành bài thi", Toast.LENGTH_SHORT).show();
+//                if(response.body().isError())
+//                    Log.d("TAG", "onResponse: failed");
+//                else
+//                    Toast.makeText(LoadQuestionActivity.this, "Bạn đã hoàn thành bài thi", Toast.LENGTH_SHORT).show();
 
                 Dialog dialog = new Dialog(LoadQuestionActivity.this);
 

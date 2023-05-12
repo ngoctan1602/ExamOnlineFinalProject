@@ -1,6 +1,7 @@
 package app.ntnt.finalprojectexamonline.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,7 +14,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
+
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.UpdateProfileActivity;
 import app.ntnt.finalprojectexamonline.model.entites.User;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
@@ -32,6 +36,7 @@ public class AccountFragment extends Fragment {
     private TextView fullName, email, address, phoneNumber, gender, numberTest, sumScore;
     private Button btnUpdateProfile, btnLogout;
     CircleImageView avatar;
+    User user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,7 +52,11 @@ public class AccountFragment extends Fragment {
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), UpdateProfileActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("profile", (Serializable) user);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -91,7 +100,7 @@ public class AccountFragment extends Fragment {
                     public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
                         if (response.body()!= null){
                             if (!response.body().isError()){
-                                User user = (User) AppConstrain.toObject(response.body().getData(), User.class);
+                                user = (User) AppConstrain.toObject(response.body().getData(), User.class);
                                 renderData(user);
                             }
                         }
