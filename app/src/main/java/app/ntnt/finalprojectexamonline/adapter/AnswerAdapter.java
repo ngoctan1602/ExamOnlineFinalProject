@@ -25,6 +25,7 @@ import app.ntnt.finalprojectexamonline.fragment.QuestionFragment;
 import app.ntnt.finalprojectexamonline.model.entites.Answer;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
 import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.NewQuestionResponse;
 
 
 public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
@@ -33,15 +34,17 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
     Context context;
     List<AnswerResponse> answers;
     List<AnswerResponse> filteredList;
+
+    NewQuestionResponse newQuestionResponse;
     private int lastCheckPosition=-1;
 
-    private int selectedAnswerPosition = -1;
+    private Long selectedAnswerPosition = -1L;
 
-    public int getSelectedAnswerPosition() {
+    public Long getSelectedAnswerPosition() {
         return selectedAnswerPosition;
     }
 
-    public void setSelectedAnswerPosition(int selectedAnswerPosition) {
+    public void setSelectedAnswerPosition(Long selectedAnswerPosition) {
         this.selectedAnswerPosition = selectedAnswerPosition;
     }
 
@@ -50,10 +53,11 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
 
     }
 
-    public void setData(List<AnswerResponse> answers) {
+    public void setData(List<AnswerResponse> answers, NewQuestionResponse newQuestionResponse) {
 
         this.answers = answers;
         this.filteredList = new ArrayList<>(answers);
+        this.newQuestionResponse=newQuestionResponse;
         notifyDataSetChanged();
     }
 
@@ -81,7 +85,7 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
 //            holder.relativeLayout.setBackgroundResource(R.color.teal_200);
 //        }
 
-        if (position == selectedAnswerPosition) {
+        if (answer.getAnswerId() == newQuestionResponse.getPositionChecked()) {
             holder.relativeLayout.setBackgroundResource(R.color.yellow);
         } else {
             holder.relativeLayout.setBackgroundResource(R.color.teal_200);
@@ -91,7 +95,10 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedAnswerPosition = position;
+//                selectedAnswerPosition = position;
+
+//                newQuestionResponse.setPositionChecked(position);
+                newQuestionResponse.setPositionChecked(answer.getAnswerId());
                 notifyDataSetChanged();
             }
         });

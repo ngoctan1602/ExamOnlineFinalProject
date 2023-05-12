@@ -55,6 +55,7 @@ public class AddQuestionActivity extends AppCompatActivity implements UploadImag
         editText = findViewById(R.id.edt_nameQuestion);
         Bundle bundle = getIntent().getExtras();
         Long topicId = bundle.getLong("topicId");
+        Log.d("TAG", "onCreate: "+topicId);
 
         initFragMent();
 
@@ -81,7 +82,10 @@ public class AddQuestionActivity extends AppCompatActivity implements UploadImag
             @Override
             public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
                 Toast.makeText(AddQuestionActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(AddQuestionActivity.this, QuestionActivity.class);
+                Intent intent = new Intent(AddQuestionActivity.this, QuestionActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putLong("topicId",topicId);
+                intent.putExtras(bundle1);
                 startActivity(intent);
             }
 

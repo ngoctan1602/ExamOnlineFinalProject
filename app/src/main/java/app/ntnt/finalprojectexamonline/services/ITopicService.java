@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 
 public interface ITopicService {
     @GET("topic")
-    Call<TopicResponse> getTopicBySubjectId(@Query("subjectId") long subjectId);
+    Call<TopicResponse> getTopicBySubjectId(@Query("subjectId") long subjectId,@Query("index") int index,@Query("size") int size);
 
     @Multipart
     @POST("topic/add")

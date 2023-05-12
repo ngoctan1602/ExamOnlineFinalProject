@@ -28,7 +28,7 @@ public class RequestInterceptor implements Interceptor {
         request = request.newBuilder().addHeader(
                 "Authorization",
                 "Bearer "+
-                       "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0YW50YW50YW4zIiwiaWF0IjoxNjgzNzE1ODY0LCJleHAiOjE2OTgxMTU4NjR9.Vq6zAnUXET6bY4_jgZltKJrJILstDqlZespA7uui0QsolCWiuqwwiuyD8UlNeA43hpxu3TL21FWzaIJEYR7IPQ").build();
+                       "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0YW5udG4yOSIsImlhdCI6MTY4Mzg2MzA3MywiZXhwIjoxNjk4MjYzMDczfQ.NV4RoXtJvKpozD5z9hw9BwzIHUJcZfESoM3taY_icyh4Kbyoxkj1pw1NuwR0PFoPXgrJFrmUBtKr_UQwqQC7dQ").build();
         return chain.proceed(request);
     }
 }

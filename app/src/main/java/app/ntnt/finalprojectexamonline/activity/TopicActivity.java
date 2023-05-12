@@ -100,7 +100,7 @@ public class TopicActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        BaseAPIService.createService(ITopicService.class).getTopicBySubjectId(subjectId).enqueue(new Callback<TopicResponse>() {
+        BaseAPIService.createService(ITopicService.class).getTopicBySubjectId(subjectId,0,100).enqueue(new Callback<TopicResponse>() {
             @Override
             public void onResponse(Call<TopicResponse> call, Response<TopicResponse> response) {
                 List<Topic> topics1 = response.body().getData();

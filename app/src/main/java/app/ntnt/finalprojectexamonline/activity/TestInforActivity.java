@@ -57,7 +57,7 @@ public class TestInforActivity extends AppCompatActivity {
 //        recyclerView.setAdapter(testInforAdapter);
 
 
-        BaseAPIService.createService(ITestService.class).getTestInTopic(topicId).enqueue(new Callback<ResponseEntity>() {
+        BaseAPIService.createService(ITestService.class).getTestInTopic(topicId,0,100).enqueue(new Callback<ResponseEntity>() {
             @Override
             public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
                 Log.d("TAG", "onResponse: sucess");
