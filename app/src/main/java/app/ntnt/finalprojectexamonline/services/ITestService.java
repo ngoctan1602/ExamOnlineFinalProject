@@ -17,7 +17,7 @@ public interface ITestService {
     Call<ResponseEntity> addTest(@Body TestRequest test);
 
     @GET("test/testInTopic")
-    Call<ResponseEntity> getTestInTopic(@Query("topicId") long topicId);
+    Call<ResponseEntity> getTestInTopic(@Query("topicId") long topicId, @Query("index") int index, @Query("size") int size);
 
     @GET("test")
     Call<ResponseEntity> getTestById(@Query("testId") long testId);

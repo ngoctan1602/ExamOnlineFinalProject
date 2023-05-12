@@ -17,14 +17,17 @@ import app.ntnt.finalprojectexamonline.fragment.QuestionFragment;
 import app.ntnt.finalprojectexamonline.model.entites.Answer;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
 import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.NewQuestionResponse;
 import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
 
 public class LoadQuestionAdapter extends FragmentStateAdapter {
     List<List<AnswerResponse>> answers;
-    List<QuestionResponse> questions;
-    public LoadQuestionAdapter(@NonNull FragmentActivity fragment, List<QuestionResponse> questions, List<List<AnswerResponse>> answers) {
+    //    List<QuestionResponse> questions;
+    List<NewQuestionResponse> questions;
+
+    public LoadQuestionAdapter(@NonNull FragmentActivity fragment, List<NewQuestionResponse> questions, List<List<AnswerResponse>> answers) {
         super(fragment);
-        this.questions= questions;
+        this.questions = questions;
         this.answers = answers;
     }
 
@@ -32,11 +35,10 @@ public class LoadQuestionAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
 
-        if(questions!=null)
-        {
-            QuestionResponse question = questions.get(position);
+        if (questions != null) {
+            NewQuestionResponse question = questions.get(position);
             List<AnswerResponse> answers1 = answers.get(position);
-            QuestionFragment questionFragment= new QuestionFragment();
+            QuestionFragment questionFragment = new QuestionFragment();
             Bundle bundle = new Bundle();
             bundle.putParcelable("question_object", question);
             bundle.putParcelableArrayList("answers_object", (ArrayList<? extends Parcelable>) answers1);
@@ -49,7 +51,7 @@ public class LoadQuestionAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        if(questions!=null)
+        if (questions != null)
             return answers.size();
         return 0;
     }

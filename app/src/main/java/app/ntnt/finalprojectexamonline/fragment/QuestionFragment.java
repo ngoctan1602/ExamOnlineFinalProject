@@ -18,6 +18,7 @@ import app.ntnt.finalprojectexamonline.adapter.AnswerAdapter;
 import app.ntnt.finalprojectexamonline.model.entites.Answer;
 import app.ntnt.finalprojectexamonline.model.entites.Question;
 import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.NewQuestionResponse;
 import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
 
 public class QuestionFragment extends Fragment {
@@ -42,17 +43,20 @@ public class QuestionFragment extends Fragment {
         Bundle bundle = getArguments();
         if(bundle !=null)
         {
-            QuestionResponse question = (QuestionResponse) bundle.getParcelable("question_object");
+            NewQuestionResponse question = (NewQuestionResponse) bundle.getParcelable("question_object");
 
-            answerAdapter.setSelectedAnswerPosition(1);
+            answerAdapter.setSelectedAnswerPosition(question.getPositionChecked());
+
             answerAdapter.notifyDataSetChanged();
             list = bundle.getParcelableArrayList("answers_object");
             if(question!=null)
             {
-                textView.setText(question.getQuestion());
+                textView.setText(question.getQuestionResponse().getQuestion());
             }
+
+            answerAdapter.setData(list,question);
         }
-        answerAdapter.setData(list);
+
         recyclerView.setAdapter(answerAdapter);
 
         return view;

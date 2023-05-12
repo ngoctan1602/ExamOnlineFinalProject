@@ -189,7 +189,7 @@ public class AddTestActivity extends AppCompatActivity {
         topics= new ArrayList<>();
 
 
-        BaseAPIService.createService(ITopicService.class).getTopicBySubjectId(23L).enqueue(new Callback<TopicResponse>() {
+        BaseAPIService.createService(ITopicService.class).getTopicBySubjectId(1L,0,100).enqueue(new Callback<TopicResponse>() {
             @Override
             public void onResponse(Call<TopicResponse> call, Response<TopicResponse> response) {
                 List<Topic> topics1 = response.body().getData();

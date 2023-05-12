@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -45,6 +46,8 @@ public class QuestionActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         Long topicId = bundle.getLong("topicId");
+
+        Log.d("TAG", "onCreate: "+topicId);
         setQuestionAdapter(topicId);
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -72,13 +75,21 @@ public class QuestionActivity extends AppCompatActivity {
                 //questions = (List<QuestionResponse>) response.body().getData();
                 //questions = AppConstrain.objectList(response.body().getData(),QuestionResponse.class);
                 questions = new ArrayList<>();
-                List<Object> objects;
-                objects = AppConstrain.objectList(response.body().getData(), QuestionResponse.class);
-                for (Object i: objects){
-                    questions.add((QuestionResponse) i);
+                if(response.body().getData()!=null)
+                {
+                    List<Object> objects;
+                    objects = AppConstrain.objectList(response.body().getData(), QuestionResponse.class);
+                    if(objects!=null)
+                    {
+                        for (Object i: objects){
+                            questions.add((QuestionResponse) i);
+                        }
+                        questionAdapter.setData(questions);
+                        recyclerView.setAdapter(questionAdapter);
+                    }
                 }
-                questionAdapter.setData(questions);
-                recyclerView.setAdapter(questionAdapter);
+
+
 
             }
 

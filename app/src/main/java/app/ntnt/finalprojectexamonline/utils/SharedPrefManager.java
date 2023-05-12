@@ -35,6 +35,15 @@ public class SharedPrefManager {
         editor.putString(KEY_USER, currentUser);
         editor.apply();
     }
+
+    public void saveUser (Long userId) {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String currentUser = gson.toJson(userId);
+        editor.putString(KEY_USER, currentUser);
+        editor.apply();
+    }
     public void saveAuthToken(AuthResponse authResponse){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -56,6 +65,15 @@ public class SharedPrefManager {
         String currentUser = sharedPreferences.getString(KEY_USER,"");
         return gson.fromJson(currentUser, String.class);
     }
+
+    public Long getUserId() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences (SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String currentUser = sharedPreferences.getString(KEY_USER,"");
+        return gson.fromJson(currentUser, Long.class);
+    }
+
+
     public AuthResponse getAuthToken() {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences (SHARED_PREF_NAME, Context.MODE_PRIVATE);
         Gson gson = new Gson();

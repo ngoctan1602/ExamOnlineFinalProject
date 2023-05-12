@@ -16,6 +16,7 @@ public class RequestInterceptor implements Interceptor {
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
+
         if (SharedPrefManager.getInstance(ContextUtil.context).isLoggedIn()) {
             AuthResponse authResponse = SharedPrefManager.getInstance(ContextUtil.context).getAuthToken();
             if (authResponse != null){
