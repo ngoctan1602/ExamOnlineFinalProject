@@ -99,7 +99,7 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
 
         if(b==true)
         {
-            Glide.with(context.getContext()).load(subject.getImage()).into(holder.imageViewSubject);
+            Glide.with(context.getContext()).load(subject.getImage()).placeholder(R.drawable.pic6).into(holder.imageViewSubject);
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
