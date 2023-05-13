@@ -7,6 +7,7 @@ import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +29,14 @@ import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
 import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.model.response.TestResponse;
+import app.ntnt.finalprojectexamonline.services.BaseAPIService;
+import app.ntnt.finalprojectexamonline.services.IStatisticService;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> {
@@ -88,8 +95,8 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(testInforActivity);
                     builder.setTitle("Xác nhận");
-                    builder.setMessage("Bạn có muốn tiếp tục?");
-                    builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    builder.setMessage("Mời bạn chọn lựa chọn bên dưới?");
+                    builder.setPositiveButton("Thực hiện bài thi", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(SharedPrefManager.getInstance(testInforActivity).getUserId()!=null)
@@ -109,9 +116,22 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
 
                         }
                     });
-                    builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("Xem điểm cao", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
+                            BaseAPIService.createService(IStatisticService.class).getHighScore(test.getTestId()).enqueue(new Callback<ResponseEntity>() {
+                                @Override
+                                public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                                    Log.d("TAG", "onResponse: success");
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseEntity> call, Throwable t) {
+                                    Log.d("TAG", "onResponse: failed");
+                                }
+                            });
+
                             dialog.dismiss();
                         }
                     });

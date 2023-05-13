@@ -79,14 +79,4 @@ public class TestInforActivity extends AppCompatActivity {
         });
     }
 
-    private List<TestInfor> getFeaturedExam() {
-        testInfors = new ArrayList<>();
-        for(int i=0;i<=10;i++)
-        {
-            TestInfor test = new TestInfor(1,"Đề quốc gia lần 1","Toán",45,"Nguyễn Văn B","29/3/2023");
-            testInfors.add(test);
-        }
-
-        return testInfors;
-    }
 }
