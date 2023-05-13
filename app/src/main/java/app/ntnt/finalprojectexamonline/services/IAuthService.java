@@ -5,6 +5,7 @@ package app.ntnt.finalprojectexamonline.services;
 import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.request.RegisterRequest;
 
+import app.ntnt.finalprojectexamonline.model.request.ResetPasswordRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import okhttp3.MultipartBody;
@@ -23,5 +24,8 @@ public interface IAuthService {
     @POST("auth/register")
     Call<ResponseEntity> register(@Part("user") RegisterRequest user,
                                   @Part MultipartBody.Part avatar);
+
+    @POST("auth/reset")
+    Call<ResponseEntity> resetPassword(@Body ResetPasswordRequest resetPasswordRequest);
 
 }

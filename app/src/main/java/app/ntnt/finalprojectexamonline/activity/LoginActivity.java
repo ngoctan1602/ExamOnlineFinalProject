@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding;
 import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
@@ -28,15 +29,15 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginBinding binding;
+    private app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding binding;
     private Button btnLogin;
-    private TextView tvSignup;
+    private TextView tvSignup ,tvForgotPassword;
     private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding =ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 //        ContextUtil.context = getApplicationContext();
 //        //Ánh xạ
@@ -54,6 +55,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 login();
+            }
+        });
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,ResetPassword.class));
             }
         });
     }
@@ -123,5 +130,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = binding.prbLogin;
         btnLogin = binding.btnLogin;
         tvSignup = binding.txtSignUp;
+        tvForgotPassword= binding.txtForgotPassword;
     }
 }

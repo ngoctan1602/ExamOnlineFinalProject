@@ -1,32 +1,50 @@
 package app.ntnt.finalprojectexamonline.adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
 import static androidx.recyclerview.widget.RecyclerView.Adapter;
 import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.test.LoadHistoryQuestionActivity;
 import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.model.entites.Test;
+import app.ntnt.finalprojectexamonline.model.response.HistoryInUserResponse;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
+import app.ntnt.finalprojectexamonline.model.response.TestResponse;
+import app.ntnt.finalprojectexamonline.services.BaseAPIService;
+import app.ntnt.finalprojectexamonline.services.ITestService;
+import app.ntnt.finalprojectexamonline.utils.AppConstrain;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class TestAdapter extends Adapter<TestAdapter.TopicViewHolder> {
     private HistoryFragment context;
-    List<Test> tests;
+    List<HistoryInUserResponse> tests;
+    TestResponse testResponse = new TestResponse();
 
     public TestAdapter(HistoryFragment context) {
         this.context = context;
     }
 
-    public void setData(List<Test> tests) {
+    public void setData(List<HistoryInUserResponse> tests) {
 
         this.tests = tests;
         notifyDataSetChanged();
@@ -41,18 +59,43 @@ public class TestAdapter extends Adapter<TestAdapter.TopicViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
-        Test test = tests.get(position);
+        HistoryInUserResponse test = tests.get(position);
         if (test == null) {
             return;
         }
-        int percent = test.getScore()*10;
-        holder.tvName.setText(test.getName());
-        holder.tvTime.setText(String.valueOf(test.getTime()));
-        holder.tvTimes.setText(String.valueOf(test.getTimes()));
-        holder.tvPercent.setText(String.valueOf(percent));
-        holder.tvDateComplete.setText(String.valueOf(test.getTime()));
-        holder.nameSubject.setText(test.getNameSubject());
-        holder.progressBar.setProgress(percent);
+        float percent = (test.getScore() * 10);
+        holder.tvPercent.setText(String.valueOf(percent) + " %");
+
+        BaseAPIService.createService(ITestService.class).getTestById(test.getTestId()).enqueue(new Callback<ResponseEntity>() {
+            @Override
+            public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                Object object;
+                object = AppConstrain.toObject(response.body().getData(), TestResponse.class);
+
+                testResponse = (TestResponse) object;
+                holder.tvName.setText(testResponse.getTestName());
+                holder.tvTime.setText(String.valueOf(testResponse.getTime())+" phút");
+                holder.tvDateComplete.setText(testResponse.getDateCreate());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEntity> call, Throwable t) {
+                Log.d("TAG", "onResponse: failed");
+            }
+        });
+        holder.progressBar.setProgress((int) percent);
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context.getContext(), LoadHistoryQuestionActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("nameTest",testResponse.getTestName());
+                bundle.putLong("hisItem",test.getHisId());
+                bundle.putLong("testId",test.getTestId());
+                intent.putExtras(bundle);
+                startActivity(context.getContext(), intent, bundle);
+            }
+        });
     }
 
 
@@ -65,18 +108,20 @@ public class TestAdapter extends Adapter<TestAdapter.TopicViewHolder> {
 
     public class TopicViewHolder extends ViewHolder {
 
-        TextView tvName,tvTime,tvTimes,tvPercent,tvDateComplete,nameSubject;
+        TextView tvName, tvTime, tvPercent, tvDateComplete;
         ProgressBar progressBar;
+        LinearLayout linearLayout;
 
         public TopicViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName=itemView.findViewById(R.id.tv_nameExam);
-            tvTime=itemView.findViewById(R.id.tv_time);
-            tvTimes=itemView.findViewById(R.id.txt_times);
-            tvPercent=itemView.findViewById(R.id.txt_percent);
-            tvDateComplete=itemView.findViewById(R.id.txt_date_complete);
-            nameSubject=itemView.findViewById(R.id.tv_time_exam);
+            tvName = itemView.findViewById(R.id.tv_nameExam);
+            tvTime = itemView.findViewById(R.id.tv_time);
+
+            tvPercent = itemView.findViewById(R.id.txt_percent);
+            tvDateComplete = itemView.findViewById(R.id.txt_date_complete_history);
+
             progressBar = itemView.findViewById(R.id.pbr_complete);
+            linearLayout = itemView.findViewById(R.id.llt_item_history);
 
         }
     }

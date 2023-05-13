@@ -17,29 +17,35 @@
             android:id="@+id/imgtimmer"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_timer"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_timer" />
 
         <TextView
             android:id="@+id/tv_timmer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgtimmer"
-            android:layout_margin="12dp"
-            android:textSize="16sp"
-            android:textColor="#ffff"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
 
-            android:text="imgtimmer" />
+            android:layout_marginBottom="12dp"
+            android:layout_toEndOf="@+id/imgtimmer"
+            android:text="imgtimmer"
+            android:textColor="#ffff"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/textView24"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
             android:layout_toStartOf="@+id/imgtimmer"
-            android:layout_margin="12dp"
-            android:textSize="16sp"
+            android:text="Thời gian còn lại"
             android:textColor="#ffff"
-            android:text="Thời gian còn lại" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btn_submit"
