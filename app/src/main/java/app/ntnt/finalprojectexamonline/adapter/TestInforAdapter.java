@@ -16,25 +16,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import java.io.Serializable;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
-import app.ntnt.finalprojectexamonline.activity.LoadTopicData;
 import app.ntnt.finalprojectexamonline.activity.LoginActivity;
-import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
+import app.ntnt.finalprojectexamonline.activity.TestInfoActivity;
 import app.ntnt.finalprojectexamonline.activity.test.LoadQuestionActivity;
-import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
-import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
-import app.ntnt.finalprojectexamonline.model.TestInfor;
 import app.ntnt.finalprojectexamonline.model.response.TestResponse;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 
 
 public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> {
     private HomeFragment context;
-    private TestInforActivity testInforActivity;
+    private TestInfoActivity testInforActivity;
     List<TestResponse> testInforList;
     private boolean b;
 
@@ -43,7 +38,7 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
         this.b=true;
     }
 
-    public TestInforAdapter(TestInforActivity testInforActivity) {
+    public TestInforAdapter(TestInfoActivity testInforActivity) {
         this.testInforActivity = testInforActivity;
         this.b=false;
     }

@@ -53,7 +53,7 @@
             android:name=".activity.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.TestInforActivity"
+            android:name=".activity.TestInfoActivity"
             android:exported="false" />
         <activity
             android:name=".activity.TopicActivity"
@@ -65,7 +65,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".activity.teacher.HomeTeacherActivity"
             android:exported="false" />
@@ -73,7 +73,7 @@
             android:name=".activity.test.AddTestActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.ActivityIntro"
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

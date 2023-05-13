@@ -14,9 +14,7 @@ import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.TestInforAdapter;
-import app.ntnt.finalprojectexamonline.adapter.TopicAdapter;
 import app.ntnt.finalprojectexamonline.model.TestInfor;
-import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.model.response.TestResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
@@ -27,7 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class TestInforActivity extends AppCompatActivity {
+public class TestInfoActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TestInforAdapter testInforAdapter;
     List<TestInfor> testInfors;

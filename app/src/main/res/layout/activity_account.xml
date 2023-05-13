@@ -9,9 +9,9 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/bg_bottomleftright_corner_border_90"
+        android:layout_width="411dp"
+        android:layout_height="350dp"
+        android:background="@drawable/top_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,90 +43,104 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="276dp"
-            android:layout_height="82dp"
+            android:layout_width="282dp"
+            android:layout_height="122dp"
             android:layout_below="@+id/clt_profile"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="70dp">
+            android:layout_marginTop="-31dp"
+            android:layout_marginEnd="64dp">
 
-            <TextView
+            <EditText
                 android:id="@+id/tvFullName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="24dp"
                 android:text="Nguyễn Thái Ngọc Tân"
                 android:textColor="#ffff"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.506"
+                app:layout_constraintHorizontal_bias="0.507"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp"
                 android:text="tanntn29@gmail.com"
                 android:textColor="#ffff"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.911" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="56dp"
+            android:layout_height="57dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="340dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="283dp"
+            android:background="@drawable/bg_blue_corner_border_16"
+            app:icon="@android:drawable/ic_lock_power_off" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="275dp"
-        android:layout_height="325dp"
+        android:layout_width="331dp"
+        android:layout_height="413dp"
         android:layout_margin="8dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/bg_radius_corner_border_90"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/white_background"
         app:layout_constraintBottom_toTopOf="@+id/btnUpdate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
 
 
         <RelativeLayout
             android:id="@+id/llt_info"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:paddingTop="16dp"
             android:paddingLeft="16dp"
+            android:paddingTop="16dp"
             android:paddingRight="16dp"
 
             >
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                app:srcCompat="@drawable/baseline_settings_24" />
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                app:srcCompat="@drawable/ic_1" />
 
             <ImageView
-                android:layout_toEndOf="@+id/imageView5"
                 android:id="@+id/imageView6"
-                android:layout_marginStart="24dp"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                app:srcCompat="@drawable/baseline_notifications_24" />
-            <ImageView
-                android:layout_toEndOf="@+id/imageView6"
-                android:id="@+id/imageView7"
-                android:layout_marginStart="24dp"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/baseline_leaderboard_24" />
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="34dp"
+                android:layout_toEndOf="@+id/imageView5"
+                app:srcCompat="@drawable/ic_2" />
 
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="34dp"
+                android:layout_toEndOf="@+id/imageView6"
+                app:srcCompat="@drawable/ic_3" />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/llt_line"
-            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
             android:layout_below="@+id/llt_info"
@@ -135,174 +149,176 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="314dp"
             android:layout_below="@+id/llt_line"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_margin="8dp"
-
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="Địa chỉ" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvAddress"
-                    android:layout_width="match_parent"
+                    android:layout_width="133dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
+                    android:text="Địa chỉ"
+                    android:textColor="#5917e1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    android:text="Khánh Hòa" />
+                <TextView
+                    android:id="@+id/dc"
+                    android:layout_width="220dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Khánh Hòa"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#5b5b5b"
+
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="1.5dp"
-                android:background="#ffff"></LinearLayout>
+                android:layout_margin="10dp"
+                android:background="#585858"></LinearLayout>
 
 
             <LinearLayout
-                android:layout_margin="8dp"
-
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="Số điện thoại" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvPhoneNumber"
-                    android:layout_width="match_parent"
+                    android:layout_width="254dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="0923140493" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="#ffff"></LinearLayout>
-
-            <LinearLayout
-                android:layout_margin="8dp"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    android:text="Số điện thoại"
+                    android:textColor="#5917e1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="match_parent"
+                    android:id="@+id/sdt"
+                    android:layout_width="188dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="Giới tính" />
+                    android:text="0923140493"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#5b5b5b"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_margin="10dp"
+                android:background="#585858"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvGender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="Nam" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="#ffff"></LinearLayout>
-
-
-            <LinearLayout
-                android:layout_margin="8dp"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    android:text="Giới tính"
+                    android:textColor="#5917e1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/gt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="Số bài đã thi" />
+                    android:text="Nam"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#5b5b5b"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_margin="10dp"
+                android:background="#585858"></LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvNumberTest"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="20" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="#ffff"></LinearLayout>
-
-            <LinearLayout
-                android:layout_margin="8dp"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                    android:text="Số bài đã thi"
+                    android:textColor="#5917e1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/so_bt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="Số điểm tích lũy" />
+                    android:text="20"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#5b5b5b"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_margin="10dp"
+                android:background="#585858"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tvSumScore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:text="3000" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="#ffff"></LinearLayout>
+                    android:text="Số điểm tích lũy"
+                    android:textColor="#5917e1"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/so_diem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="3000"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#5b5b5b"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -310,28 +326,15 @@
 
     <Button
         android:id="@+id/btnUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="326dp"
+        android:layout_height="57dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_blue_corner_border_16"
 
         android:text="Cập nhật thông tin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.274"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnLogOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_blue_corner_border_16"
-
-        android:text="Đăng xuất"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

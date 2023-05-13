@@ -7,7 +7,6 @@ import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
-import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
-import app.ntnt.finalprojectexamonline.activity.TopicActivity;
 import app.ntnt.finalprojectexamonline.activity.test.AddTestActivity;
 import app.ntnt.finalprojectexamonline.activity.test.AnswerActivity;
 import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
-import app.ntnt.finalprojectexamonline.model.entites.Question;
-import app.ntnt.finalprojectexamonline.model.entites.Topic;
 import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
 
 

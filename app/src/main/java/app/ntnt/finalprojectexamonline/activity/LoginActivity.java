@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                                 //Lấy dữ liệu từ response
                                 authResponse = (AuthResponse) AppConstrain.toObject(response.body().getData(), AuthResponse.class);
                                 SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(authResponse);
-//                                SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUsername());
+//                              SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUsername());
                                 SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUserId());
                                 Log.d("TAG", "onResponse: "+SharedPrefManager.getInstance(getApplicationContext()).getUserId());
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
