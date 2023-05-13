@@ -17,19 +17,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import java.io.Serializable;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
-import app.ntnt.finalprojectexamonline.activity.LoadTopicData;
 import app.ntnt.finalprojectexamonline.activity.LoginActivity;
-import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
+import app.ntnt.finalprojectexamonline.activity.TestInfoActivity;
 import app.ntnt.finalprojectexamonline.activity.test.LoadQuestionActivity;
-import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
-import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
+<<<<<<< HEAD
+=======
 import app.ntnt.finalprojectexamonline.model.TestInfor;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
+>>>>>>> 57602a39b54e82e3d753fe38a2b2af231a0c1803
 import app.ntnt.finalprojectexamonline.model.response.TestResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.IStatisticService;
@@ -41,7 +40,7 @@ import retrofit2.Response;
 
 public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> {
     private HomeFragment context;
-    private TestInforActivity testInforActivity;
+    private TestInfoActivity testInforActivity;
     List<TestResponse> testInforList;
     private boolean b;
 
@@ -50,7 +49,7 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
         this.b=true;
     }
 
-    public TestInforAdapter(TestInforActivity testInforActivity) {
+    public TestInforAdapter(TestInfoActivity testInforActivity) {
         this.testInforActivity = testInforActivity;
         this.b=false;
     }
