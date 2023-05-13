@@ -5,11 +5,9 @@ import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,38 +17,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
-import app.ntnt.finalprojectexamonline.activity.test.AnswerActivity;
-import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
-import app.ntnt.finalprojectexamonline.fragment.QuestionFragment;
-import app.ntnt.finalprojectexamonline.model.entites.Answer;
-import app.ntnt.finalprojectexamonline.model.entites.Question;
 import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.NewAnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.NewQuestionHistoryResponse;
 import app.ntnt.finalprojectexamonline.model.response.NewQuestionResponse;
 
 
-public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
+public class HistoryAnswerAdapter extends Adapter<HistoryAnswerAdapter.TopicViewHolder> {
     Context context;
-    List<AnswerResponse> answers;
-    List<AnswerResponse> filteredList;
-    NewQuestionResponse newQuestionResponse;
-    private Long selectedAnswerPosition = -1L;
-    public Long getSelectedAnswerPosition() {
-        return selectedAnswerPosition;
-    }
+    List<NewAnswerResponse> answers;
+    List<NewAnswerResponse> filteredList;
+    NewQuestionHistoryResponse newQuestionResponse;
+    NewAnswerResponse newAnswerResponse;
+//    private Long selectedAnswerPosition = -1L;
+//    public Long getSelectedAnswerPosition() {
+//        return selectedAnswerPosition;
+//    }
+//
+//    public void setSelectedAnswerPosition(Long selectedAnswerPosition) {
+//        this.selectedAnswerPosition = selectedAnswerPosition;
+//    }
 
-    public void setSelectedAnswerPosition(Long selectedAnswerPosition) {
-        this.selectedAnswerPosition = selectedAnswerPosition;
-    }
-
-    public AnswerAdapter(Context context) {
+    public HistoryAnswerAdapter(Context context) {
         this.context = context;
 
     }
 
-    public void setData(List<AnswerResponse> answers, NewQuestionResponse newQuestionResponse) {
+    public void setData(List<NewAnswerResponse> answers, NewQuestionHistoryResponse newQuestionResponse,NewAnswerResponse newAnswerResponse) {
         this.answers = answers;
         this.filteredList = new ArrayList<>(answers);
         this.newQuestionResponse=newQuestionResponse;
+        this.newAnswerResponse = newAnswerResponse;
         notifyDataSetChanged();
     }
 
@@ -64,25 +61,36 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TopicViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        AnswerResponse answer = filteredList.get(position);
+        NewAnswerResponse answer = filteredList.get(position);
         if (answer == null) {
             return;
         }
         holder.tvNameAnswer.setText(answer.getContent());
 
-        if (answer.getAnswerId() == newQuestionResponse.getPositionChecked()) {
+        if (answer.isCorrect()) {
             holder.relativeLayout.setBackgroundResource(R.color.yellow);
-        } else {
+        }
+        else
+        {
             holder.relativeLayout.setBackgroundResource(R.color.teal_200);
         }
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                newQuestionResponse.setPositionChecked(answer.getAnswerId());
-                notifyDataSetChanged();
+        if(newAnswerResponse.getAnswerId()==answer.getAnswerId())
+        {
+            if (answer.isCorrect()) {
+                holder.relativeLayout.setBackgroundResource(R.color.yellow);
             }
-        });
+            else
+                holder.relativeLayout.setBackgroundResource(R.color.red);
+        }
+
+//        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                newQuestionResponse.setPositionChecked(answer.getAnswerId());
+//                notifyDataSetChanged();
+//            }
+//        });
     }
 
 
@@ -105,19 +113,5 @@ public class AnswerAdapter extends Adapter<AnswerAdapter.TopicViewHolder> {
             relativeLayout= itemView.findViewById(R.id.rlt_load_answer);
 
         }
-    }
-
-    public void filter(String query) {
-        filteredList.clear();
-        if (query.isEmpty()) {
-            filteredList.addAll(answers);
-        } else {
-            for (AnswerResponse item : answers) {
-                if (item.getContent().toLowerCase().contains(query.toLowerCase())) {
-                    filteredList.add(item);
-                }
-            }
-        }
-        notifyDataSetChanged();
     }
 }
