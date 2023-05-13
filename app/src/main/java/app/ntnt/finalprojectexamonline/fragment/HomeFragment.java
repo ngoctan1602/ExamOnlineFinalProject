@@ -5,7 +5,10 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.SubjectAdpater;
@@ -26,6 +31,8 @@ import app.ntnt.finalprojectexamonline.model.response.SubjectResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.ISubjectService;
 import app.ntnt.finalprojectexamonline.services.IUserService;
+import app.ntnt.finalprojectexamonline.slider.SliderAdapter;
+import app.ntnt.finalprojectexamonline.slider.SliderItem;
 import app.ntnt.finalprojectexamonline.utils.AppConstrain;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import retrofit2.Call;
@@ -39,8 +46,12 @@ public class HomeFragment extends Fragment {
     RecyclerView rcvSubject;
     RecyclerView rcvTest;
     List<Subject> subjects;
+    SliderAdapter sliderAdapter;
     List<TestInfor> testInforList;
     View view;
+    private Timer timer;
+    ViewPager2 viewPager2;
+    List<SliderItem> sliderItemList;
 
     TextView tvNameUser;
 
@@ -57,6 +68,20 @@ public class HomeFragment extends Fragment {
 
         //Load data for User
         loadDataUser();
+
+        viewPager2 = view.findViewById(R.id.view_rounded_image);
+        sliderAdapter=new SliderAdapter(getContext());
+        sliderAdapter.setData(getAllItem());
+        viewPager2.setAdapter(sliderAdapter);
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+            }
+        });
+        autoSlider();
 
         //Set name user
         BaseAPIService.createService(IUserService.class).getProfile()
@@ -146,5 +171,49 @@ public class HomeFragment extends Fragment {
         tvNameUser = view.findViewById(R.id.tv_name_user);
         rcvSubject = view.findViewById(R.id.rcv_subject_home);
         rcvTest =view.findViewById(R.id.rcv_featured_exam);
+        viewPager2= view.findViewById(R.id.view_rounded_image);
+    }
+    private List<SliderItem> getAllItem()
+    {
+        sliderItemList = new ArrayList<>();
+        sliderItemList.add(new SliderItem(R.drawable.slider1));
+        sliderItemList.add(new SliderItem(R.drawable.slider2));
+        sliderItemList.add(new SliderItem(R.drawable.slider3));
+        return sliderItemList;
+    }
+    private void autoSlider()
+    {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem = viewPager2.getCurrentItem();
+                        int totalItem = sliderItemList.size()-1;
+                        if(currentItem<totalItem)
+                        {
+                            currentItem++;
+                            viewPager2.setCurrentItem(currentItem);
+
+                        }
+                        else {
+                            viewPager2.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        },500, 2500);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(timer!=null)
+        {
+            timer.cancel();
+            timer=null;
+        }
     }
 }
