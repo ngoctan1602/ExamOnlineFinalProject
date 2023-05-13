@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,11 +22,9 @@ import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.activity.LoadTopicData;
-import app.ntnt.finalprojectexamonline.activity.TestInforActivity;
+import app.ntnt.finalprojectexamonline.activity.TestInfoActivity;
 import app.ntnt.finalprojectexamonline.activity.TopicActivity;
 import app.ntnt.finalprojectexamonline.activity.test.QuestionActivity;
-import app.ntnt.finalprojectexamonline.fragment.HistoryFragment;
-import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.entites.Topic;
 
 
@@ -100,7 +97,7 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(loadTopicData, TestInforActivity.class);
+                    Intent intent = new Intent(loadTopicData, TestInfoActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putLong("topicId",topic.getId());
                     bundle.putString("nameTopic",topic.getName());
