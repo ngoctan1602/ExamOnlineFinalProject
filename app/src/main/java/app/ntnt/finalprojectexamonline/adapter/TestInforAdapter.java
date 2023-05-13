@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.HighScoreActivity;
 import app.ntnt.finalprojectexamonline.activity.LoginActivity;
 import app.ntnt.finalprojectexamonline.activity.TestInfoActivity;
 import app.ntnt.finalprojectexamonline.activity.test.LoadQuestionActivity;
@@ -118,17 +119,24 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            BaseAPIService.createService(IStatisticService.class).getHighScore(test.getTestId()).enqueue(new Callback<ResponseEntity>() {
-                                @Override
-                                public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
-                                    Log.d("TAG", "onResponse: success");
-                                }
+                            Intent intent = new Intent(testInforActivity, HighScoreActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("testId", test.getTestId());
+                            bundle.putString("testName", test.getTestName());
+                            intent.putExtras(bundle);
+                            startActivity(testInforActivity,intent,bundle);
 
-                                @Override
-                                public void onFailure(Call<ResponseEntity> call, Throwable t) {
-                                    Log.d("TAG", "onResponse: failed");
-                                }
-                            });
+//                            BaseAPIService.createService(IStatisticService.class).getHighScore(test.getTestId()).enqueue(new Callback<ResponseEntity>() {
+//                                @Override
+//                                public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+//                                    Log.d("TAG", "onResponse: success");
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<ResponseEntity> call, Throwable t) {
+//                                    Log.d("TAG", "onResponse: failed");
+//                                }
+//                            });
 
                             dialog.dismiss();
                         }
