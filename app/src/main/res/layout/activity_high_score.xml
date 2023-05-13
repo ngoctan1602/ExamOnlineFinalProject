@@ -4,11 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.HighScoreActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/teal_200"
+    >
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_name_test_high_score"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="#ffff"
+        android:textStyle="bold"
+        android:gravity="center"
         android:text="Danh sách điểm cao bài thi" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_load_high_score"
+        android:layout_margin="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

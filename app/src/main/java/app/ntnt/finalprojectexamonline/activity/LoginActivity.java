@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import app.ntnt.finalprojectexamonline.activity.teacher.LoginTeacher;
 import app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding;
 import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding binding;
     private Button btnLogin;
-    private TextView tvSignup ,tvForgotPassword;
+    private TextView tvSignup ,tvForgotPassword,tvLoginTeacher;
     private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,12 @@ public class LoginActivity extends AppCompatActivity {
 //        //Ánh xạ
         init();
         //Chuyển trang đăng kí
+        tvLoginTeacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, LoginTeacher.class));
+            }
+        });
         tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,5 +138,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = binding.btnLogin;
         tvSignup = binding.txtSignUp;
         tvForgotPassword= binding.txtForgotPassword;
+        tvLoginTeacher= binding.tvLoginTeacher;
     }
 }
