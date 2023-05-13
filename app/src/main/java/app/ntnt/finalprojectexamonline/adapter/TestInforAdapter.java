@@ -24,11 +24,10 @@ import app.ntnt.finalprojectexamonline.activity.LoginActivity;
 import app.ntnt.finalprojectexamonline.activity.TestInfoActivity;
 import app.ntnt.finalprojectexamonline.activity.test.LoadQuestionActivity;
 import app.ntnt.finalprojectexamonline.fragment.HomeFragment;
-<<<<<<< HEAD
-=======
+
 import app.ntnt.finalprojectexamonline.model.TestInfor;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
->>>>>>> 57602a39b54e82e3d753fe38a2b2af231a0c1803
+
 import app.ntnt.finalprojectexamonline.model.response.TestResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.IStatisticService;

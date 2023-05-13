@@ -81,6 +81,10 @@
         <activity
             android:name=".activity.test.AddTestActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".activity.ActivityIntro"
+            android:exported="true" />
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true">
