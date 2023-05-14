@@ -128,13 +128,13 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/edt_time_test"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1.5"
                 android:ems="10"
                 android:hint="nhập thời gian làm bài thi"
-                android:inputType="textPersonName" />
+                android:inputType="number" />
 
         </LinearLayout>
 
@@ -158,13 +158,13 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/edt_num_questions"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="nhập số câu hỏi có trong bài thi"
-                android:inputType="textPersonName" />
+                android:inputType="number" />
 
             <ImageView
                 android:id="@+id/img_countQues"

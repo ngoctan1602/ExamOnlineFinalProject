@@ -7,6 +7,7 @@ import static androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,18 +100,19 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
         }
         if (b == true) {
             Glide.with(contextQues).load(question.getImage()).into(holder.imgQuestion);
-        }
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (b == false) {
-                    Intent intent = new Intent(context, AnswerActivity.class);
-                    Bundle bundle = new Bundle();
-                    startActivity(context, intent, bundle);
+            holder.imgEdit.setVisibility(View.GONE);
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        Intent intent = new Intent(contextQues, AnswerActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelableArrayList("question", (ArrayList<? extends Parcelable>) question.getAnswers());
+                        intent.putExtras(bundle);
+                        startActivity(contextQues, intent, bundle);
                 }
+            });
+        }
 
-            }
-        });
     }
 
 

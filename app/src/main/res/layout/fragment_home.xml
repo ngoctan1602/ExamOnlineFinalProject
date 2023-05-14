@@ -42,10 +42,10 @@
 
                 <TextView
                     android:id="@+id/tv_subject"
-                    android:layout_width="115dp"
-                    android:layout_height="39dp"
+                    android:layout_width="116dp"
+                    android:layout_height="38dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="364dp"
+                    android:layout_marginEnd="293dp"
                     android:padding="4dp"
                     android:text="Môn học"
                     android:textColor="#000"

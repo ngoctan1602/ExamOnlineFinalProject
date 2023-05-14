@@ -23,6 +23,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.teacher.LoginTeacher"
+            android:exported="false" />
+        <activity
+            android:name=".activity.HighScoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ResetPassword"
             android:exported="false" />
         <activity
@@ -77,6 +83,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.test.AddTestActivity"
+            android:exported="true" />
+        <activity
+            android:name=".activity.ActivityIntro"
             android:exported="true" />
         <activity
             android:name=".activity.SplashActivity"

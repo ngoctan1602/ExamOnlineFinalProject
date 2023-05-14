@@ -4,34 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.LoginActivity"
+    tools:context=".activity.teacher.LoginTeacher"
     android:background="#edebfc">
-
-    <TextView
-        android:id="@+id/tv_login_teacher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:text="Đăng nhập với tư cách giáo viên"
-        android:textColor="#6a5ae0"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_login"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
-        android:text="Đăng nhập"
+        android:layout_marginTop="324dp"
+        android:text="Đăng nhập cho giáo viên"
         android:textColor="#000"
         android:textSize="36sp"
         android:textStyle="bold"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,19 +37,6 @@
         app:layout_constraintStart_toStartOf="@+id/edt_password"
         app:layout_constraintTop_toBottomOf="@+id/edt_password" />
 
-
-    <TextView
-        android:id="@+id/txtForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Quên mật khẩu? Lấy lại mật khẩu"
-        android:textColor="#6a5ae0"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/btn_login"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/btn_login"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <EditText
         android:id="@+id/edt_password"
@@ -92,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Chưa có tài khoản? Tạo mới"
+        android:text="Đăng nhập với học sinh"
         android:textColor="#6a5ae0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_login"
@@ -115,7 +89,7 @@
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="410dp"
-        android:layout_height="200dp"
+        android:layout_height="327dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

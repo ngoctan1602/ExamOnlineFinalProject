@@ -99,7 +99,7 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
 
         if(b==true)
         {
-            Glide.with(context.getContext()).load(subject.getImage()).into(holder.imageViewSubject);
+            Glide.with(context.getContext()).load(subject.getImage()).placeholder(R.drawable.pic6).into(holder.imageViewSubject);
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -125,6 +125,7 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
                     Intent intent = new Intent(teacherHomeFragment.getContext(), TopicActivity.class);
                     bundle.putSerializable("subjectId", subject.getSubjectId());
                     bundle.putSerializable("nameSubject", subject.getName());
+                    bundle.putSerializable("bUser", bUser);
                     intent.putExtras(bundle);
                     startActivity(teacherHomeFragment.getContext(), intent, bundle);
 
@@ -165,33 +166,35 @@ public class SubjectAdpater extends Adapter<SubjectAdpater.TopicViewHolder> {
                     holder.imgDelete.setVisibility(View.INVISIBLE);
                     holder.imgEdit.setVisibility(View.INVISIBLE);
                 } else if (bUser == true) {
-                    holder.imgDelete.setVisibility(View.VISIBLE);
+//                    holder.imgDelete.setVisibility(View.VISIBLE);
                     holder.imgEdit.setVisibility(View.INVISIBLE);
+                    holder.imgDelete.setVisibility(View.INVISIBLE);
+                    holder.relativeLayout.setBackgroundResource(R.color.yellow);
 
 
-                    holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(teacherHomeFragment.getContext());
-                            builder.setTitle("Bạn đang chọn môn" + subject.getName());
-                            builder.setMessage("Bạn có chắn chắn không?");
-                            builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    teacherHomeFragment.deleteSubject(subject.getSubjectId());
-                                }
-                            });
-                            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Thực hiện hành động khi người dùng nhấp vào nút "Không"
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.show();
-                        }
-                    });
-
+//                    holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(teacherHomeFragment.getContext());
+//                            builder.setTitle("Bạn đang chọn môn" + subject.getName());
+//                            builder.setMessage("Bạn có chắn chắn không?");
+//                            builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    teacherHomeFragment.deleteSubject(subject.getSubjectId());
+//                                }
+//                            });
+//                            builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // Thực hiện hành động khi người dùng nhấp vào nút "Không"
+//                                    dialog.dismiss();
+//                                }
+//                            });
+//                            builder.show();
+//                        }
+//                    });
+//
 
                 }
             }

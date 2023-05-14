@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.TopicActivity;
 import app.ntnt.finalprojectexamonline.fragment.UploadImageFragment;
+import app.ntnt.finalprojectexamonline.model.entites.Topic;
 import app.ntnt.finalprojectexamonline.model.request.AnswerRequest;
 import app.ntnt.finalprojectexamonline.model.request.QuestionRequest;
 import app.ntnt.finalprojectexamonline.model.response.RespRegister;
@@ -28,6 +30,7 @@ import app.ntnt.finalprojectexamonline.services.IQuestionService;
 import app.ntnt.finalprojectexamonline.services.ISubjectService;
 import app.ntnt.finalprojectexamonline.services.ITopicService;
 import app.ntnt.finalprojectexamonline.utils.AppConstrain;
+import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -41,6 +44,7 @@ public class AddTopicActivity extends AppCompatActivity implements UploadImageFr
     EditText editText;
     TextView textView;
     Uri mUri;
+    boolean bUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class AddTopicActivity extends AppCompatActivity implements UploadImageFr
 
         Bundle bundle = getIntent().getExtras();
         long subjectId = bundle.getLong("subjectId");
+        bUser = (boolean)bundle.getSerializable("bUser");
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,31 +76,29 @@ public class AddTopicActivity extends AppCompatActivity implements UploadImageFr
     }
     private void addTopic(long subjectId)
     {
-//        RequestBody subjectIdRes = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(subjectId));
-//        RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), editText.getText().toString());
         MultipartBody.Part img = AppConstrain.toPart(this, mUri);
-        Log.d("TAG", "onResponse: "+img);
+        Log.d("TAG", "onResponse: "+ SharedPrefManager.getInstance(AddTopicActivity.this).getAuthToken().getToken().toString());
+        RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), editText.getText().toString());
+        RequestBody idSubject = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(subjectId));
+        BaseAPIService.createService(ITopicService.class)
+                .addTopic(idSubject,name,img)
+                .enqueue(new Callback<RespRegister>() {
+                    @Override
+                    public void onResponse(Call<RespRegister> call, Response<RespRegister> response) {
+                        Log.d("TAG", "onResponse: ");
+                        Intent intent = new Intent(AddTopicActivity.this, TopicActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("subjectId",subjectId);
+                        bundle.putBoolean("bUser",bUser);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
 
-        List<AnswerRequest> answerRequestList = new ArrayList<>();
-        AnswerRequest answerRequest = new AnswerRequest("Câu này đúng",true);
-        AnswerRequest answerRequest1 = new AnswerRequest("Câu này sai",false);
-        answerRequestList.add(answerRequest);
-        answerRequestList.add(answerRequest1);
-        QuestionRequest questionRequest = new QuestionRequest("Câu hỏi nè",13L,answerRequestList);
-//        Log.d("TAG", "addTopic: ");
-
-        BaseAPIService.createService(IQuestionService.class).addQuestion(questionRequest,img).enqueue(new Callback<ResponseEntity>() {
-            @Override
-            public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
-                boolean b = response.body().isError();
-                Log.d("TAG", "onResponse: "+b);
-            }
-
-            @Override
-            public void onFailure(Call<ResponseEntity> call, Throwable t) {
-                Log.d("TAG", "onResponse: failed");
-            }
-        });
+                    @Override
+                    public void onFailure(Call<RespRegister> call, Throwable t) {
+                        Log.d("TAG", "onResponse: failed");
+                    }
+                });
 
     }
     private void initFragMent() {

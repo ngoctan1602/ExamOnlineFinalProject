@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SplashActivity.this, ActivityIntro.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
             }

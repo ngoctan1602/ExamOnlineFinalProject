@@ -1,4 +1,4 @@
-package app.ntnt.finalprojectexamonline.activity;
+package app.ntnt.finalprojectexamonline.activity.teacher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,72 +6,67 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import app.ntnt.finalprojectexamonline.activity.teacher.LoginTeacher;
+import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.HomeActivity;
+import app.ntnt.finalprojectexamonline.activity.LoginActivity;
 import app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding;
+import app.ntnt.finalprojectexamonline.databinding.ActivityLoginTeacherBinding;
 import app.ntnt.finalprojectexamonline.model.request.LoginRequest;
 import app.ntnt.finalprojectexamonline.model.response.AuthResponse;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.IAuthService;
 import app.ntnt.finalprojectexamonline.utils.AppConstrain;
-import app.ntnt.finalprojectexamonline.utils.ContextUtil;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
-public class LoginActivity extends AppCompatActivity {
-
-    private app.ntnt.finalprojectexamonline.databinding.ActivityLoginBinding binding;
+public class LoginTeacher extends AppCompatActivity {
+    private ActivityLoginTeacherBinding binding;
     private Button btnLogin;
-    private TextView tvSignup ,tvForgotPassword,tvLoginTeacher;
+    private EditText edtUsername ,edtPassword;
     private ProgressBar progressBar;
+    private TextView tvLoginStudent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginTeacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-//        ContextUtil.context = getApplicationContext();
-//        //Ánh xạ
         init();
-        //Chuyển trang đăng kí
-        tvLoginTeacher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, LoginTeacher.class));
-            }
-        });
-        tvSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-        //Xét sự kiện login
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 login();
             }
         });
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+        tvLoginStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,ResetPassword.class));
+                startActivity(new Intent(LoginTeacher.this,LoginActivity.class));
             }
         });
     }
-
+    private boolean validated(){
+        if(binding.edtPassword.getText().toString().trim().isEmpty()){
+            binding.edtPassword.setError("Vui lòng nhập password");
+            return false;
+        }
+        if(binding.edtUsername.getText().toString().trim().isEmpty()){
+            binding.edtUsername.setError("Vui lòng nhập username");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
     private void login(){
 
         if(!validated()){
@@ -91,63 +86,46 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(authResponse);
 //                              SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUsername());
                                 SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUserId());
+                                Log.d("TAG", "onResponse: "+SharedPrefManager.getInstance(getApplicationContext()).getUserId());
 
-
-
-
-                                if(authResponse.getRoles().get(0).toString().equals("ROLE_student"))
+                                if(authResponse.getRoles().get(0).toString().equals("ROLE_teacher"))
                                 {
-                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                    Toast.makeText(LoginTeacher.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(LoginTeacher.this, HomeTeacherActivity.class);
                                     startActivity(intent);
                                 }
                                 else {
-                                    Toast.makeText(LoginActivity.this, "Đăng thất bại vì không phải tài khoản học sinh", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginTeacher.this, "Đăng nhập thất bại vì không phải tài khoản giáo viên", Toast.LENGTH_LONG).show();
                                 }
 
                             }
                             else {
-                                Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginTeacher.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
                             }
                         }
 
                         else {
-                            Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginTeacher.this, "Đăng nhập thất bại", Toast.LENGTH_LONG).show();
                         }
                     }
                     @Override
                     public void onFailure(Call<ResponseEntity> call, Throwable t) {
-                        Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginTeacher.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
                     }
                 });
         progressBar.setVisibility(View.INVISIBLE);
     }
-
-    private boolean validated(){
-        if(binding.edtPassword.getText().toString().trim().isEmpty()){
-            binding.edtPassword.setError("Vui lòng nhập password");
-            return false;
-        }
-        if(binding.edtUsername.getText().toString().trim().isEmpty()){
-            binding.edtUsername.setError("Vui lòng nhập username");
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
     private LoginRequest getInputData(){
-        String username = binding.edtUsername.getText().toString();
-        String password = binding.edtPassword.getText().toString();
+        String username = edtUsername.getText().toString();
+        String password = edtPassword.getText().toString();
         return new LoginRequest(username, password);
     }
-
-    private void init()
+    void init()
     {
-        progressBar = binding.prbLogin;
+        edtUsername = binding.edtUsername;
+        edtPassword = binding.edtPassword;
         btnLogin = binding.btnLogin;
-        tvSignup = binding.txtSignUp;
-        tvForgotPassword= binding.txtForgotPassword;
-        tvLoginTeacher= binding.tvLoginTeacher;
+        progressBar = binding.prbLogin;
+        tvLoginStudent = binding.txtSignUp;
     }
 }

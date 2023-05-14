@@ -34,21 +34,30 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
     List<Topic> topics;
     List<Topic> filteredList;
     boolean b;
+    boolean bUser;
 
     public TopicAdapter(TopicActivity context) {
         this.context = context;
-        this.b= true;
+        this.b = true;
     }
 
     public TopicAdapter(LoadTopicData loadTopicData) {
         this.loadTopicData = loadTopicData;
-        this.b =false;
+        this.b = false;
     }
 
     public void setData(List<Topic> topics) {
 
         this.topics = topics;
         this.filteredList = new ArrayList<>(topics);
+        notifyDataSetChanged();
+    }
+
+    public void setData(List<Topic> topics, boolean bUser) {
+
+        this.topics = topics;
+        this.filteredList = new ArrayList<>(topics);
+        this.bUser = bUser;
         notifyDataSetChanged();
     }
 
@@ -68,29 +77,36 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
 
         holder.tvNameTopic.setText(topic.getName());
 //        holder.imageViewTopic.setImageResource(R.drawable.pic6);
-        if(b==true)
-        {
+        if (b == true) {
             Glide.with(context).load(topic.getImage()).into(holder.imageViewTopic);
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, QuestionActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putLong("topicId",topic.getId());
+                    bundle.putLong("topicId", topic.getId());
                     intent.putExtras(bundle);
-                    startActivity(context,intent,bundle);
+                    startActivity(context, intent, bundle);
                 }
             });
 
-            holder.imgEdit.setVisibility(View.GONE);
-            holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.showDialogDelete();
-                }
-            });
-        }
-        else {
+
+            if (bUser == false) {
+                holder.imgEdit.setVisibility(View.GONE);
+                holder.imgDelete.setVisibility(View.GONE);
+            }
+            else {
+                holder.imgEdit.setVisibility(View.GONE);
+                holder.imgDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        context.showDialogDelete(topic.getId());
+                    }
+                });
+            }
+
+
+        } else {
             Glide.with(loadTopicData).load(topic.getImage()).into(holder.imageViewTopic);
             holder.imgEdit.setVisibility(View.GONE);
             holder.imgDelete.setVisibility(View.GONE);
@@ -99,10 +115,10 @@ public class TopicAdapter extends Adapter<TopicAdapter.TopicViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(loadTopicData, TestInfoActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putLong("topicId",topic.getId());
-                    bundle.putString("nameTopic",topic.getName());
+                    bundle.putLong("topicId", topic.getId());
+                    bundle.putString("nameTopic", topic.getName());
                     intent.putExtras(bundle);
-                    startActivity(loadTopicData,intent,bundle);
+                    startActivity(loadTopicData, intent, bundle);
                 }
             });
         }
