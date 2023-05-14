@@ -61,14 +61,25 @@ public class AddSubjectActivity extends AppCompatActivity implements UploadImage
         BaseAPIService.createService(ISubjectService.class).addSubject(requestBody,avatar).enqueue(new Callback<RespRegister>() {
             @Override
             public void onResponse(Call<RespRegister> call, Response<RespRegister> response) {
-                Toast.makeText(AddSubjectActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AddSubjectActivity.this,HomeTeacherActivity.class);
-                startActivity(intent);
+                if(response.body()!=null)
+                {
+                    Toast.makeText(AddSubjectActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    Log.d("TAG", "onResponse: Thêm thành công");
+                    Intent intent = new Intent(AddSubjectActivity.this,HomeTeacherActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Log.d("TAG", "onResponse: Bạn đã tạo môn học trước đó, nên không thể tạo môn học mới ");
+                    Toast.makeText(AddSubjectActivity.this, "Bạn đã tạo môn học trước đó, nên không thể tạo môn học mới", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AddSubjectActivity.this,HomeTeacherActivity.class);
+                    startActivity(intent);
+                }
             }
 
             @Override
             public void onFailure(Call<RespRegister> call, Throwable t) {
                 Toast.makeText(AddSubjectActivity.this, "Môn học đã tồn tại", Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "onResponse: Bạn đã tạo môn học, không thể tạo môn học mới");
             }
         });
 

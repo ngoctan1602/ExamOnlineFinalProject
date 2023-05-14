@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                 .enqueue(new Callback<ResponseEntity>() {
                     @Override
                     public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
-                        progressBar.setVisibility(View.INVISIBLE);
                         if (response.body()!=null){
                             AuthResponse authResponse = null;
                             if (!response.body().isError()){
@@ -92,10 +91,20 @@ public class LoginActivity extends AppCompatActivity {
                                 SharedPrefManager.getInstance(getApplicationContext()).saveAuthToken(authResponse);
 //                              SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUsername());
                                 SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUserId());
-                                Log.d("TAG", "onResponse: "+SharedPrefManager.getInstance(getApplicationContext()).getUserId());
-                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-                                startActivity(intent);
+
+
+
+
+                                if(authResponse.getRoles().get(0).toString().equals("ROLE_student"))
+                                {
+                                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "Đăng thất bại vì không phải tài khoản học sinh", Toast.LENGTH_LONG).show();
+                                }
+
                             }
                             else {
                                 Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_LONG).show();
@@ -111,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Đăng nhập Thất bại", Toast.LENGTH_LONG).show();
                     }
                 });
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private boolean validated(){

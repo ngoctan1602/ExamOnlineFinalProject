@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 import app.ntnt.finalprojectexamonline.activity.LoginActivity;
 import app.ntnt.finalprojectexamonline.model.entites.User;
@@ -44,6 +48,9 @@ public class SharedPrefManager {
         editor.putString(KEY_USER, currentUser);
         editor.apply();
     }
+
+
+
     public void saveAuthToken(AuthResponse authResponse){
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -72,6 +79,9 @@ public class SharedPrefManager {
         String currentUser = sharedPreferences.getString(KEY_USER,"");
         return gson.fromJson(currentUser, Long.class);
     }
+
+
+
 
 
     public AuthResponse getAuthToken() {

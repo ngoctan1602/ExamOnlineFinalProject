@@ -93,10 +93,11 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
                     Subject subjects1 = new Subject(subjectResponse.getSubjectId(), subjectResponse.getName(), subjectResponse.getImage());
                     subjects.add(subjects1);
                     List<User> users= subjectResponse.getUsers();
+                    Long userId = SharedPrefManager.getInstance(getContext()).getUserId();
                     boolean b1=false;
                     for(User user:users)
                     {
-                        if(user.getUserId()==18)
+                        if(user.getUserId()==userId)
                         {
                             b1=true;
                         }

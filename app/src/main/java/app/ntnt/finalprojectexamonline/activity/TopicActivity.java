@@ -29,6 +29,7 @@ import app.ntnt.finalprojectexamonline.activity.teacher.AddTopicActivity;
 import app.ntnt.finalprojectexamonline.adapter.TopicAdapter;
 import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.entites.Topic;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.model.response.TopicResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
 import app.ntnt.finalprojectexamonline.services.ISubjectService;
@@ -46,6 +47,9 @@ public class TopicActivity extends AppCompatActivity {
     ImageView imageView;
 
     TextView textView;
+    Long subjectId ;
+    String nameSubject ;
+    boolean bUser;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -59,11 +63,13 @@ public class TopicActivity extends AppCompatActivity {
 
 
         Bundle bundle = getIntent().getExtras();
-        Long subjectId = (Long) bundle.getSerializable("subjectId");
-        String nameSubject = (String)bundle.getSerializable("nameSubject");
+        subjectId = (Long) bundle.getSerializable("subjectId");
+        nameSubject = (String)bundle.getSerializable("nameSubject");
+//         bundle.putSerializable("bUser", bUser);
+        bUser = (boolean)bundle.getSerializable("bUser");
         textView.setText("Danh sách chủ đề môn "+nameSubject);
-        setTopicAdapter(subjectId);
-        Log.d("hehe", String.valueOf(subjectId));
+        setTopicAdapter(subjectId,bUser);
+        Log.d("hehe", String.valueOf(bUser));
         searchView = (SearchView) findViewById(R.id.search_topic);
 
 
@@ -73,6 +79,7 @@ public class TopicActivity extends AppCompatActivity {
                 Intent intent = new Intent(TopicActivity.this, AddTopicActivity.class);
                 //Intent intent = new Intent(TopicActivity.this, AddQuestionActivity.class);
                 intent.putExtra("subjectId",subjectId);
+                intent.putExtra("bUser",bUser);
                 startActivity(intent);
             }
         });
@@ -94,7 +101,7 @@ public class TopicActivity extends AppCompatActivity {
 
 
 
-    private void setTopicAdapter(Long subjectId) {
+    private void setTopicAdapter(Long subjectId,boolean bUser) {
         topics = new ArrayList<>();
         topicAdapter = new TopicAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
@@ -104,7 +111,7 @@ public class TopicActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TopicResponse> call, Response<TopicResponse> response) {
                 List<Topic> topics1 = response.body().getData();
-                topicAdapter.setData(topics1);
+                topicAdapter.setData(topics1,bUser);
                 recyclerView.setAdapter(topicAdapter);
 
             }
@@ -117,39 +124,10 @@ public class TopicActivity extends AppCompatActivity {
     }
 
 
-    public void showDialogUpdate() {
-        Dialog dialog = new Dialog(TopicActivity.this);
-        dialog.setContentView(R.layout.dialog_add_subject);
-        Window window = dialog.getWindow();
-        window.setGravity(Gravity.CENTER);
-        Button btnOk = dialog.findViewById(R.id.dialog_btn_Ok);
-        Button btnCancel = dialog.findViewById(R.id.dialog_btn_Cancel);
 
 
-//        imageView = dialog.findViewById(R.id.img_dialog_imgSubject);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                CheckPermission();
-//            }
-//        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Gọi API update môn học
-            }
-        });
-        dialog.show();
-    }
 
-
-    public void showDialogDelete() {
+    public void showDialogDelete(long idTopic) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage("Bạn có muốn xóa hay không?");
@@ -159,13 +137,25 @@ public class TopicActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Xử lý khi người dùng chọn xác nhận
+                BaseAPIService.createService(ITopicService.class).deleteTopicById(idTopic).enqueue(new Callback<ResponseEntity>() {
+                    @Override
+                    public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                        Log.d("TAG", "onResponse: xóa thành công");
+                        setTopicAdapter(subjectId,bUser);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseEntity> call, Throwable t) {
+                        Log.d("TAG", "onResponse: sai");
+                    }
+                });
             }
         });
 
         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Xử lý khi người dùng chọn hủy
+                dialog.dismiss();
             }
         });
 
