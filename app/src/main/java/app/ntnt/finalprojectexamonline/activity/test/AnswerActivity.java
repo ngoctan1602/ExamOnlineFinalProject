@@ -6,15 +6,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.adapter.AnswerAdapter;
-import app.ntnt.finalprojectexamonline.adapter.QuestionAdapter;
 import app.ntnt.finalprojectexamonline.model.entites.Answer;
-import app.ntnt.finalprojectexamonline.model.entites.Question;
+import app.ntnt.finalprojectexamonline.model.response.AnswerResponse;
+import app.ntnt.finalprojectexamonline.model.response.QuestionResponse;
 
 public class AnswerActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -26,7 +27,14 @@ public class AnswerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
         recyclerView= findViewById(R.id.rcv_answer);
+        Bundle bundle = getIntent().getExtras();
+
+        List<AnswerResponse> answerResponse= bundle.getParcelableArrayList("question");
+
+
         setQuestionAdapter();
+
+
 
     }
 
