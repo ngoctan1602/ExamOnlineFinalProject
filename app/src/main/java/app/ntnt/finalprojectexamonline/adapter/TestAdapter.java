@@ -66,30 +66,41 @@ public class TestAdapter extends Adapter<TestAdapter.TopicViewHolder> {
         float percent = (test.getScore() * 10);
         holder.tvPercent.setText(String.valueOf(percent) + " %");
 
-        BaseAPIService.createService(ITestService.class).getTestById(test.getTestId()).enqueue(new Callback<ResponseEntity>() {
-            @Override
-            public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
-                Object object;
-                object = AppConstrain.toObject(response.body().getData(), TestResponse.class);
+        holder.tvName.setText(test.getTestName());
+        holder.tvTime.setText(String.valueOf(test.getTimeInTest()) + " phút");
+        holder.tvDateComplete.setText(test.getTime());
 
-                testResponse = (TestResponse) object;
-                holder.tvName.setText(testResponse.getTestName());
-                holder.tvTime.setText(String.valueOf(testResponse.getTime())+" phút");
-                holder.tvDateComplete.setText(testResponse.getDateCreate());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseEntity> call, Throwable t) {
-                Log.d("TAG", "onResponse: failed");
-            }
-        });
+//        BaseAPIService.createService(ITestService.class).getTestById(test.getTestId()).enqueue(new Callback<ResponseEntity>() {
+//            @Override
+//            public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+//
+//                if(response.body().isError()==false) {
+//
+//                    Object object;
+//                    object = AppConstrain.toObject(response.body().getData(), TestResponse.class);
+//
+//                    testResponse = (TestResponse) object;
+//                    if (testResponse != null) {
+//                        holder.tvName.setText(testResponse.getTestName());
+//                        holder.tvTime.setText(String.valueOf(testResponse.getTime()) + " phút");
+//                        holder.tvDateComplete.setText(testResponse.getDateCreate());
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseEntity> call, Throwable t) {
+//                Log.d("TAG", "onResponse: failed");
+//            }
+//        });
         holder.progressBar.setProgress((int) percent);
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context.getContext(), LoadHistoryQuestionActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("nameTest",testResponse.getTestName());
+                bundle.putString("nameTest",test.getTestName());
                 bundle.putLong("hisItem",test.getHisId());
                 bundle.putLong("testId",test.getTestId());
                 intent.putExtras(bundle);
