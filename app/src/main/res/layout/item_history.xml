@@ -3,24 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginStart="10dp"
-    app:cardBackgroundColor="#17BDBB"
-    >
+    app:cardBackgroundColor="#909CC8">
 
    <LinearLayout
        android:id="@+id/llt_item_history"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       >
+       android:orientation="horizontal">
 
       <RelativeLayout
-          android:layout_width="128dp"
+          android:layout_width="100dp"
           android:layout_height="match_parent"
-          android:layout_marginEnd="8dp"
-          >
+          android:layout_marginEnd="8dp">
 
          <ProgressBar
              android:id="@+id/pbr_complete"
@@ -43,13 +40,13 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_below="@id/pbr_complete"
-             android:layout_centerInParent="true"
              android:layout_alignParentTop="true"
+             android:layout_centerInParent="true"
              android:layout_marginTop="12dp"
-             android:textColor="#ffff"
              android:text="2%"
-             android:textStyle="bold"
-             android:textSize="8sp" />
+             android:textColor="#6a5ae0"
+             android:textSize="8sp"
+             android:textStyle="bold" />
 
          <TextView
              android:id="@+id/txt_date_complete_history"
@@ -58,30 +55,33 @@
              android:layout_below="@+id/pbr_complete"
              android:layout_centerInParent="true"
              android:paddingLeft="4dp"
-             android:textStyle="bold"
              android:text="29/3/2023"
-             android:textColor="#ffff"
-             android:textSize="12sp" />
+             android:textColor="#6a5ae0"
+             android:textSize="12sp"
+             android:textStyle="bold" />
       </RelativeLayout>
+
       <RelativeLayout
           android:layout_width="1dp"
           android:layout_height="match_parent"
-          android:background="#ffff"
-          android:layout_marginEnd="8dp">
+          android:layout_marginEnd="1dp"
+          android:background="#edebfc">
 
       </RelativeLayout>
 
       <RelativeLayout
           android:layout_width="match_parent"
-          android:layout_height="match_parent">
+          android:layout_height="match_parent"
+         android:background="#edebfc">
 
          <TextView
              android:id="@+id/tv_nameExam"
              android:layout_width="wrap_content"
-             android:textColor="#ffff"
              android:layout_height="wrap_content"
              android:gravity="center"
-             android:text="Đề thi Trung học phổ thông quốc gia năm 2023 - Đề số 1" />
+             android:text="Đề thi Trung học phổ thông quốc gia năm 2023 - Đề số 1"
+             android:textColor="#6a5ae0"
+             android:textStyle="bold" />
 
 
          <ImageView
@@ -102,7 +102,7 @@
              android:layout_marginTop="8dp"
              android:layout_toEndOf="@+id/img_timer"
              android:text="45 phút"
-             android:textColor="#ffff" />
+             android:textColor="#6a5ae0" />
 
          <TextView
              android:id="@+id/tvNumberUserTest"
