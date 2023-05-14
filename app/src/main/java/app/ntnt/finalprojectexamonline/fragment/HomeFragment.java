@@ -30,7 +30,9 @@ import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.entites.User;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.model.response.SubjectResponse;
+import app.ntnt.finalprojectexamonline.model.response.TestResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
+import app.ntnt.finalprojectexamonline.services.IStatisticService;
 import app.ntnt.finalprojectexamonline.services.ISubjectService;
 import app.ntnt.finalprojectexamonline.services.IUserService;
 import app.ntnt.finalprojectexamonline.slider.SliderAdapter;
@@ -49,6 +51,7 @@ public class HomeFragment extends Fragment {
     CircleImageView avatar;
     RecyclerView rcvSubject;
     RecyclerView rcvTest;
+    RecyclerView recyclerView;
     List<Subject> subjects;
     SliderAdapter sliderAdapter;
     List<TestInfor> testInforList;
@@ -86,6 +89,7 @@ public class HomeFragment extends Fragment {
             }
         });
         autoSlider();
+        loadFeatureTest();
 
         //Set name user
         BaseAPIService.createService(IUserService.class).getProfile()
@@ -169,6 +173,32 @@ public class HomeFragment extends Fragment {
                         Log.d("erroeee rồi", t.getMessage().toString());
                     }
                 });
+    }
+
+    void loadFeatureTest()
+    {
+        testInforAdapter = new TestInforAdapter(this);
+        GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
+        rcvTest.setLayoutManager(gridLayoutManager);
+        BaseAPIService.createService(IStatisticService.class).getFeatureTest(0,5).enqueue(new Callback<ResponseEntity>() {
+            @Override
+            public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                Log.d("TAG", "onResponse: thành công");
+                List<Object> objects;
+                objects = AppConstrain.objectList(response.body().getData(), TestResponse.class);
+                List<TestResponse> testResponses = new ArrayList<>();
+                for (Object i: objects){
+                    testResponses.add((TestResponse) i);
+                }
+                testInforAdapter.setData(testResponses);
+                rcvTest.setAdapter(testInforAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEntity> call, Throwable t) {
+                Log.d("TAG", "onResponse: thất bại");
+            }
+        });
     }
 
     private void init(View view)

@@ -162,34 +162,36 @@ public class LoadQuestionActivity extends AppCompatActivity {
         BaseAPIService.createService(IHistoryService.class).finishTest(historyRequest).enqueue(new Callback<ResponseEntity>() {
             @Override
             public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
-//                if(response.body().isError())
-//                    Log.d("TAG", "onResponse: failed");
-//                else
-//                    Toast.makeText(LoadQuestionActivity.this, "Bạn đã hoàn thành bài thi", Toast.LENGTH_SHORT).show();
 
-                Dialog dialog = new Dialog(LoadQuestionActivity.this);
-
-                // Set the custom layout for the dialog
-                dialog.setContentView(R.layout.finish_test);
-
-                // Find any views you need to work with in the layout
-//                TextView titleTextView = dialog.findViewById(R.id.dialog_title);
-//                EditText inputEditText = dialog.findViewById(R.id.dialog_input);
-                Button btnWatchLater = dialog.findViewById(R.id.btn_watch_later);
-                Button btnWatchNow = dialog.findViewById(R.id.btn_watch_now);
-                btnWatchLater.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(LoadQuestionActivity.this,HomeActivity.class));
-                    }
-                });
-                btnWatchNow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Gọi đến activity xem đáp án
-                    }
-                });
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoadQuestionActivity.this);
+                builder.setMessage("Cảm ơn bạn đã thực hiện bài thi. Bạn có thể xem số điểm và câu trả lời ở phần lịch sử")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivity(new Intent(LoadQuestionActivity.this,HomeActivity.class));
+                            }
+                        });
+                AlertDialog dialog = builder.create();
                 dialog.show();
+
+
+//                Dialog dialog = new Dialog(LoadQuestionActivity.this);
+//                dialog.setContentView(R.layout.finish_test);
+//
+//                Button btnWatchLater = dialog.findViewById(R.id.btn_watch_later);
+//                Button btnWatchNow = dialog.findViewById(R.id.btn_watch_now);
+//                btnWatchLater.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        startActivity(new Intent(LoadQuestionActivity.this,HomeActivity.class));
+//                    }
+//                });
+//                btnWatchNow.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //Gọi đến activity xem đáp án
+//                    }
+//                });
+//                dialog.show();
             }
 
             @Override
@@ -203,34 +205,42 @@ public class LoadQuestionActivity extends AppCompatActivity {
         BaseAPIService.createService(ITestService.class).getTestById(testId).enqueue(new Callback<ResponseEntity>() {
             @Override
             public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
-                Log.d("TAG", "onResponse: succees");
-                if (response.body().isError() == false) {
-                    Object objects;
-                    objects = AppConstrain.toObject(response.body().getData(), TestResponse.class);
-                    TestResponse testResponse = (TestResponse) objects;
 
-                    questionResponses = testResponse.getQuestions();
-                    List<List<AnswerResponse>> answerResponses = new ArrayList<>();
-                    for (QuestionResponse questionResponse : questionResponses) {
-                        answerResponses.add(questionResponse.getAnswers());
-                    }
-                    size = questionResponses.size();
-                    timeLeftInMillis = testResponse.getTime() * 60000;
-
-                    //Thử
-                    newQuestionResponse = new ArrayList<NewQuestionResponse>();
-
-                    for (QuestionResponse questionResponse : questionResponses) {
-                        newQuestionResponse.add(new NewQuestionResponse(questionResponse, -1L));
-                    }
-
-                    LoadQuestionAdapter viewPagerAdapter = new LoadQuestionAdapter(LoadQuestionActivity.this, newQuestionResponse, answerResponses);
+                if(response.body()!=null) {
 
 
-                    //
+                    if (response.body().isError() == false) {
+                        Object objects;
+                        objects = AppConstrain.toObject(response.body().getData(), TestResponse.class);
+                        TestResponse testResponse = (TestResponse) objects;
+
+                        questionResponses = testResponse.getQuestions();
+                        List<List<AnswerResponse>> answerResponses = new ArrayList<>();
+                        for (QuestionResponse questionResponse : questionResponses) {
+                            answerResponses.add(questionResponse.getAnswers());
+                        }
+                        size = questionResponses.size();
+                        timeLeftInMillis = testResponse.getTime() * 60000;
+
+                        //Thử
+                        newQuestionResponse = new ArrayList<NewQuestionResponse>();
+
+                        for (QuestionResponse questionResponse : questionResponses) {
+                            newQuestionResponse.add(new NewQuestionResponse(questionResponse, -1L));
+                        }
+
+                        LoadQuestionAdapter viewPagerAdapter = new LoadQuestionAdapter(LoadQuestionActivity.this, newQuestionResponse, answerResponses);
+
+
+                        //
 
 //                    LoadQuestionAdapter viewPagerAdapter = new LoadQuestionAdapter(LoadQuestionActivity.this, questionResponses, answerResponses);
-                    viewPager.setAdapter(viewPagerAdapter);
+                        viewPager.setAdapter(viewPagerAdapter);
+                    }
+                }
+                else {
+                    Toast.makeText(LoadQuestionActivity.this, "Bài thi đã bị xóa khỏi hệ thống, chỉ có thể xem thống kê cũ", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoadQuestionActivity.this,HomeActivity.class));
                 }
             }
 
