@@ -3,63 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginStart="10dp"
-    app:cardBackgroundColor="#17BDBB"
-    >
+    app:cardBackgroundColor="#E2DFF4">
 
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="100dp"
        android:orientation="horizontal"
-       android:padding="10dp"
-       >
-
+       android:padding="10dp">
 
 
       <RelativeLayout
           android:id="@+id/rlt_item_test"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          >
+          android:layout_height="match_parent">
+
 
          <TextView
              android:id="@+id/tv_nameExam_test"
-             android:layout_width="match_parent"
-             android:textColor="#ffff"
-             android:gravity="center"
+             android:layout_width="318dp"
              android:layout_height="wrap_content"
-             android:text="Đề thi Trung học phổ thông quốc gia năm 2023 - Đề số 1" />
+             android:layout_alignParentTop="true"
+             android:layout_alignParentEnd="true"
+             android:layout_marginTop="9dp"
+             android:layout_marginEnd="11dp"
+             android:gravity="center"
+             android:text="Đề thi Trung học phổ thông quốc gia năm 2023"
+             android:textColor="#ffff" />
 
          <ImageView
              android:id="@+id/img_subject_test"
              android:layout_width="30dp"
              android:layout_height="35dp"
+             android:layout_below="@+id/tv_nameExam_test"
+             android:layout_alignParentStart="true"
+             android:layout_marginStart="6dp"
              android:layout_marginLeft="80dp"
-             android:layout_below="@+id/tv_nameExam_test"
+             android:layout_marginTop="-29dp"
              android:src="@drawable/baseline_menu_book_24" />
-
-         <TextView
-             android:id="@+id/tv_nameSubject_test"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_below="@+id/tv_nameExam_test"
-             android:layout_centerInParent="true"
-             android:layout_marginStart="7dp"
-             android:layout_marginTop="6dp"
-             android:textColor="#ffff"
-             android:layout_toEndOf="@+id/img_subject_test"
-             android:text="Toán" />
-
 
          <ImageView
              android:id="@+id/img_timer_test"
-             android:layout_width="30dp"
-             android:layout_height="40dp"
+             android:layout_width="66dp"
+             android:layout_height="34dp"
              android:layout_below="@+id/tv_nameExam_test"
-             android:layout_marginStart="8dp"
-             android:layout_toEndOf="@+id/tv_nameSubject_test"
+             android:layout_alignParentStart="true"
+             android:layout_marginStart="240dp"
+             android:layout_marginTop="12dp"
+             android:layout_marginEnd="-3dp"
+             android:layout_toStartOf="@+id/tv_time_test"
              android:src="@drawable/baseline_access_time_24" />
 
          <TextView
@@ -67,32 +61,11 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_below="@+id/tv_nameExam_test"
-             android:layout_centerInParent="true"
-             android:layout_marginStart="4dp"
-             android:layout_marginTop="8dp"
-             android:layout_toEndOf="@+id/img_timer_test"
+             android:layout_alignParentEnd="true"
+             android:layout_centerVertical="true"
+             android:layout_marginTop="20dp"
+             android:layout_marginEnd="26dp"
              android:text="45 phút"
-             android:textColor="#ffff" />
-
-         <ImageView
-             android:id="@+id/img_author"
-             android:layout_width="30dp"
-             android:layout_height="40dp"
-             android:layout_below="@+id/img_subject_test"
-
-             android:layout_marginLeft="80dp"
-             android:src="@drawable/baseline_person_24" />
-
-         <TextView
-             android:id="@+id/tv_author"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_below="@+id/img_subject_test"
-             android:layout_centerInParent="true"
-             android:layout_marginStart="4dp"
-             android:layout_marginTop="6dp"
-             android:layout_toEndOf="@+id/img_author"
-             android:text="Nguyễn Văn A"
              android:textColor="#ffff" />
 
          <ImageView
@@ -100,8 +73,9 @@
              android:layout_width="30dp"
              android:layout_height="40dp"
              android:layout_below="@+id/img_subject_test"
-             android:layout_marginStart="4dp"
-             android:layout_toEndOf="@+id/tv_author"
+             android:layout_alignParentStart="true"
+             android:layout_marginStart="98dp"
+             android:layout_marginTop="2dp"
              android:src="@drawable/baseline_calendar_month_24" />
 
          <TextView
@@ -110,8 +84,8 @@
              android:layout_height="wrap_content"
              android:layout_below="@+id/img_subject_test"
              android:layout_centerInParent="true"
-             android:layout_marginStart="4dp"
-             android:layout_marginTop="6dp"
+             android:layout_marginStart="12dp"
+             android:layout_marginTop="13dp"
              android:layout_toEndOf="@+id/img_datecreated"
              android:text="22/3/2023"
              android:textColor="#ffff" />

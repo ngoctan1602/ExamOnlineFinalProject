@@ -50,7 +50,7 @@
             android:layout_marginTop="-31dp"
             android:layout_marginEnd="64dp">
 
-            <EditText
+            <TextView
                 android:id="@+id/tvFullName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,13 +63,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <TextView
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:text="tanntn29@gmail.com"
                 android:textColor="#ffff"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
             android:layout_height="57dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-
+            android:contentDescription="Log out"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="340dp"
@@ -95,8 +95,8 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="331dp"
-        android:layout_height="413dp"
+        android:layout_width="314dp"
+        android:layout_height="401dp"
         android:layout_margin="8dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/white_background"
@@ -158,29 +158,7 @@
 
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_width="133dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Địa chỉ"
-                    android:textColor="#5917e1"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/dc"
-                    android:layout_width="220dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Khánh Hòa"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#5b5b5b"
-
-                    android:textSize="18sp" />
-            </LinearLayout>
+                android:orientation="horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,7 +175,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvPhoneNumber"
+                    android:id="@+id/sdt"
                     android:layout_width="254dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -207,7 +185,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/sdt"
+                    android:id="@+id/tvPhoneNumber"
                     android:layout_width="188dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -231,7 +209,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvGender"
+                    android:id="@+id/gt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -241,7 +219,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/gt"
+                    android:id="@+id/tvGender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -263,62 +241,14 @@
 
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvNumberTest"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Số bài đã thi"
-                    android:textColor="#5917e1"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/so_bt"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="20"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#5b5b5b"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_margin="10dp"
-                android:background="#585858"></LinearLayout>
+                android:orientation="horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
 
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvSumScore"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Số điểm tích lũy"
-                    android:textColor="#5917e1"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/so_diem"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="3000"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#5b5b5b"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                android:orientation="horizontal" />
 
         </LinearLayout>
 

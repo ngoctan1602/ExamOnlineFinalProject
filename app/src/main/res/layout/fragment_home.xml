@@ -15,26 +15,27 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="1000dp">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="560dp"
+            android:layout_height="720dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="286dp"
+            android:layout_marginTop="280dp"
             android:layout_marginBottom="0dp"
             android:background="@drawable/background_main_manu">
 
             <RelativeLayout
 
                 android:id="@+id/relativeLayout2"
-                android:layout_width="409dp"
-                android:layout_height="512dp"
+                android:layout_width="404dp"
+                android:layout_height="470dp"
                 android:layout_marginTop="228dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,9 +65,9 @@
                 <ImageView
                     android:id="@+id/imageView9"
                     android:layout_width="match_parent"
-                    android:layout_height="243dp"
+                    android:layout_height="154dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="164dp"
+                    android:layout_marginBottom="80dp"
                     android:src="@drawable/img_1" />
 
             </RelativeLayout>
@@ -138,8 +139,14 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_avt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="159dp"
+                android:layout_height="104dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
                 android:src="@drawable/pic6" />
 
             <TextView

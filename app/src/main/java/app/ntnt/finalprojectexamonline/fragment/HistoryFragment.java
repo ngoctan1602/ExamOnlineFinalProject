@@ -45,9 +45,10 @@ public class HistoryFragment extends Fragment {
         testAdapter = new TestAdapter(this);
         GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-      BaseAPIService.createService(IHistoryService.class).getHisTory(
-              SharedPrefManager.getInstance(getContext()).getUserId()
-      ).enqueue(new Callback<ResponseEntity>() {
+
+
+      BaseAPIService.createService(IHistoryService.class).getHisTory(SharedPrefManager.getInstance(getContext()).getUserId()).enqueue(new Callback<ResponseEntity>() {
+
           @Override
           public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
 
