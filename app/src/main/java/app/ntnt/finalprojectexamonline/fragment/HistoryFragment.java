@@ -41,11 +41,11 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_history, container, false);
         recyclerView = view.findViewById(R.id.rcv_exam_complete);
-
+        Long userId =SharedPrefManager.getInstance(getContext()).getUserId();
         testAdapter = new TestAdapter(this);
         GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-      BaseAPIService.createService(IHistoryService.class).getHisTory(SharedPrefManager.getInstance(getContext()).getUserId()).enqueue(new Callback<ResponseEntity>() {
+      BaseAPIService.createService(IHistoryService.class).getHisTory(3L).enqueue(new Callback<ResponseEntity>() {
           @Override
           public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
 

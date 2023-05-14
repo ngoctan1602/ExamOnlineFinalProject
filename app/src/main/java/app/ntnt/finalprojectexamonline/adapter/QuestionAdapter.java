@@ -98,18 +98,19 @@ public class QuestionAdapter extends Adapter<QuestionAdapter.TopicViewHolder> {
         }
         if (b == true) {
             Glide.with(contextQues).load(question.getImage()).into(holder.imgQuestion);
-        }
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (b == false) {
-                    Intent intent = new Intent(context, AnswerActivity.class);
-                    Bundle bundle = new Bundle();
-                    startActivity(context, intent, bundle);
-                }
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (b == false) {
+                        Intent intent = new Intent(contextQues, AnswerActivity.class);
+                        Bundle bundle = new Bundle();
+                        startActivity(contextQues, intent, bundle);
+                    }
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
 

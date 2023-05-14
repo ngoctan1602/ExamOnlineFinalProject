@@ -44,4 +44,8 @@ public interface ISubjectService {
     @GET("subject")
     Call<ResponseEntity> getAllSubject();
 
+    @GET("subject/getSubjectByUserId")
+    Call<ResponseEntity> getSubjectByUserId(@Query("userId") long userId);
+
+
 }
