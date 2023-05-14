@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -35,6 +37,7 @@ import app.ntnt.finalprojectexamonline.slider.SliderAdapter;
 import app.ntnt.finalprojectexamonline.slider.SliderItem;
 import app.ntnt.finalprojectexamonline.utils.AppConstrain;
 import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +46,7 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
     SubjectAdpater subjectAdapter;
     TestInforAdapter testInforAdapter;
+    CircleImageView avatar;
     RecyclerView rcvSubject;
     RecyclerView rcvTest;
     List<Subject> subjects;
@@ -92,6 +96,7 @@ public class HomeFragment extends Fragment {
                             if (!response.body().isError()){
                                 User user = (User) AppConstrain.toObject(response.body().getData(), User.class);
                                 tvNameUser.setText(user.getFirstName()+ " " + user.getLastName());
+                                Glide.with(view).load(user.getAvatar()).into(avatar);
                             }
                         }
                         if (response.errorBody()!= null){
@@ -172,6 +177,7 @@ public class HomeFragment extends Fragment {
         rcvSubject = view.findViewById(R.id.rcv_subject_home);
         rcvTest =view.findViewById(R.id.rcv_featured_exam);
         viewPager2= view.findViewById(R.id.view_rounded_image);
+        avatar = view.findViewById(R.id.img_avt);
     }
     private List<SliderItem> getAllItem()
     {
