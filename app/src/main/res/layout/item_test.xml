@@ -31,7 +31,9 @@
              android:layout_marginEnd="11dp"
              android:gravity="center"
              android:text="Đề thi Trung học phổ thông quốc gia năm 2023"
-             android:textColor="#ffff" />
+             android:textColor="#6a5ae0"
+             android:textSize="15sp"
+             android:textStyle="bold" />
 
          <ImageView
              android:id="@+id/img_subject_test"
@@ -66,7 +68,7 @@
              android:layout_marginTop="20dp"
              android:layout_marginEnd="26dp"
              android:text="45 phút"
-             android:textColor="#ffff" />
+             android:textColor="#6a5ae0" />
 
          <ImageView
              android:id="@+id/img_datecreated"
@@ -88,7 +90,7 @@
              android:layout_marginTop="13dp"
              android:layout_toEndOf="@+id/img_datecreated"
              android:text="22/3/2023"
-             android:textColor="#ffff" />
+             android:textColor="#6a5ae0" />
       </RelativeLayout>
 
 
