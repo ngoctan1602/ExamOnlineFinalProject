@@ -31,6 +31,7 @@ import app.ntnt.finalprojectexamonline.model.entites.Subject;
 import app.ntnt.finalprojectexamonline.model.entites.User;
 import app.ntnt.finalprojectexamonline.model.response.DeleteResponse;
 import app.ntnt.finalprojectexamonline.model.response.RespRegister;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
 import app.ntnt.finalprojectexamonline.model.response.SubjectDataResponse;
 import app.ntnt.finalprojectexamonline.model.response.SubjectResponse;
 import app.ntnt.finalprojectexamonline.services.BaseAPIService;
@@ -74,6 +75,19 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
             }
         });
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                subjectAdpater.filter(newText);
+                return true;
+            }
+        });
+
         return view;
     }
 
@@ -113,6 +127,7 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
                 Log.d("s", "lỗi");
             }
         });
+
     }
 
     private void init(View view)
@@ -120,6 +135,7 @@ public class TeacherHomeFragment extends Fragment implements UploadImageFragment
         recyclerView = view.findViewById(R.id.rcv_subject_home_teacher);
         searchView = view.findViewById(R.id.search_subject);
         imageViewAdd = view.findViewById(R.id.img_addSubject);
+        searchView = view.findViewById(R.id.search_subject);
     }
     public void addSubject(String name)
     {

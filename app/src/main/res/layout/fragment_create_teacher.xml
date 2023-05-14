@@ -27,30 +27,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="20dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/llt_randomtest"
-                android:orientation="vertical"
-                android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:src="@drawable/random"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tạo đề thi ngẫu nhiên"
-                    android:gravity="center"
-                    android:textSize="16dp"
-                    android:textColor="#ffff"
-                    android:layout_weight="1"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

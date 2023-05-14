@@ -45,7 +45,10 @@ public class HistoryFragment extends Fragment {
         testAdapter = new TestAdapter(this);
         GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+
       BaseAPIService.createService(IHistoryService.class).getHisTory(SharedPrefManager.getInstance(getContext()).getUserId()).enqueue(new Callback<ResponseEntity>() {
+
           @Override
           public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
 
@@ -74,27 +77,7 @@ public class HistoryFragment extends Fragment {
           }
       });
 
-
         return view;
     }
 
-//    private void loadDataTest()
-//    {
-//        testAdapter = new TestAdapter(this);
-//        GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        testAdapter.setData(getFeaturedExam());
-//        recyclerView.setAdapter(testAdapter);
-//    }
-//
-//    private List<Test> getFeaturedExam() {
-//        tests = new ArrayList<>();
-//        for(int i=0;i<=10;i++)
-//        {
-//            Test test = new Test(1,"Đề quốc gia",8,"Toán",45,1);
-//            tests.add(test);
-//        }
-//
-//        return tests;
-//    }
 }
