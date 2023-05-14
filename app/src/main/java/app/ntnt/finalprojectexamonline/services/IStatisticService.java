@@ -13,4 +13,9 @@ public interface IStatisticService {
     @GET("statistic/test/inTest")
     Call<ResponseEntity> getHighScore(@Query("testId") Long testId);
 
+
+    @GET("statistic/test")
+    Call<ResponseEntity> getFeatureTest(@Query("index") int index,@Query("size") int size);
+
+
 }

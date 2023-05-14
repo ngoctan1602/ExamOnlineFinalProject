@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.io.Serializable;
 
 import app.ntnt.finalprojectexamonline.R;
+import app.ntnt.finalprojectexamonline.activity.UpdateAvatar;
 import app.ntnt.finalprojectexamonline.activity.UpdateProfileActivity;
 import app.ntnt.finalprojectexamonline.model.entites.User;
 import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
@@ -49,6 +50,13 @@ public class AccountFragment extends Fragment {
         return view;
     }
     private void setEvent(){
+
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), UpdateAvatar.class));
+            }
+        });
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

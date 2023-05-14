@@ -88,6 +88,8 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
                 {
                     Intent intent = new Intent(context.getContext(), LoadQuestionActivity.class);
                     Bundle bundle = new Bundle();
+                    bundle.putLong("testId", test.getTestId());
+                    intent.putExtras(bundle);
                     startActivity(context.getContext(),intent,bundle);
                 }
                else {

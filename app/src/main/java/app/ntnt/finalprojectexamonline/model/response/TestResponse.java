@@ -30,6 +30,13 @@ public class TestResponse implements Parcelable {
         time = in.readInt();
     }
 
+    public TestResponse(Long testId, String dateCreate, String testName, int time) {
+        this.testId = testId;
+        this.dateCreate = dateCreate;
+        this.testName = testName;
+        this.time = time;
+    }
+
     public static final Creator<TestResponse> CREATOR = new Creator<TestResponse>() {
         @Override
         public TestResponse createFromParcel(Parcel in) {

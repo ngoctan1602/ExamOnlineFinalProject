@@ -16,9 +16,10 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface IUserService {
-    @POST("updateAvatar")
+
     @Multipart
-    Call<String> updateAvatar(@Part MultipartBody.Part avatar);
+    @POST("updateAvatar")
+    Call<ResponseEntity> updateAvatar(@Part MultipartBody.Part avatar);
 
     @POST("updateProfile")
     Call<ResponseEntity> updateProfile(@Body UserRequest userRequest);

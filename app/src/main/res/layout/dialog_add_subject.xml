@@ -28,11 +28,11 @@
 
     <RelativeLayout
         android:id="@+id/rlt_dialog_imgSubject"
-        android:layout_marginTop="4dp"
-        android:layout_below="@+id/rlt_dialog_text"
         android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@+id/rlt_dialog_text"
         android:layout_centerInParent="true"
-        android:layout_height="150dp">
+        android:layout_marginTop="4dp">
 
         <FrameLayout
 
