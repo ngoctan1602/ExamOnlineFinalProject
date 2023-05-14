@@ -30,4 +30,8 @@ public interface IQuestionService {
     @GET("question/inTopic")
     Call<ResponseEntity> getQuestionByTopicId(@Query("topicId") Long topicId);
 
+    @GET("question/del")
+    Call<ResponseEntity> deleteQuestionById(@Query("questionId") Long topicId);
+
+
 }

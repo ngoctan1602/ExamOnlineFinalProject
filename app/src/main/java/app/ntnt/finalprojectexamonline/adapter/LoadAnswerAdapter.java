@@ -42,7 +42,7 @@ public class LoadAnswerAdapter extends Adapter<LoadAnswerAdapter.TopicViewHolder
     @Override
     public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_anwser, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_delete_anwser, parent, false);
         return new TopicViewHolder(view);
     }
 
@@ -73,8 +73,8 @@ public class LoadAnswerAdapter extends Adapter<LoadAnswerAdapter.TopicViewHolder
         public TopicViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvNameAnswer = itemView.findViewById(R.id.tv_answer_content);
-            relativeLayout= itemView.findViewById(R.id.rlt_load_answer);
+            tvNameAnswer = itemView.findViewById(R.id.tv_load_answer_content);
+            relativeLayout= itemView.findViewById(R.id.rlt_load_answer_adapter);
 
         }
     }

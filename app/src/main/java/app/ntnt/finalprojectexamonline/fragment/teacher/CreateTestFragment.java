@@ -19,12 +19,19 @@ import app.ntnt.finalprojectexamonline.R;
 import app.ntnt.finalprojectexamonline.activity.test.AddTestActivity;
 import app.ntnt.finalprojectexamonline.adapter.TestAdapter;
 import app.ntnt.finalprojectexamonline.model.entites.Test;
+import app.ntnt.finalprojectexamonline.model.response.ResponseEntity;
+import app.ntnt.finalprojectexamonline.services.BaseAPIService;
+import app.ntnt.finalprojectexamonline.services.ISubjectService;
+import app.ntnt.finalprojectexamonline.utils.SharedPrefManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CreateTestFragment extends Fragment {
     RecyclerView recyclerView;
     TestAdapter testAdapter;
-    LinearLayout randomTest,addTest;
+    LinearLayout addTest;
     SearchView search_test;
     List<Test> tests;
 
@@ -42,36 +49,31 @@ public class CreateTestFragment extends Fragment {
                 startActivity(intent);
             }
         });
-//        recyclerView = view.findViewById(R.id.rcv_exam_complete);
-//        loadDataTest();
         return view;
     }
 
-    private void loadDataTest()
-    {
-//        testAdapter = new TestAdapter(this);
-//        GridLayoutManager gridLayoutManager= new GridLayoutManager(getContext(),1, GridLayoutManager.VERTICAL,false);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        testAdapter.setData(getFeaturedExam());
-//        recyclerView.setAdapter(testAdapter);
-    }
-
-    private List<Test> getFeaturedExam() {
-        tests = new ArrayList<>();
-        for(int i=0;i<=10;i++)
-        {
-            Test test = new Test(1,"Đề quốc gia",8,"Toán",45,1);
-            tests.add(test);
-        }
-
-        return tests;
-    }
 
     private void init(View view)
     {
         search_test = view.findViewById(R.id.search_test);
         recyclerView = view.findViewById(R.id.rcv_test_created);
-        randomTest = view.findViewById(R.id.llt_randomtest);
         addTest = view.findViewById(R.id.llt_addTest);
+    }
+
+    private void LoadDataAdapter()
+    {
+        BaseAPIService.createService(ISubjectService.class)
+                .getSubjectByUserId(SharedPrefManager.getInstance(getContext()).getUserId())
+                .enqueue(new Callback<ResponseEntity>() {
+                    @Override
+                    public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseEntity> call, Throwable t) {
+
+                    }
+                });
     }
 }

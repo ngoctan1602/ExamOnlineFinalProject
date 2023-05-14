@@ -1,10 +1,12 @@
 package app.ntnt.finalprojectexamonline.activity.test;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +36,7 @@ public class QuestionActivity extends AppCompatActivity {
     QuestionAdapter questionAdapter;
     List<QuestionResponse> questions;
     ImageView imageView;
+    Long topicId;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,7 +48,7 @@ public class QuestionActivity extends AppCompatActivity {
         imageView = findViewById(R.id.img_addQuestion);
 
         Bundle bundle = getIntent().getExtras();
-        Long topicId = bundle.getLong("topicId");
+        topicId = bundle.getLong("topicId");
 
         Log.d("TAG", "onCreate: "+topicId);
         setQuestionAdapter(topicId);
@@ -68,7 +71,6 @@ public class QuestionActivity extends AppCompatActivity {
         questionAdapter = new QuestionAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         BaseAPIService.createService(IQuestionService.class).getQuestionByTopicId(idTopic).enqueue(new Callback<ResponseEntity>() {
             @Override
             public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
@@ -98,6 +100,51 @@ public class QuestionActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    public void updateData(Long questionId)
+    {
+        Log.d("TAG", "onClick: xóa câu hỏi");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận");
+        builder.setMessage("Bạn có chắc chắn muốn xóa ?");
+        builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BaseAPIService.createService(IQuestionService.class)
+                        .deleteQuestionById(questionId)
+                        .enqueue(new Callback<ResponseEntity>() {
+                            @Override
+                            public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
+                                if(response.body().isError())
+                                {
+                                    Log.d("TAG", "onResponse: lỗi khi xóa");
+                                }
+
+                                setQuestionAdapter(topicId);
+
+                                Log.d("TAG", "onResponse: thành công");
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseEntity> call, Throwable t) {
+                                Log.d("TAG", "onResponse: lỗi gọi api");
+                            }
+                        });
+            }
+        });
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Code xử lý khi người dùng chọn Hủy
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+
     }
 
 }
