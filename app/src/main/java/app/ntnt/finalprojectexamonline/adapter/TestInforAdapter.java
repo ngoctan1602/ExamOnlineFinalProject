@@ -169,9 +169,7 @@ public class TestInforAdapter extends Adapter<TestInforAdapter.TopicViewHolder> 
         public TopicViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_nameExam_test);
-            tvTime = itemView.findViewById(R.id.tv_time_test);
-            tvNameSubject = itemView.findViewById(R.id.tv_nameSubject_test);
-            tvNameAuthor = itemView.findViewById(R.id.tv_author);
+            tvTime = itemView.findViewById(R.id.tv_time_test);;
             tvDateCreated = itemView.findViewById(R.id.tv_datecreated);
             relativeLayout =itemView.findViewById(R.id.rlt_item_test);
 

@@ -33,7 +33,7 @@ import retrofit2.Response;
 
 public class AccountFragment extends Fragment {
     View view;
-    private TextView fullName, email, address, phoneNumber, gender, numberTest, sumScore;
+    private TextView fullName, email, phoneNumber, gender;
     private Button btnUpdateProfile, btnLogout;
     CircleImageView avatar;
     User user;
@@ -86,11 +86,10 @@ public class AccountFragment extends Fragment {
     private void renderData(User user){
         fullName.setText(user.getFirstName()+" "+user.getLastName());
         email.setText(user.getEmail());
-        address.setText("");
         phoneNumber.setText(user.getPhoneNumber());
         gender.setText(user.getGender());
         String avt = user.getAvatar();
-        Glide.with(view).load(user.getAvatar()).into(avatar);
+        Glide.with(view).load(user.getAvatar()).placeholder(R.drawable.pic6).into(avatar);
     }
 
     private void loadData (){
@@ -118,11 +117,8 @@ public class AccountFragment extends Fragment {
     private void init(){
         fullName = view.findViewById(R.id.tvFullName);
         email = view.findViewById(R.id.tvEmail);
-        address = view.findViewById(R.id.tvAddress);
         phoneNumber = view.findViewById(R.id.tvPhoneNumber);
         gender = view.findViewById(R.id.tvGender);
-        numberTest = view.findViewById(R.id.tvNumberTest);
-        sumScore = view.findViewById(R.id.tvSumScore);
         avatar = view.findViewById(R.id.avatar);
         btnLogout = view.findViewById(R.id.btnLogOut);
         btnUpdateProfile = view.findViewById(R.id.btnUpdate);
