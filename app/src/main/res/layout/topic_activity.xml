@@ -2,11 +2,18 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_700">
+    android:background="#edebfc">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="400dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@drawable/top_background1">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/img_addTopic"
@@ -17,12 +24,11 @@
             android:src="@android:drawable/ic_input_add" />
 
         <RelativeLayout
+            android:id="@+id/rlt_topic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rlt_topic"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp">
-
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
 
 
             <TextView
@@ -31,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Danh sách chủ đề môn Toán"
-                android:textColor="#ffff"
+                android:textColor="#000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -41,17 +47,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlt_topic"
-            android:layout_marginTop="-2dp"
-            >
+            android:background="@drawable/white_background"
+            android:layout_margin="12dp">
 
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_topic"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/bg_blue_corner_border_16"/>
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp" />
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
