@@ -257,6 +257,7 @@ public class LoadQuestionActivity extends AppCompatActivity {
         txtNext = findViewById(R.id.txt_next);
         txtSumQuestion = findViewById(R.id.txt_sumquestion);
         viewPager = findViewById(R.id.view_pager);
+
         submit = findViewById(R.id.btn_submit);
     }
 

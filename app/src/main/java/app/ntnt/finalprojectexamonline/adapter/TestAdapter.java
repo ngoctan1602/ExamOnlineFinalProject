@@ -100,6 +100,7 @@ public class TestAdapter extends Adapter<TestAdapter.TopicViewHolder> {
             public void onClick(View v) {
                 Intent intent = new Intent(context.getContext(), LoadHistoryQuestionActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt("status",test.getStatus());
                 bundle.putString("nameTest",test.getTestName());
                 bundle.putLong("hisItem",test.getHisId());
                 bundle.putLong("testId",test.getTestId());

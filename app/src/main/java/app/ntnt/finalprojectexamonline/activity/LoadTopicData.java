@@ -48,7 +48,7 @@ public class LoadTopicData extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Long subjectId = (Long) bundle.getSerializable("subjectId");
         String nameSubject = (String)bundle.getSerializable("nameSubject");
-        textView.setText("Danh sách chủ đề môn "+nameSubject);
+        textView.setText("Danh sách chủ đề "+nameSubject);
 
         setTopicAdapter(subjectId);
     }

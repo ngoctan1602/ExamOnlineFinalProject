@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,6 +65,7 @@ public class LoadHistoryQuestionActivity extends AppCompatActivity {
         Long hisItem = (Long) bundle.getLong("hisItem");
         Long testId = (Long) bundle.getLong("testId");
         String nameTest = (String) bundle.getString("nameTest");
+        int status = (int) bundle.getInt("status");
 
         textView.setText("Đang xem lại "+ nameTest);
 //        loadDataQuestion(testId);
@@ -157,12 +159,19 @@ public class LoadHistoryQuestionActivity extends AppCompatActivity {
                 builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        if(status==1)
+                        {
+                            Intent intent = new  Intent(LoadHistoryQuestionActivity.this,LoadQuestionActivity.class);
+                            Bundle bundle1 = new Bundle();
+                            bundle1.putLong("testId",testId);
+                            intent.putExtras(bundle1);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(LoadHistoryQuestionActivity.this, "Bài thi đã xóa khỏi hệ thống, bạn chỉ có thể xem lại", Toast.LENGTH_SHORT).show();
+                        }
 
-                        Intent intent = new  Intent(LoadHistoryQuestionActivity.this,LoadQuestionActivity.class);
-                        Bundle bundle1 = new Bundle();
-                        bundle1.putLong("testId",testId);
-                        intent.putExtras(bundle1);
-                        startActivity(intent);
+
                     }
                 });
                 builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -221,14 +230,15 @@ public class LoadHistoryQuestionActivity extends AppCompatActivity {
         txtNext = findViewById(R.id.txt_next);
         txtSumQuestion = findViewById(R.id.txt_sumquestion);
         viewPager = findViewById(R.id.view_pager);
+
         submit = findViewById(R.id.btn_submit);
 
         imageView = findViewById(R.id.imgtimmer);
-        imageView.setVisibility(View.GONE);
-        countdownText.setVisibility(View.GONE);
+        imageView.setVisibility(View.INVISIBLE);
+        countdownText.setVisibility(View.INVISIBLE);
 
         textView = findViewById(R.id.textView24);
-        submit.setText("Thi lại");
+//        submit.setText("Thi lại");
 
     }
 

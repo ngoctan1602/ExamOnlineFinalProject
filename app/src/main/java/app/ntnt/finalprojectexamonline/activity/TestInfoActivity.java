@@ -40,7 +40,7 @@ public class TestInfoActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Long topicId = (Long) bundle.getSerializable("topicId");
         String nameTopic = (String)bundle.getSerializable("nameTopic");
-        textView.setText("Danh sách chủ đề môn "+nameTopic);
+        textView.setText("Danh sách bài thi chủ đề "+nameTopic);
 
         recyclerView = findViewById(R.id.rcv_test);
         loadDataTest(topicId);
