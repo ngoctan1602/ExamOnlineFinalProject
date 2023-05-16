@@ -13,7 +13,6 @@
         tools:ignore="ScopedStorage" />
 
     <application
-        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -87,9 +86,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.test.AddTestActivity"
-            android:exported="true" />
-        <activity
-            android:name=".activity.ActivityIntro"
             android:exported="true" />
         <activity
             android:name=".activity.SplashActivity"
