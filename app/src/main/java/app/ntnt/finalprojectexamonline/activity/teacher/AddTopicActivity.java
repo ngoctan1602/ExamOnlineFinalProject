@@ -77,6 +77,7 @@ public class AddTopicActivity extends AppCompatActivity implements UploadImageFr
     private void addTopic(long subjectId)
     {
         MultipartBody.Part img = AppConstrain.toPart(this, mUri);
+        Log.d("TAG", "addTopic: "+mUri.toString());
         Log.d("TAG", "onResponse: "+ SharedPrefManager.getInstance(AddTopicActivity.this).getAuthToken().getToken().toString());
         RequestBody name = RequestBody.create(MediaType.parse("multipart/form-data"), editText.getText().toString());
         RequestBody idSubject = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(subjectId));

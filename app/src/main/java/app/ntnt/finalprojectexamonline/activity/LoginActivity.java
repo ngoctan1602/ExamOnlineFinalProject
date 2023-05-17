@@ -92,9 +92,6 @@ public class LoginActivity extends AppCompatActivity {
 //                              SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUsername());
                                 SharedPrefManager.getInstance(getApplicationContext()).saveUser(authResponse.getUserId());
 
-
-
-
                                 if(authResponse.getRoles().get(0).toString().equals("ROLE_student"))
                                 {
                                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
