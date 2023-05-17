@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     SubjectAdpater subjectAdapter;
     TestInforAdapter testInforAdapter;
     CircleImageView avatar;
+    SearchView searchView;
     RecyclerView rcvSubject;
     RecyclerView rcvTest;
     RecyclerView recyclerView;
@@ -90,6 +92,7 @@ public class HomeFragment extends Fragment {
         });
         autoSlider();
         loadFeatureTest();
+
 
         //Set name user
         BaseAPIService.createService(IUserService.class).getProfile()
@@ -208,6 +211,7 @@ public class HomeFragment extends Fragment {
         rcvTest =view.findViewById(R.id.rcv_featured_exam);
         viewPager2= view.findViewById(R.id.view_rounded_image);
         avatar = view.findViewById(R.id.img_avt);
+
     }
     private List<SliderItem> getAllItem()
     {

@@ -2,6 +2,7 @@ package app.ntnt.finalprojectexamonline.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ public class ResetPassword extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseEntity> call, Response<ResponseEntity> response) {
                 Log.d("TAG", "onResponse: success");
+                startActivity(new Intent(ResetPassword.this,HomeActivity.class));
             }
 
             @Override

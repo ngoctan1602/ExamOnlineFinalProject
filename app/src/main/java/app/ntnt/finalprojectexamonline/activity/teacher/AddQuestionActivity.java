@@ -119,6 +119,7 @@ public class AddQuestionActivity extends AppCompatActivity implements UploadImag
                 answerRequestList.add(new AnswerRequest(text, isCorrect));
             }
         }
+
         QuestionRequest questionRequest = new QuestionRequest(editText.getText().toString(), topicId, answerRequestList);
         return questionRequest;
     }
